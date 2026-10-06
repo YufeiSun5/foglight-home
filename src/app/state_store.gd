@@ -66,7 +66,7 @@ func submit(c: Dictionary) -> Dictionary:
 	var result = {"ok": true, "revision": reduced.state.revision, "events": events.duplicate(true)}
 	reduced.state.ledger[id] = {"fingerprint": fingerprint, "result": result.duplicate(true)}
 	_state = reduced.state
-	if c.action in ["choose", "begin", "suspend", "skip"]: _generation += 1
+	if c.action in ["choose", "begin", "suspend", "skip", "travel"]: _generation += 1
 	# Block signal-driven reentrancy until this complete transaction is published.
 	changed.emit()
 	committed.emit(events.duplicate(true))

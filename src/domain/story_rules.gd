@@ -1,6 +1,6 @@
 extends RefCounted
 ## Pure story rules, adapted and hardened from PR #1. No nodes, IO, or authority.
-const SCHEMA = 2
+const SCHEMA = 3
 const CONTENT_VERSION = "chapter01-cloud-1"
 const COLORS = {"blue": "708ba9", "cream": "dbceb2", "green": "658c7c", "indigo": "465673"}
 const BOTTOMS = ["trousers", "culottes", "long_skirt", "short_skirt"]
@@ -14,7 +14,7 @@ static func fresh() -> Dictionary:
 	return {"schema": SCHEMA, "content_version": CONTENT_VERSION, "revision": 0,
 		"stage": "gate", "node": "g1", "mode": "story", "resume_node": "", "flags": BASE_FLAGS.duplicate(),
 		"appearance": {"coat_color": "blue", "bottom_id": "trousers"},
-		"journal": [], "choices": {}, "ledger": {}, "anchor": [-7.0, 4.0],
+		"journal": [], "choices": {}, "ledger": {}, "anchor": [-1.2, 3.4],
 		"world": {"scene_id": "FOG_HARBOR", "spawn_id": "PLAYER_ANCHOR"},
 		"story_time": {"chapter_id": "CH01", "day_index": 1, "time_slot": "night"}}
 
@@ -36,7 +36,10 @@ static func valid(s: Dictionary, nodes: Dictionary) -> bool:
 	if s.node != "" and nodes[s.node].get("scene", "") != (s.stage if s.mode == "story" else "optional"):
 		return false
 	if s.resume_node != "" and (s.mode == "story" or nodes[s.resume_node].get("scene", "") != s.stage): return false
-	if s.world != {"scene_id": "FOG_HARBOR", "spawn_id": "PLAYER_ANCHOR"}: return false
+	if s.world.size()!=2 or not s.world.get("scene_id") in ["FOG_HARBOR","PILOT_CABIN"] or s.world.get("spawn_id")!="PLAYER_ANCHOR": return false
+	if s.mode=="story":
+		var expected_scene="PILOT_CABIN" if nodes[s.node].scene=="cabin" else "FOG_HARBOR"
+		if s.world.scene_id!=expected_scene:return false
 	for flag in BASE_FLAGS:
 		if s.flags.get(flag) != true: return false
 	for flag in s.flags:
@@ -64,6 +67,7 @@ static func valid(s: Dictionary, nodes: Dictionary) -> bool:
 	if not anchor is Array or anchor.size() != 2: return false
 	for axis in anchor:
 		if not (axis is float or axis is int) or not is_finite(float(axis)) or absf(axis) > 100: return false
+	if s.world.scene_id=="PILOT_CABIN" and (absf(float(anchor[0]))>3.0 or absf(float(anchor[1]))>4.0):return false
 	return s.story_time == {"chapter_id": "CH01", "day_index": 1, "time_slot": "night"}
 
 static func reduce(s: Dictionary, action: String, payload: Dictionary, nodes: Dictionary) -> Dictionary:
@@ -123,6 +127,20 @@ static func reduce(s: Dictionary, action: String, payload: Dictionary, nodes: Di
 				n.node = "mirror1" if target == "mirror" else "talk_" + target
 				n.mode = "optional"
 			else: return {"error": "现在可以自由走走"}
+			if n.mode=="story":
+				var desired="PILOT_CABIN" if nodes[n.node].scene=="cabin" else "FOG_HARBOR"
+				if n.world.scene_id!=desired:
+					n.world.scene_id=desired
+					n.anchor=[0.0,2.2] if desired=="PILOT_CABIN" else [3.3,-3.4]
+					events.append({"kind":"scene_changed","object_id":desired})
+		"travel":
+			if n.node!="":return {"error":"先暂放当前对话，再进出船舱"}
+			var destination:Variant=payload.get("scene_id")
+			if not destination in ["FOG_HARBOR","PILOT_CABIN"]:return {"error":"入口不存在"}
+			if destination==n.world.scene_id:return {"error":"已经在这里"}
+			n.world.scene_id=destination
+			n.anchor=[0.0,2.2] if destination=="PILOT_CABIN" else [10.0,-9.1]
+			events.append({"kind":"scene_changed","object_id":destination})
 		"suspend":
 			if n.node == "": return {"error": "已经在自由探索"}
 			if n.mode == "story": n.resume_node = n.node
