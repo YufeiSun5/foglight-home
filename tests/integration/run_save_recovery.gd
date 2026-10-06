@@ -24,6 +24,7 @@ func _initialize() -> void:
 	_test_versions()
 	_test_migration()
 	_test_barriers()
+	_test_cabin_saves()
 	print("SAVE: %d checks; %d failures; fixtures %s" % [checks, failures.size(), test_root])
 	for failure in failures: printerr(failure)
 	quit(0 if failures.is_empty() else 1)
@@ -164,3 +165,19 @@ func _test_barriers() -> void:
 	DirAccess.copy_absolute(case.path + "/slot.bak", case.path + "/slot.json")
 	check(case.store.load_game().ok and case.store.view().revision == 0, "older valid save may be loaded")
 	check(case.store.save().ok, "load barrier permits valid low-revision persistence")
+
+func _test_cabin_saves()->void:
+	var case=_case()
+	case.store.command("suspend")
+	case.store.command("travel",{"scene_id":"PILOT_CABIN"})
+	case.store.command("anchor",{"position":[-1.0,1.5]})
+	case.store.command("outfit",{"coat_color":"cream","bottom_id":"long_skirt"})
+	var expected=case.store.view()
+	check(case.store.save().ok,"indoor state saved")
+	case.store.command("travel",{"scene_id":"FOG_HARBOR"})
+	check(case.store.load_game().ok and case.store.view()==expected,"load restores room, local position, appearance and suspended story")
+	var legacy=Rules.fresh()
+	legacy.schema=2
+	_write(case.path+"/slot.json",_envelope(legacy))
+	check(case.store.load_game().ok and case.store.view().schema==3,"schema2 migrates to schema3")
+	check(case.store.view().world.scene_id=="FOG_HARBOR","old outdoor anchor preserved")

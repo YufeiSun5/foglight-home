@@ -526,7 +526,7 @@
   },
   "mirror2": {
     "speaker": "star",
-    "text": "今天还是短发，还是我习惯的样子。换不换衣服，都可以慢慢决定。",
+    "text": "今天还是我习惯的样子。换不换衣服，都可以慢慢决定。",
     "expression": "hurt",
     "next": "mirror3",
     "scene": "optional"
