@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "status": "artwork visually reviewed at native and nearest 4x; awaiting parent real-engine verification",
+  "character_id": "shen_yanzhou",
+  "outfit_id": "default",
+  "frame_size": [
+    80,
+    80
+  ],
+  "effective_body_height": 64,
+  "foot_anchor": [
+    40,
+    75
+  ],
+  "atlas": "idle.png",
+  "atlas_size": [
+    160,
+    320
+  ],
+  "columns": [
+    "open",
+    "blink"
+  ],
+  "rows": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "seconds": [
+    2.6,
+    0.12
+  ],
+  "loop": true,
+  "filter": "nearest",
+  "mipmaps": false,
+  "walk_animation": false,
+  "runtime_notes": [
+    "Stationary conversation NPC only. Do not slide this atlas as a walking animation.",
+    "All directions are separately authored; do not mirror asymmetric hair or equipment.",
+    "Back row has no visible eyes: its second frame is a local breathing variation.",
+    "True transparent source; only technical crop, nearest-neighbor resampling and frame packing performed.",
+    "This is AI-authored original sprite artwork; visual acceptance still depends on real engine presentation."
+  ]
+}

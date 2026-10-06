@@ -1,0 +1,229 @@
+{
+  "version": 2,
+  "character_id": "cen_xingyao",
+  "coat_colors": {
+    "blue": 0,
+    "indigo": 1,
+    "green": 2,
+    "cream": 3
+  },
+  "bottoms": [
+    "long_skirt",
+    "short_skirt",
+    "culottes",
+    "trousers"
+  ],
+  "combinations": 16,
+  "outfits": {
+    "long_skirt": {
+      "version": 2,
+      "bottom_id": "long_skirt",
+      "frame_size": [
+        80,
+        80
+      ],
+      "effective_height": 64,
+      "foot_anchor": [
+        40,
+        75
+      ],
+      "walk": {
+        "directions": [
+          "down",
+          "right",
+          "up"
+        ],
+        "size": [
+          480,
+          80
+        ],
+        "frames": 6,
+        "fps": 8,
+        "left": "Use walk_right plus horizontal flip. This mirrors asymmetric satchel and hair ornament; first-version limitation."
+      },
+      "idle": {
+        "size": [
+          160,
+          320
+        ],
+        "columns": 2,
+        "rows": [
+          "down",
+          "left",
+          "right",
+          "up"
+        ],
+        "column_states": [
+          "neutral/open",
+          "blink/local relaxation"
+        ],
+        "durations_seconds": [
+          2.6,
+          0.12
+        ],
+        "up_note": "Localized fingers/shoulders, no visible eye blink from behind."
+      },
+      "mask": "Each atlas has identical-size _topmask.png; only blue upper cloth pixels selected. No global hue change.",
+      "creator": "AI-original image_gen artwork,2026-10-06",
+      "license": "No open-source license added or implied."
+    },
+    "short_skirt": {
+      "version": 2,
+      "bottom_id": "short_skirt",
+      "frame_size": [
+        80,
+        80
+      ],
+      "effective_height": 64,
+      "foot_anchor": [
+        40,
+        75
+      ],
+      "walk": {
+        "directions": [
+          "down",
+          "right",
+          "up"
+        ],
+        "size": [
+          480,
+          80
+        ],
+        "frames": 6,
+        "fps": 8,
+        "left": "Use walk_right plus horizontal flip. This mirrors asymmetric satchel and hair ornament; first-version limitation."
+      },
+      "idle": {
+        "size": [
+          160,
+          320
+        ],
+        "columns": 2,
+        "rows": [
+          "down",
+          "left",
+          "right",
+          "up"
+        ],
+        "column_states": [
+          "neutral/open",
+          "blink/local relaxation"
+        ],
+        "durations_seconds": [
+          2.6,
+          0.12
+        ],
+        "up_note": "Localized fingers/shoulders, no visible eye blink from behind."
+      },
+      "mask": "Each atlas has identical-size _topmask.png; only blue upper cloth pixels selected. No global hue change.",
+      "creator": "AI-original image_gen artwork,2026-10-06",
+      "license": "No open-source license added or implied."
+    },
+    "culottes": {
+      "version": 2,
+      "bottom_id": "culottes",
+      "frame_size": [
+        80,
+        80
+      ],
+      "effective_height": 64,
+      "foot_anchor": [
+        40,
+        75
+      ],
+      "walk": {
+        "directions": [
+          "down",
+          "right",
+          "up"
+        ],
+        "size": [
+          480,
+          80
+        ],
+        "frames": 6,
+        "fps": 8,
+        "left": "Use walk_right plus horizontal flip. This mirrors asymmetric satchel and hair ornament; first-version limitation."
+      },
+      "idle": {
+        "size": [
+          160,
+          320
+        ],
+        "columns": 2,
+        "rows": [
+          "down",
+          "left",
+          "right",
+          "up"
+        ],
+        "column_states": [
+          "neutral/open",
+          "blink/local relaxation"
+        ],
+        "durations_seconds": [
+          2.6,
+          0.12
+        ],
+        "up_note": "Localized fingers/shoulders, no visible eye blink from behind."
+      },
+      "mask": "Each atlas has identical-size _topmask.png; only blue upper cloth pixels selected. No global hue change.",
+      "creator": "AI-original image_gen artwork,2026-10-06",
+      "license": "No open-source license added or implied."
+    },
+    "trousers": {
+      "version": 2,
+      "bottom_id": "trousers",
+      "frame_size": [
+        80,
+        80
+      ],
+      "effective_height": 64,
+      "foot_anchor": [
+        40,
+        75
+      ],
+      "walk": {
+        "directions": [
+          "down",
+          "right",
+          "up"
+        ],
+        "size": [
+          480,
+          80
+        ],
+        "frames": 6,
+        "fps": 8,
+        "left": "Use walk_right plus horizontal flip. This mirrors asymmetric satchel and hair ornament; first-version limitation."
+      },
+      "idle": {
+        "size": [
+          160,
+          320
+        ],
+        "columns": 2,
+        "rows": [
+          "down",
+          "left",
+          "right",
+          "up"
+        ],
+        "column_states": [
+          "neutral/open",
+          "blink/local relaxation"
+        ],
+        "durations_seconds": [
+          2.6,
+          0.12
+        ],
+        "up_note": "Localized fingers/shoulders, no visible eye blink from behind."
+      },
+      "mask": "Each atlas has identical-size _topmask.png; only blue upper cloth pixels selected. No global hue change.",
+      "creator": "AI-original image_gen artwork,2026-10-06",
+      "license": "No open-source license added or implied."
+    }
+  },
+  "world_shader": "res://assets/characters_v2/palette_world.gdshader",
+  "preview_shader": "res://assets/characters_v2/palette_preview.gdshader"
+}
