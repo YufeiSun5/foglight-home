@@ -1,0 +1,8 @@
+.godot/
+builds/
+*.log
+.DS_Store
+*.tmp
+*.bak
+__pycache__/
+assets/fonts/*.ttf
