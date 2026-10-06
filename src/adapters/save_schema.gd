@@ -38,7 +38,7 @@ static func migrate(input: Dictionary) -> Dictionary:
 static func _upgrade_cabin_anchor(state:Dictionary)->void:
 	if state.get("stage")=="cabin" and state.get("mode")=="story" and state.get("node","")!="":
 		state.world={"scene_id":"PILOT_CABIN","spawn_id":"PLAYER_ANCHOR"}
-		state.anchor=[0.0,2.2]
+		state.anchor=[0.0,1.65]
 
 # Godot JSON parses every number as float; normalize only schema-owned integer fields.
 # Arrays and Dictionaries use strict nested type equality, unlike scalar ==.

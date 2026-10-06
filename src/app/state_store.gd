@@ -42,7 +42,7 @@ func make_command(action: String, payload: Dictionary = {}) -> Dictionary:
 func command(action: String, payload: Dictionary = {}) -> Dictionary:
 	return submit(make_command(action, payload))
 
-func submit(c: Dictionary) -> Dictionary:
+func inspect_command(c: Dictionary) -> Dictionary:
 	if _submitting: return {"ok": false, "error": "已有命令正在提交"}
 	if c.get("epoch") != _epoch: return {"ok": false, "error": "旧会话回调"}
 	var id: Variant = c.get("id", "")
@@ -51,9 +51,19 @@ func submit(c: Dictionary) -> Dictionary:
 	var fingerprint = JSON.stringify([c.action, c.payload, c.source, c.get("generation"), c.get("revision")], "", true).sha256_text()
 	if _state.ledger.has(id):
 		var previous: Dictionary = _state.ledger[id]
-		return previous.result.duplicate(true) if previous.fingerprint == fingerprint else {"ok": false, "error": "命令ID冲突"}
+		return {"ok":true,"replay":true} if previous.fingerprint == fingerprint else {"ok": false, "error": "命令ID冲突"}
 	if c.get("revision") != int(_state.revision) or c.get("generation") != _generation:
 		return {"ok": false, "error": "旧交互回调"}
+	var candidate=Rules.reduce(_state,c.action,c.payload,_nodes)
+	if candidate.has("error"):return {"ok":false,"error":candidate.error}
+	return {"ok":true,"replay":false}
+
+func submit(c:Dictionary)->Dictionary:
+	var inspected=inspect_command(c)
+	if not inspected.ok:return inspected
+	if inspected.replay:return _state.ledger[c.id].result.duplicate(true)
+	var id:String=c.id
+	var fingerprint=JSON.stringify([c.action,c.payload,c.source,c.get("generation"),c.get("revision")],"",true).sha256_text()
 	_submitting = true
 	var reduced = Rules.reduce(_state, c.action, c.payload, _nodes)
 	if reduced.has("error"):

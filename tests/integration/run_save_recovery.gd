@@ -25,6 +25,7 @@ func _initialize() -> void:
 	_test_migration()
 	_test_barriers()
 	_test_cabin_saves()
+	_test_decimal_anchor()
 	print("SAVE: %d checks; %d failures; fixtures %s" % [checks, failures.size(), test_root])
 	for failure in failures: printerr(failure)
 	quit(0 if failures.is_empty() else 1)
@@ -181,3 +182,13 @@ func _test_cabin_saves()->void:
 	_write(case.path+"/slot.json",_envelope(legacy))
 	check(case.store.load_game().ok and case.store.view().schema==3,"schema2 migrates to schema3")
 	check(case.store.view().world.scene_id=="FOG_HARBOR","old outdoor anchor preserved")
+
+func _test_decimal_anchor()->void:
+	var case=_case()
+	var coordinate=snappedf(-9.2,.01)
+	check(case.store.command("anchor",{"position":[10.0,coordinate]}).ok,"fractional physical anchor accepted")
+	var serialized=JSON.stringify(case.store.view(),"",true)
+	check(case.store.save().ok,"decimal JSON roundtrip does not report a false save failure")
+	var recovered=case.port.read_snapshot()
+	check(recovered.ok and recovered.serialized_payload==serialized,"final read compares exact intended payload bytes")
+	check(case.store.load_game().ok and is_equal_approx(case.store.view().anchor[1],coordinate),"decimal anchor restores with unchanged semantic coordinate")

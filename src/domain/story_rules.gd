@@ -131,7 +131,7 @@ static func reduce(s: Dictionary, action: String, payload: Dictionary, nodes: Di
 				var desired="PILOT_CABIN" if nodes[n.node].scene=="cabin" else "FOG_HARBOR"
 				if n.world.scene_id!=desired:
 					n.world.scene_id=desired
-					n.anchor=[0.0,2.2] if desired=="PILOT_CABIN" else [3.3,-3.4]
+					n.anchor=[0.0,1.65] if desired=="PILOT_CABIN" else [-1.2,3.4]
 					events.append({"kind":"scene_changed","object_id":desired})
 		"travel":
 			if n.node!="":return {"error":"先暂放当前对话，再进出船舱"}
@@ -139,7 +139,7 @@ static func reduce(s: Dictionary, action: String, payload: Dictionary, nodes: Di
 			if not destination in ["FOG_HARBOR","PILOT_CABIN"]:return {"error":"入口不存在"}
 			if destination==n.world.scene_id:return {"error":"已经在这里"}
 			n.world.scene_id=destination
-			n.anchor=[0.0,2.2] if destination=="PILOT_CABIN" else [10.0,-9.1]
+			n.anchor=[0.0,1.65] if destination=="PILOT_CABIN" else [10.0,-8.68]
 			events.append({"kind":"scene_changed","object_id":destination})
 		"suspend":
 			if n.node == "": return {"error": "已经在自由探索"}

@@ -46,7 +46,7 @@ func _read(path: String) -> Dictionary:
 	var migrated = Schema.migrate(state)
 	if not migrated.get("ok", false): return migrated
 	if _validator.is_valid() and not _validator.call(migrated.state): return {"ok": false, "error": "存档状态校验失败"}
-	return {"ok": true, "state": migrated.state, "sequence": int(envelope.sequence), "migrated": migrated.migrated}
+	return {"ok": true, "state": migrated.state, "sequence": int(envelope.sequence), "migrated": migrated.migrated, "serialized_payload": envelope.payload}
 
 func read_snapshot() -> Dictionary:
 	var result = _read(root + "/slot.json")
@@ -81,7 +81,7 @@ func write_snapshot(snapshot: Dictionary, request_epoch: int) -> Dictionary:
 	if write_error != OK: return {"ok": false, "error": "存档写入失败"}
 	if fault == "partial": return {"ok": false, "error": "模拟写入中断"}
 	var staged = _read(root + "/slot.tmp")
-	if not staged.get("ok", false) or staged.sequence != _sequence: return {"ok": false, "error": "临时存档校验失败"}
+	if not staged.get("ok", false) or staged.sequence != _sequence or staged.serialized_payload != payload: return {"ok": false, "error": "临时存档校验失败"}
 	if fault == "validated": return {"ok": false, "error": "模拟校验后中断"}
 	# A damaged primary must never replace the last known good backup.
 	if current.get("ok", false):
@@ -94,8 +94,10 @@ func write_snapshot(snapshot: Dictionary, request_epoch: int) -> Dictionary:
 	if DirAccess.rename_absolute(root + "/slot.tmp", root + "/slot.json") != OK: return {"ok": false, "error": "存档替换失败"}
 	_last_written_revision = int(snapshot.revision)
 	if fault in ["after_replace", "final_read"]: return {"ok": false, "error": "模拟替换后回读中断"}
+	# Compare exact serialized payload bytes after checksum/schema/state validation.
+	# In-memory snapped decimal floats can differ by one ULP after JSON roundtrip.
 	var final = _read(root + "/slot.json")
-	if not final.get("ok", false) or final.sequence != _sequence or final.state != snapshot: return {"ok": false, "error": "最终存档回读失败"}
+	if not final.get("ok", false) or final.sequence != _sequence or final.serialized_payload != payload: return {"ok": false, "error": "最终存档回读失败"}
 	return {"ok": true, "sequence": _sequence, "revision": snapshot.revision}
 
 static func _whole(value: Variant) -> bool:
