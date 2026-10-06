@@ -1,0 +1,7 @@
+; Verified cloud story/state milestone. Graphical scene is developed separately.
+config_version=5
+[application]
+config/name="Foglight Home"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+[rendering]
+renderer/rendering_method="gl_compatibility"
