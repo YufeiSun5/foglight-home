@@ -1,0 +1,199 @@
+{
+  "date_utc": "2026-10-06",
+  "atlases": [
+    {
+      "bottom": "trousers",
+      "atlas": "walk_down",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 361,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "8b0e444e8ab9e2a996d496f49e4a8364c6163d23ed530571ff112157a334276c",
+      "mask_sha256": "054755695adcced5bf2da24a0de98f09b165df809e63adc062f7bde722cbf9e0"
+    },
+    {
+      "bottom": "trousers",
+      "atlas": "walk_right",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 413,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "20233fed87eb9d2e40076f4cbe3855dbbd06b97852138b623646812971af0bc3",
+      "mask_sha256": "503ebb24b93c961e6cfc6d52e40d12fbdab31cc6f1cc6ca00bfcc3eb6c12bc42"
+    },
+    {
+      "bottom": "trousers",
+      "atlas": "walk_up",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 256,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "e3e8824110d645a119819d9f4d4f6314cdccb3098afe662bdae6ad898c736076",
+      "mask_sha256": "ec7ceee9b237f038e9651dc83276392fc322ba856fac09fa88be61c764c2985d"
+    },
+    {
+      "bottom": "trousers",
+      "atlas": "idle",
+      "size": [
+        160,
+        320
+      ],
+      "mask_count": 451,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "7f73d81dec6dc1409e753aade1d08c889888a1ee42f2097157cf5545d1c60c17",
+      "mask_sha256": "579b4b48231a184112ec0ee42f697fea30b6418a377f5c880106f4935a7928ef"
+    },
+    {
+      "bottom": "culottes",
+      "atlas": "walk_down",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 353,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "af7034788941058aae32256506745d09ccf6913578c856d4c3de0b58bfb2a4e7",
+      "mask_sha256": "57fe26b34e87c6161c71ad7eccf45ccf250f34d6fc74af8628086510f5c28b55"
+    },
+    {
+      "bottom": "culottes",
+      "atlas": "walk_right",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 409,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "0c982653cc7f862bc59c545f3c89f5a5ca825a04dcf2351cc16c998be4affa12",
+      "mask_sha256": "3469603660839cc5e8f92bbf9e14b47c185169fc2f7886ead6bd87cd79343e3b"
+    },
+    {
+      "bottom": "culottes",
+      "atlas": "walk_up",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 262,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "0eeafa4896fb32050308daddc2c429bbaf813b6b86d22ddacdad61da45dbff22",
+      "mask_sha256": "1dbbc8c4c4fc7c438bc0ede76fd43e120e69adb60840c2541458bfa49483ac5e"
+    },
+    {
+      "bottom": "culottes",
+      "atlas": "idle",
+      "size": [
+        160,
+        320
+      ],
+      "mask_count": 448,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "93476c78fb66aae8f739630167b7ed9b25035e34a50edf149867124e61f85c0f",
+      "mask_sha256": "26d6bf7be62212cccc6c2110f37f9806d016937f51ba724957938d36283d0664"
+    },
+    {
+      "bottom": "long_skirt",
+      "atlas": "walk_down",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 367,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "916751f5220efddba199cd4b44362c831a8a958755eae69d9402568fa6267353",
+      "mask_sha256": "c1176cdc5100b794b0722d181f8ddfecfb3c58bb87a9cde538a959e7373d65a2"
+    },
+    {
+      "bottom": "long_skirt",
+      "atlas": "walk_right",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 453,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "2abe6b6e07c84af662b766234f911ea87bdb8ed9a3bc9e87e4d1ca8faa7cfe2e",
+      "mask_sha256": "9af9e68cc5e3130be2dd51b9e62c25c2cd7d67826d4a2a2c30281a309cf42801"
+    },
+    {
+      "bottom": "long_skirt",
+      "atlas": "walk_up",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 245,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "7ac6ca8eb4b11abc0cf5f5be5ac51a97c85ea52455821f8090414013fdedc3d2",
+      "mask_sha256": "4c296d43ca5023b372d181b9576610794791c68acb2b98430881c7f2f3680210"
+    },
+    {
+      "bottom": "long_skirt",
+      "atlas": "idle",
+      "size": [
+        160,
+        320
+      ],
+      "mask_count": 504,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "01545a33fb3bcf61c3cba1350347b6c032611b8d18b7c854d159c911e7299138",
+      "mask_sha256": "75033921f59636b4cb68490366cdc55da43073b689b7fb9fa009c5add0c86939"
+    },
+    {
+      "bottom": "short_skirt",
+      "atlas": "walk_down",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 299,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "9b20c02b741e7e8cdd3f8015a310b4e4aab2797bd8cf594fe97628c403804bcd",
+      "mask_sha256": "c73734eb26c7f2fadf71bd3108d98f9ca2e055fa5958d097b2e1adbc4019f9e0"
+    },
+    {
+      "bottom": "short_skirt",
+      "atlas": "walk_right",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 397,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "1c83d464d747c78197d31188b1e5aff141660a676f0159b8b7be7b44b57095fb",
+      "mask_sha256": "ba43481fb0045cd7fd691f5bd41c05ac85b71693dde1014f754048e76dde7c60"
+    },
+    {
+      "bottom": "short_skirt",
+      "atlas": "walk_up",
+      "size": [
+        480,
+        80
+      ],
+      "mask_count": 238,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "bd5f6095530f1fbf0d0f6243b4ccfe4ccd1dd977e7d4ecb6393afe5b19feb9bf",
+      "mask_sha256": "6fa32897fdb66c3eafb876a581da09a052b1ed068cf739e8e67d7b3b6fc5f288"
+    },
+    {
+      "bottom": "short_skirt",
+      "atlas": "idle",
+      "size": [
+        160,
+        320
+      ],
+      "mask_count": 496,
+      "warm_skin_gold_hair_color_false_positives": 0,
+      "sha256": "adb3d39bedc7b8f0d7a0cf9325e75073c79556f94ce67f703f15e3c278ea1ada",
+      "mask_sha256": "01309a2c21974c46c14cff0f36e2f177f10b7bd5cfaef07e990cfc602a3e81c6"
+    }
+  ],
+  "original_candidate_files_preserved": 15,
+  "checks": "Dimensions, binary mask registration and no selected warm-color pixels; visual source and native64px previews also inspected. Not substitute for in-game16-color traversal."
+}

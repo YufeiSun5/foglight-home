@@ -1,0 +1,508 @@
+{
+  "created_utc": "2026-10-06",
+  "creator": "OpenAI built-in image_gen.imagegen; original fictional game artwork",
+  "scope": "Three adult NPCs, default outfit, four directions x two idle frames; no walking authored.",
+  "inputs": [
+    {
+      "role": "Approved original fictional character concept",
+      "path": "author_reference/雾灯归航-四人角色概念设定.png",
+      "sha256": "fd495bff747af498b563953c6867b1b8fa77546993e5603a2c2c386fde6c4db2"
+    },
+    {
+      "role": "Project-owned heroine v2 style and scale reference only",
+      "path": "art_source/characters_v2/xingyao_idle_4dir_preview_4x.png",
+      "sha256": "302a20be1bf35bfd25e322a84276e6b83c81e627887885eaed4b56d4744dbae5"
+    }
+  ],
+  "observed_reference_only": [
+    {
+      "description": "Official SO2R screenshots observed for visual craft; never copied into project NPC files or supplied as NPC generation inputs",
+      "paths": [
+        "/tmp/so2r_03.jpg",
+        "/tmp/so2r_04.jpg"
+      ],
+      "redistribution": "No redistribution of official screenshots in project assets"
+    }
+  ],
+  "generation_records": [
+    "yanzhou_generation_record.json",
+    "zhiwei_generation_record.json",
+    "qilan_generation_record.json"
+  ],
+  "processing": "image_gen created all artwork and blink/breath changes. ImageMagick only cropped alpha-bounded source sprites, nearest-resampled to64px height and packed80px cells. Pillow/NumPy only inspected pixels. No program-drawn rectangle humanoids, no program repainting, no mirroring. The technical resize is not a claim of professional pixel-art acceptance.",
+  "visual_review": {
+    "actually_inspected": [
+      "Approved four-character concept",
+      "Project heroine idle four-direction 4x sheet",
+      "Real engine .qa/screenshots/09-v2-native-960x540.png, as integration context only",
+      "All three generated eight-frame sources",
+      "Each80x80 runtime frame in nearest4x contact sheets",
+      "Combined three-character native and4x turnarounds"
+    ],
+    "findings": {
+      "shen_yanzhou": "Short tousled black hair, light jaw stubble at source scale, deep indigo coat, broader male shoulders; front/left/right/back correct; open/closed eyes visible; back has no face. Stubble is subtle at64px.",
+      "xu_zhiwei": "Short chestnut hair and side clasp, verdigris apron, cream sleeves and sturdy brown trousers. Back showsX apron straps; clasp visibility differs across sides. Fixed initial row-split extraction error by alpha-detected row spans.",
+      "qi_lan": "Distinct high black ponytail, rust-red mantle, angular guarded expression, compact silhouette; sword remains sheathed in all views. No back-facing eyes. Ponytail trails behind correct profile direction."
+    },
+    "anatomy": "No observed duplicated limbs or detached hands in reviewed output; two arms/two legs per sprite.",
+    "animation": "Visible eyes close in three facing directions; rear frame has small shoulder/cloth change. Pair feet retain y75 baseline, and frames are not a uniform translation. Small generated pixel-level shape/shading variation remains.",
+    "engine_gate": "NOT tested by this worker in running engine. Parent must test nearest filtering, world scale, occlusion, blink timing and silhouette in real Godot capture."
+  },
+  "limitations": [
+    "These are visually reviewed AI sprite candidates, not a claim of professional hand-pixelled authorship or full-game visual approval.",
+    "Sources were authored for pixel-sprite look then technically extracted; generated fine shading exceeds the requested32–40-color palette. No false palette-size claim.",
+    "Fine brass ornament can be less legible at native64px; judge in-engine instead of relying on large source illustration.",
+    "Idle pair geometry is nearly consistent but generated microvariation remains; only intended for sparse0.12s blinking after2.6s open.",
+    "No walk or scripted sliding animation supplied.",
+    "No project open-source LICENSE added; this provenance does not determine copyright or platform clearance."
+  ],
+  "checks": [
+    {
+      "character_id": "shen_yanzhou",
+      "atlas_sha256": "b86abb8b4b1dfc97a60ee79d42e33d2ab3cfecd40861d0a5f6ed8b8a1ed6ca46",
+      "source_sha256": "332552390ae0d5aabd6e3630afc384dbdd94e0a892977e504a55ad5bc491b0f4",
+      "frame_checks": [
+        {
+          "direction": "down",
+          "state": "open",
+          "alpha_bbox": [
+            24,
+            12,
+            57,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1747,
+          "visible_rgb_colors": 1452
+        },
+        {
+          "direction": "down",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            57,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1746,
+          "visible_rgb_colors": 1464
+        },
+        {
+          "direction": "left",
+          "state": "open",
+          "alpha_bbox": [
+            25,
+            12,
+            55,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1506,
+          "visible_rgb_colors": 1249
+        },
+        {
+          "direction": "left",
+          "state": "blink",
+          "alpha_bbox": [
+            25,
+            12,
+            55,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1524,
+          "visible_rgb_colors": 1254
+        },
+        {
+          "direction": "right",
+          "state": "open",
+          "alpha_bbox": [
+            24,
+            12,
+            54,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1509,
+          "visible_rgb_colors": 1254
+        },
+        {
+          "direction": "right",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            54,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1530,
+          "visible_rgb_colors": 1234
+        },
+        {
+          "direction": "up",
+          "state": "open",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1679,
+          "visible_rgb_colors": 1318
+        },
+        {
+          "direction": "up",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1657,
+          "visible_rgb_colors": 1291
+        }
+      ],
+      "pair_checks": [
+        {
+          "direction": "down",
+          "different_frames": true,
+          "changed_visible_pixels": 1570,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "left",
+          "different_frames": true,
+          "changed_visible_pixels": 1339,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "right",
+          "different_frames": true,
+          "changed_visible_pixels": 1333,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "up",
+          "different_frames": true,
+          "changed_visible_pixels": 1505,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        }
+      ]
+    },
+    {
+      "character_id": "xu_zhiwei",
+      "atlas_sha256": "94376fd9711b97e65692ab4cf96fb2d4779823b8b3f83f03bceea7d5fe24a75c",
+      "source_sha256": "fa13c4b313a2f10ae7a862d8035af5f8c4085711ece66d5cafcf2e1f39c0fac4",
+      "frame_checks": [
+        {
+          "direction": "down",
+          "state": "open",
+          "alpha_bbox": [
+            23,
+            12,
+            55,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1617,
+          "visible_rgb_colors": 1385
+        },
+        {
+          "direction": "down",
+          "state": "blink",
+          "alpha_bbox": [
+            23,
+            12,
+            55,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1635,
+          "visible_rgb_colors": 1375
+        },
+        {
+          "direction": "left",
+          "state": "open",
+          "alpha_bbox": [
+            25,
+            12,
+            53,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1272,
+          "visible_rgb_colors": 1075
+        },
+        {
+          "direction": "left",
+          "state": "blink",
+          "alpha_bbox": [
+            25,
+            12,
+            53,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1292,
+          "visible_rgb_colors": 1079
+        },
+        {
+          "direction": "right",
+          "state": "open",
+          "alpha_bbox": [
+            27,
+            12,
+            54,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1226,
+          "visible_rgb_colors": 1042
+        },
+        {
+          "direction": "right",
+          "state": "blink",
+          "alpha_bbox": [
+            26,
+            12,
+            54,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1291,
+          "visible_rgb_colors": 1080
+        },
+        {
+          "direction": "up",
+          "state": "open",
+          "alpha_bbox": [
+            25,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1568,
+          "visible_rgb_colors": 1287
+        },
+        {
+          "direction": "up",
+          "state": "blink",
+          "alpha_bbox": [
+            25,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1567,
+          "visible_rgb_colors": 1300
+        }
+      ],
+      "pair_checks": [
+        {
+          "direction": "down",
+          "different_frames": true,
+          "changed_visible_pixels": 1434,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "left",
+          "different_frames": true,
+          "changed_visible_pixels": 1114,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "right",
+          "different_frames": true,
+          "changed_visible_pixels": 1124,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "up",
+          "different_frames": true,
+          "changed_visible_pixels": 1354,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        }
+      ]
+    },
+    {
+      "character_id": "qi_lan",
+      "atlas_sha256": "fbf0baa50cc7f0ef63f81a46fea1f33f3e565efb42af3b1ef63e253f4bd03f54",
+      "source_sha256": "ce3516443d6ea596876ea8d81b21122b8868f8d436c18be22d764c1c0a952070",
+      "frame_checks": [
+        {
+          "direction": "down",
+          "state": "open",
+          "alpha_bbox": [
+            23,
+            12,
+            59,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1760,
+          "visible_rgb_colors": 1414
+        },
+        {
+          "direction": "down",
+          "state": "blink",
+          "alpha_bbox": [
+            23,
+            12,
+            59,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1753,
+          "visible_rgb_colors": 1413
+        },
+        {
+          "direction": "left",
+          "state": "open",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1575,
+          "visible_rgb_colors": 1253
+        },
+        {
+          "direction": "left",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1585,
+          "visible_rgb_colors": 1252
+        },
+        {
+          "direction": "right",
+          "state": "open",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1566,
+          "visible_rgb_colors": 1226
+        },
+        {
+          "direction": "right",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            56,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1555,
+          "visible_rgb_colors": 1232
+        },
+        {
+          "direction": "up",
+          "state": "open",
+          "alpha_bbox": [
+            25,
+            12,
+            59,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1582,
+          "visible_rgb_colors": 1270
+        },
+        {
+          "direction": "up",
+          "state": "blink",
+          "alpha_bbox": [
+            24,
+            12,
+            58,
+            76
+          ],
+          "effective_height": 64,
+          "fully_transparent_corner": true,
+          "opaque_or_partial_pixel_count": 1591,
+          "visible_rgb_colors": 1245
+        }
+      ],
+      "pair_checks": [
+        {
+          "direction": "down",
+          "different_frames": true,
+          "changed_visible_pixels": 1520,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "left",
+          "different_frames": true,
+          "changed_visible_pixels": 1357,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "right",
+          "different_frames": true,
+          "changed_visible_pixels": 1314,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        },
+        {
+          "direction": "up",
+          "different_frames": true,
+          "changed_visible_pixels": 1462,
+          "foot_baseline_equal": true,
+          "not_exact_uniform_translation": true
+        }
+      ]
+    }
+  ]
+}

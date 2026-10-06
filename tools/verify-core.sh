@@ -11,3 +11,8 @@ for script in tests/content/validate_content.gd tests/domain/run_tests.gd tests/
 done
 python3 tests/content/check_json.py
 python3 tools/check_boundaries.py
+
+# Character-only checkpoints remain independently testable before full scene integration.
+if [[ -f tests/content/validate_asset_checkpoint.py ]]; then
+  python3 tests/content/validate_asset_checkpoint.py
+fi

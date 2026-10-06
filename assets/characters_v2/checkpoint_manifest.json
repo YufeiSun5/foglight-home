@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "scope": "35 pixel atlases/masks and1 protagonist bust; no full game integration or missing assets claimed",
+  "images": [
+    {
+      "path": "assets/characters/cen_xingyao/portrait.png",
+      "bytes": 2748444,
+      "width": 1774,
+      "height": 887,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "c957333fc3f3cc5e1000633728e7ec6fa9ad5f6eac18160d1684297b89ec4a38",
+      "git_blob_sha1": "ee146b0b747fa7bea99cb54272a7485364477b29"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/idle.png",
+      "bytes": 51713,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "93476c78fb66aae8f739630167b7ed9b25035e34a50edf149867124e61f85c0f",
+      "git_blob_sha1": "586663faf944bcabc1efcd6d34916937662047bf"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/idle_topmask.png",
+      "bytes": 1189,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "26d6bf7be62212cccc6c2110f37f9806d016937f51ba724957938d36283d0664",
+      "git_blob_sha1": "bc1b503ab36b0bbe8bbc0cb2864a88fe4ff66b5b"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_down.png",
+      "bytes": 36038,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "af7034788941058aae32256506745d09ccf6913578c856d4c3de0b58bfb2a4e7",
+      "git_blob_sha1": "0bd81db811b49f046d58691af15b1a324c0dc1d8"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_down_topmask.png",
+      "bytes": 966,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "57fe26b34e87c6161c71ad7eccf45ccf250f34d6fc74af8628086510f5c28b55",
+      "git_blob_sha1": "3c2b2c755ca87a99ca62707640480591c5cdd1c6"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_right.png",
+      "bytes": 42496,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "0c982653cc7f862bc59c545f3c89f5a5ca825a04dcf2351cc16c998be4affa12",
+      "git_blob_sha1": "89ff8b26d0304e035be288ee2671944f7329e9eb"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_right_topmask.png",
+      "bytes": 973,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "3469603660839cc5e8f92bbf9e14b47c185169fc2f7886ead6bd87cd79343e3b",
+      "git_blob_sha1": "91cd46bb80720421a2b3fe72c76e872f5d70ec57"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_up.png",
+      "bytes": 34305,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "0eeafa4896fb32050308daddc2c429bbaf813b6b86d22ddacdad61da45dbff22",
+      "git_blob_sha1": "962c00928dc668eea5625680653cfe3aca28c4da"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/culottes/walk_up_topmask.png",
+      "bytes": 714,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "1dbbc8c4c4fc7c438bc0ede76fd43e120e69adb60840c2541458bfa49483ac5e",
+      "git_blob_sha1": "e3b81bbf4e6e214ab8e8e1a8cfb0ebbf7dfaca43"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/idle.png",
+      "bytes": 51003,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "01545a33fb3bcf61c3cba1350347b6c032611b8d18b7c854d159c911e7299138",
+      "git_blob_sha1": "eec32a0fcdfc0376cf8f39ff50c29c289ef9e310"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/idle_topmask.png",
+      "bytes": 1243,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "75033921f59636b4cb68490366cdc55da43073b689b7fb9fa009c5add0c86939",
+      "git_blob_sha1": "84ac63171446d5d44f1d839df1bc69f60ed56d27"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_down.png",
+      "bytes": 37322,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "916751f5220efddba199cd4b44362c831a8a958755eae69d9402568fa6267353",
+      "git_blob_sha1": "446e95e6e1682cb616dd5beccfc46546b35c2ddf"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_down_topmask.png",
+      "bytes": 990,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "c1176cdc5100b794b0722d181f8ddfecfb3c58bb87a9cde538a959e7373d65a2",
+      "git_blob_sha1": "4323e0408f1436c6b56126a7b56b7bde32683fc2"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_right.png",
+      "bytes": 44403,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "2abe6b6e07c84af662b766234f911ea87bdb8ed9a3bc9e87e4d1ca8faa7cfe2e",
+      "git_blob_sha1": "c5eaf7abaab72393dc1c34341ae1c4370304df39"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_right_topmask.png",
+      "bytes": 983,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "9af9e68cc5e3130be2dd51b9e62c25c2cd7d67826d4a2a2c30281a309cf42801",
+      "git_blob_sha1": "89eee2e122076dc17ce821bc8ff9c4297e81fd7a"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_up.png",
+      "bytes": 35464,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "7ac6ca8eb4b11abc0cf5f5be5ac51a97c85ea52455821f8090414013fdedc3d2",
+      "git_blob_sha1": "f2fda04580572cab37adca84363ade945c374ef4"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/long_skirt/walk_up_topmask.png",
+      "bytes": 687,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "4c296d43ca5023b372d181b9576610794791c68acb2b98430881c7f2f3680210",
+      "git_blob_sha1": "6613d092e5a9fe3bf523fceef32c6c812437ce0c"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/idle.png",
+      "bytes": 49333,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "adb3d39bedc7b8f0d7a0cf9325e75073c79556f94ce67f703f15e3c278ea1ada",
+      "git_blob_sha1": "85e7da0f64152633700ef8c935e5b052832213f6"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/idle_topmask.png",
+      "bytes": 1239,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "01309a2c21974c46c14cff0f36e2f177f10b7bd5cfaef07e990cfc602a3e81c6",
+      "git_blob_sha1": "6fc6afbfbd5d94b64467fd7d78cf92559f7ef16b"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_down.png",
+      "bytes": 35094,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "9b20c02b741e7e8cdd3f8015a310b4e4aab2797bd8cf594fe97628c403804bcd",
+      "git_blob_sha1": "49847754c2cae42aee2725489ecb87347c3fe7a7"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_down_topmask.png",
+      "bytes": 881,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "c73734eb26c7f2fadf71bd3108d98f9ca2e055fa5958d097b2e1adbc4019f9e0",
+      "git_blob_sha1": "f1353b66a92524a9e8d1aa755dc0e3a904f7817e"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_right.png",
+      "bytes": 40937,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "1c83d464d747c78197d31188b1e5aff141660a676f0159b8b7be7b44b57095fb",
+      "git_blob_sha1": "8bf8d9ee0c2fc52ce42e4b9ce7d54a84df45298b"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_right_topmask.png",
+      "bytes": 931,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "ba43481fb0045cd7fd691f5bd41c05ac85b71693dde1014f754048e76dde7c60",
+      "git_blob_sha1": "3ade5b266bdd8faf26e99eb99b27629f6f52ec9b"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_up.png",
+      "bytes": 33971,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "bd5f6095530f1fbf0d0f6243b4ccfe4ccd1dd977e7d4ecb6393afe5b19feb9bf",
+      "git_blob_sha1": "890baa22ffa0555b3a461405a9983f51ed67f71e"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/short_skirt/walk_up_topmask.png",
+      "bytes": 685,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "6fa32897fdb66c3eafb876a581da09a052b1ed068cf739e8e67d7b3b6fc5f288",
+      "git_blob_sha1": "bfbae73117e969600ad8f109614a8cb8ee6e9ed8"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/idle.png",
+      "bytes": 49080,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "7f73d81dec6dc1409e753aade1d08c889888a1ee42f2097157cf5545d1c60c17",
+      "git_blob_sha1": "a0c1f7cb83d3a38a86f1fcc54cc1f43eb1b57a6d"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/idle_topmask.png",
+      "bytes": 1144,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "579b4b48231a184112ec0ee42f697fea30b6418a377f5c880106f4935a7928ef",
+      "git_blob_sha1": "c04217beda281a762db9d763101e6c55ea53bf60"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_down.png",
+      "bytes": 42069,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "8b0e444e8ab9e2a996d496f49e4a8364c6163d23ed530571ff112157a334276c",
+      "git_blob_sha1": "aee7e62f667814cf644f548602362b0387f3937c"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_down_topmask.png",
+      "bytes": 977,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "054755695adcced5bf2da24a0de98f09b165df809e63adc062f7bde722cbf9e0",
+      "git_blob_sha1": "a964dc31c7bf180c5b394c6d442ae214d237944f"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_right.png",
+      "bytes": 40868,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "20233fed87eb9d2e40076f4cbe3855dbbd06b97852138b623646812971af0bc3",
+      "git_blob_sha1": "50bb2edd5d45876d7915711f9c5ee8fc555f145d"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_right_topmask.png",
+      "bytes": 957,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "503ebb24b93c961e6cfc6d52e40d12fbdab31cc6f1cc6ca00bfcc3eb6c12bc42",
+      "git_blob_sha1": "2718c6b5988ea3a6c445a3d221f92755e5310900"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_up.png",
+      "bytes": 33384,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "e3e8824110d645a119819d9f4d4f6314cdccb3098afe662bdae6ad898c736076",
+      "git_blob_sha1": "1084b2ce8336b7f5570998cfd440ca5f68be184f"
+    },
+    {
+      "path": "assets/characters_v2/cen_xingyao/outfits/trousers/walk_up_topmask.png",
+      "bytes": 719,
+      "width": 480,
+      "height": 80,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "ec7ceee9b237f038e9651dc83276392fc322ba856fac09fa88be61c764c2985d",
+      "git_blob_sha1": "dd01fabd978ed4868577e23308d35e48300284d1"
+    },
+    {
+      "path": "assets/characters_v2/npcs/qi_lan/idle.png",
+      "bytes": 43651,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "fbf0baa50cc7f0ef63f81a46fea1f33f3e565efb42af3b1ef63e253f4bd03f54",
+      "git_blob_sha1": "fa4b290345bc92dccedc3bda451295b05a20f250"
+    },
+    {
+      "path": "assets/characters_v2/npcs/shen_yanzhou/idle.png",
+      "bytes": 42582,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "b86abb8b4b1dfc97a60ee79d42e33d2ab3cfecd40861d0a5f6ed8b8a1ed6ca46",
+      "git_blob_sha1": "0d4b69d842e0371c2571ff26ab68c21ee863473d"
+    },
+    {
+      "path": "assets/characters_v2/npcs/xu_zhiwei/idle.png",
+      "bytes": 39457,
+      "width": 160,
+      "height": 320,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "94376fd9711b97e65692ab4cf96fb2d4779823b8b3f83f03bceea7d5fe24a75c",
+      "git_blob_sha1": "f721b1cdf486d6438d9eea0a09a2b4fb181c84f0"
+    }
+  ]
+}
