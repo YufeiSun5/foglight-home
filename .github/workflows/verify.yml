@@ -1,0 +1,24 @@
+name: Verify Godot content and state
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download verified official Godot 4.6.3
+        shell: bash
+        run: |
+          curl -fsSL --retry 2 -o /tmp/godot.zip https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_linux.x86_64.zip
+          echo 'a035258da32b77f966a5376f9fa29c30a6adde826a85ba918e1605bd1fc9823eba7d85f1dd5e748956bd2ba72827c0025ffa11bb82aec91128c407a2e723c99c  /tmp/godot.zip' | sha512sum --check
+          unzip -q /tmp/godot.zip -d /tmp/foglight-engine
+          chmod +x /tmp/foglight-engine/Godot_v4.6.3-stable_linux.x86_64
+      - name: Run bounded content, state, save and presentation checks
+        env:
+          GODOT_BIN: /tmp/foglight-engine/Godot_v4.6.3-stable_linux.x86_64
+        run: bash tools/verify-core.sh
