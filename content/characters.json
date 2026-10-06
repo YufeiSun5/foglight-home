@@ -1,0 +1,22 @@
+{
+  "cen_xingyao": {
+    "display_name": "岑星遥",
+    "age": 26,
+    "speaker": "star"
+  },
+  "shen_yanzhou": {
+    "display_name": "沈砚舟",
+    "age": 32,
+    "speaker": "shen"
+  },
+  "xu_zhiwei": {
+    "display_name": "许知微",
+    "age": 33,
+    "speaker": "xu"
+  },
+  "qi_lan": {
+    "display_name": "祁岚",
+    "age": 29,
+    "speaker": "qi"
+  }
+}

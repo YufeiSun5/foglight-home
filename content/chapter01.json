@@ -1,0 +1,614 @@
+{
+  "g1": {
+    "speaker": "star",
+    "text": "认可与配给确认，已经拿到了。可一听见家里的声音，我又想把它们藏到最下面。",
+    "expression": "hurt",
+    "next": "g2",
+    "scene": "gate"
+  },
+  "g2": {
+    "speaker": "star",
+    "text": "母亲的信压在图袋里：“先别开始，回来再说。家里还盼着以后。”",
+    "expression": "calm",
+    "next": "g3",
+    "scene": "gate"
+  },
+  "g3": {
+    "speaker": "star",
+    "text": "今晚，我先把那封信收好。我的名字，不用再藏到最下面。",
+    "expression": "calm",
+    "next": "g4",
+    "scene": "gate"
+  },
+  "g4": {
+    "speaker": "star",
+    "text": "要招绘图的人……名字写在这儿。岑星遥。",
+    "expression": "calm",
+    "next": "g5",
+    "scene": "gate"
+  },
+  "g5": {
+    "speaker": "star",
+    "text": "两次正常钟声之后，第三声错位。又是刚才那艘船……",
+    "expression": "calm",
+    "next": "g6",
+    "scene": "gate"
+  },
+  "g6": {
+    "speaker": "star",
+    "text": "不是潮在绕，是灯把船引回来了。去引灯台看看吧。",
+    "expression": "calm",
+    "next": "",
+    "effect": {
+      "stage": "meet"
+    },
+    "scene": "gate"
+  },
+  "m1": {
+    "speaker": "shen",
+    "text": "别碰左边的栏杆，它比我还不可靠。",
+    "expression": "smile",
+    "next": "m2",
+    "scene": "meet"
+  },
+  "m2": {
+    "speaker": "star",
+    "text": "那你怎么站在旁边？",
+    "expression": "wary",
+    "next": "m3",
+    "scene": "meet"
+  },
+  "m3": {
+    "speaker": "shen",
+    "text": "它至少还肯替我挡风。你听见钟声了吗？",
+    "expression": "calm",
+    "next": "m4",
+    "scene": "meet"
+  },
+  "m4": {
+    "speaker": "star",
+    "text": "第三声早了。把灯转回来半格，先别动底座。",
+    "expression": "calm",
+    "next": "m5",
+    "scene": "meet"
+  },
+  "m5": {
+    "speaker": "shen",
+    "text": "好。听你的。你叫什么？",
+    "expression": "calm",
+    "next": "",
+    "choices": [
+      {
+        "id": "m5.name",
+        "text": "岑星遥。你可以叫我星遥。",
+        "next": "ma1"
+      },
+      {
+        "id": "m5.work",
+        "text": "先救船，名字等会儿说。",
+        "next": "mb1"
+      },
+      {
+        "id": "m5.careful",
+        "text": "我没修过这东西。你别因为我说得像就全信。",
+        "next": "mc1"
+      }
+    ],
+    "scene": "meet"
+  },
+  "ma1": {
+    "speaker": "shen",
+    "text": "星遥，我是沈砚舟。今晚借一下你的耳朵。",
+    "expression": "smile",
+    "next": "m6",
+    "scene": "meet"
+  },
+  "mb1": {
+    "speaker": "shen",
+    "text": "好。等他们靠岸，我再好好问。",
+    "expression": "calm",
+    "next": "m6",
+    "scene": "meet"
+  },
+  "mc1": {
+    "speaker": "shen",
+    "text": "那我们一起核对。你听，我看灯影。",
+    "expression": "calm",
+    "next": "m6",
+    "scene": "meet"
+  },
+  "m6": {
+    "speaker": "shen",
+    "text": "前面是灯盘。只碰有木柄的那块；其余的，我们一起来。",
+    "expression": "calm",
+    "next": "",
+    "effect": {
+      "stage": "repair"
+    },
+    "scene": "meet"
+  },
+  "r1": {
+    "speaker": "star",
+    "text": "先长，再短……最后一段被盖住了。这里有块灯片装反了。",
+    "expression": "calm",
+    "next": "r2",
+    "scene": "repair"
+  },
+  "r2": {
+    "speaker": "shen",
+    "text": "我稳住外圈。你只碰有木柄的那块。",
+    "expression": "calm",
+    "next": "r3",
+    "scene": "repair"
+  },
+  "r3": {
+    "speaker": "xu",
+    "text": "停。先别转最里面那一层。",
+    "expression": "wary",
+    "next": "r4",
+    "scene": "repair"
+  },
+  "r4": {
+    "speaker": "xu",
+    "text": "它在空转。你们越用力，船会越觉得岸在另一边。",
+    "expression": "calm",
+    "next": "r5",
+    "scene": "repair"
+  },
+  "r5": {
+    "speaker": "shen",
+    "text": "知微，来得正好。",
+    "expression": "smile",
+    "next": "r6",
+    "scene": "repair"
+  },
+  "r6": {
+    "speaker": "qi",
+    "text": "你每次说这句，通常都说明事情不太好。她是谁？",
+    "expression": "wary",
+    "next": "r7",
+    "scene": "repair"
+  },
+  "r7": {
+    "speaker": "star",
+    "text": "在下面听见灯不对的人。",
+    "expression": "calm",
+    "next": "r8",
+    "scene": "repair"
+  },
+  "r8": {
+    "speaker": "qi",
+    "text": "听见就敢上来？",
+    "expression": "wary",
+    "next": "r9",
+    "scene": "repair"
+  },
+  "r9": {
+    "speaker": "star",
+    "text": "下面没有人回应。",
+    "expression": "calm",
+    "next": "r10",
+    "scene": "repair"
+  },
+  "r10": {
+    "speaker": "xu",
+    "text": "这句够了。姑娘，把木柄往你那边压住。名字等灯亮了再吵。",
+    "expression": "smile",
+    "next": "r11",
+    "scene": "repair"
+  },
+  "r11": {
+    "speaker": "narrator",
+    "text": "知微卡住齿轮，星遥握住木柄，砚舟拉稳外圈，祁岚系紧支柱上的绳索。四个人各守住一处。",
+    "expression": "calm",
+    "next": "r12",
+    "scene": "repair"
+  },
+  "r12": {
+    "speaker": "star",
+    "text": "现在。第一声……第二声……松一点。",
+    "expression": "calm",
+    "next": "r13",
+    "scene": "repair"
+  },
+  "r13": {
+    "speaker": "shen",
+    "text": "看见岸了。",
+    "expression": "smile",
+    "next": "r14",
+    "effect": {
+      "flag": "relit"
+    },
+    "scene": "repair"
+  },
+  "r14": {
+    "speaker": "narrator",
+    "text": "灯光连成一束。远处船鸣两声，船影进入港湾。潮声恢复稳定。",
+    "expression": "calm",
+    "next": "r15",
+    "scene": "repair"
+  },
+  "r15": {
+    "speaker": "xu",
+    "text": "不错。你听见的是齿轮之间那点空隙。",
+    "expression": "smile",
+    "next": "r16",
+    "scene": "repair"
+  },
+  "r16": {
+    "speaker": "star",
+    "text": "我以为你会让我下去。",
+    "expression": "hurt",
+    "next": "r17",
+    "scene": "repair"
+  },
+  "r17": {
+    "speaker": "xu",
+    "text": "你做对了，为什么要下去？",
+    "expression": "calm",
+    "next": "r18",
+    "scene": "repair"
+  },
+  "r18": {
+    "speaker": "qi",
+    "text": "也不能因为一盏灯，就把整条船都交出去。",
+    "expression": "wary",
+    "next": "r19",
+    "scene": "repair"
+  },
+  "r19": {
+    "speaker": "shen",
+    "text": "没人说要交船。先请她喝一杯热的。",
+    "expression": "smile",
+    "next": "r20",
+    "scene": "repair"
+  },
+  "r20": {
+    "speaker": "narrator",
+    "text": "星遥松开僵硬的手，接过砚舟递来的干布。知微听了听齿轮；祁岚转头望向港湾。船舱的灯已经亮了。",
+    "expression": "calm",
+    "next": "",
+    "effect": {
+      "stage": "cabin"
+    },
+    "scene": "repair"
+  },
+  "c1": {
+    "speaker": "narrator",
+    "text": "船舱里，砚舟先把干布盖住知微的工具，再把热茶推给祁岚，最后在星遥面前放一只空杯。",
+    "expression": "calm",
+    "next": "c2",
+    "scene": "cabin"
+  },
+  "c2": {
+    "speaker": "shen",
+    "text": "都是热的。岚，今天没放你不喜欢的那种叶子。",
+    "expression": "smile",
+    "next": "c3",
+    "scene": "cabin"
+  },
+  "c3": {
+    "speaker": "xu",
+    "text": "我的备用衣服。要吗？袖子应该不碍你画图。",
+    "expression": "calm",
+    "next": "c4",
+    "scene": "cabin"
+  },
+  "c4": {
+    "speaker": "star",
+    "text": "我穿成这样也可以？",
+    "expression": "wary",
+    "next": "c5",
+    "scene": "cabin"
+  },
+  "c5": {
+    "speaker": "xu",
+    "text": "哪样？衣服是给你穿的。你自己喜欢就可以。",
+    "expression": "smile",
+    "next": "",
+    "choices": [
+      {
+        "id": "c5.accept",
+        "text": "想收下，但我自己挑颜色和款式。",
+        "next": "ca1"
+      },
+      {
+        "id": "c5.later",
+        "text": "先放在衣柜里吧。今天这套就很舒服。",
+        "next": "cb1"
+      },
+      {
+        "id": "c5.decline",
+        "text": "谢谢。我暂时不想换衣服。",
+        "next": "cc1"
+      }
+    ],
+    "scene": "cabin"
+  },
+  "ca1": {
+    "speaker": "xu",
+    "text": "当然。衣柜里那些都能直接拿，你想看时再看。",
+    "expression": "smile",
+    "next": "c6",
+    "scene": "cabin"
+  },
+  "cb1": {
+    "speaker": "xu",
+    "text": "好。不用急着决定，也不用为了谢我穿上它。",
+    "expression": "calm",
+    "next": "c6",
+    "scene": "cabin"
+  },
+  "cc1": {
+    "speaker": "xu",
+    "text": "好，那先收起来。热茶仍是你的。",
+    "expression": "smile",
+    "next": "c6",
+    "scene": "cabin"
+  },
+  "c6": {
+    "speaker": "narrator",
+    "text": "知微把衣服留在空椅上，退开一步，没有催她。祁岚看着那张椅子，脸色变冷。",
+    "expression": "calm",
+    "next": "c7",
+    "scene": "cabin"
+  },
+  "c7": {
+    "speaker": "qi",
+    "text": "你倒总知道别人该用什么。",
+    "expression": "angry",
+    "next": "c8",
+    "scene": "cabin"
+  },
+  "c8": {
+    "speaker": "xu",
+    "text": "我问了她。",
+    "expression": "wary",
+    "next": "c9",
+    "scene": "cabin"
+  },
+  "c9": {
+    "speaker": "shen",
+    "text": "先喝茶，冷了就——",
+    "expression": "wary",
+    "next": "c10",
+    "scene": "cabin"
+  },
+  "c10": {
+    "speaker": "qi",
+    "text": "又喝茶。",
+    "expression": "hurt",
+    "next": "c11",
+    "scene": "cabin"
+  },
+  "c11": {
+    "speaker": "narrator",
+    "text": "他没能用体贴消除旧事。星遥看向椅子，暂不追问。",
+    "expression": "calm",
+    "next": "c12",
+    "scene": "cabin"
+  },
+  "c12": {
+    "speaker": "shen",
+    "text": "我们还要去沉钟岛找旧图。愿意做同行绘图师吗？报酬按份额算。先说清楚，知微和祁岚都是我的妻子。",
+    "expression": "calm",
+    "next": "c13",
+    "scene": "cabin"
+  },
+  "c13": {
+    "speaker": "xu",
+    "text": "你先只考虑工作。",
+    "expression": "calm",
+    "next": "",
+    "choices": [
+      {
+        "id": "c13.time",
+        "text": "我想试试，但可能需要一点适应的时间。",
+        "next": "ct1"
+      },
+      {
+        "id": "c13.terms",
+        "text": "把报酬和轮值写下来，我再上船。",
+        "next": "cu1"
+      },
+      {
+        "id": "c13.private",
+        "text": "有些自己的事，我暂时不想解释。",
+        "next": "cv1"
+      }
+    ],
+    "scene": "cabin"
+  },
+  "ct1": {
+    "speaker": "xu",
+    "text": "可以。报酬和轮值都写下来，想问什么，随时再问。",
+    "expression": "calm",
+    "next": "c14",
+    "scene": "cabin"
+  },
+  "cu1": {
+    "speaker": "qi",
+    "text": "这个要求合理。纸给我。",
+    "expression": "calm",
+    "next": "c14",
+    "scene": "cabin"
+  },
+  "cv1": {
+    "speaker": "shen",
+    "text": "那就先不解释。工作需要的，我们一件件问。",
+    "expression": "calm",
+    "next": "c14",
+    "scene": "cabin"
+  },
+  "c14": {
+    "speaker": "star",
+    "text": "请写岑星遥。星星的星，遥远的遥。",
+    "expression": "smile",
+    "next": "c15",
+    "scene": "cabin"
+  },
+  "c15": {
+    "speaker": "narrator",
+    "text": "知微把纸转过来供她确认；祁岚拿走压在折椅上的救援带，星遥坐下。窗外雾色淡了一点。出发前，还可以在港里走走。",
+    "expression": "calm",
+    "next": "",
+    "effect": {
+      "stage": "depart"
+    },
+    "scene": "cabin"
+  },
+  "d1": {
+    "speaker": "narrator",
+    "text": "近黎明的船边，星遥看着自己的名字，把那封家书与确认单分开收好。",
+    "expression": "calm",
+    "next": "d2",
+    "scene": "depart"
+  },
+  "d2": {
+    "speaker": "shen",
+    "text": "出发前都还可以改主意。",
+    "expression": "calm",
+    "next": "d3",
+    "scene": "depart"
+  },
+  "d3": {
+    "speaker": "star",
+    "text": "你希望我来吗？",
+    "expression": "calm",
+    "next": "d4",
+    "scene": "depart"
+  },
+  "d4": {
+    "speaker": "shen",
+    "text": "希望。但别为了让我高兴就答应。",
+    "expression": "smile",
+    "next": "d5",
+    "scene": "depart"
+  },
+  "d5": {
+    "speaker": "star",
+    "text": "今晚这件衣服，很暖。",
+    "expression": "smile",
+    "next": "d6",
+    "scene": "depart"
+  },
+  "d6": {
+    "speaker": "narrator",
+    "text": "他笑了一下，挂好备用灯后退开。星遥自己提灯。四道窗光落在水面。",
+    "expression": "calm",
+    "next": "d7",
+    "scene": "depart"
+  },
+  "d7": {
+    "speaker": "star",
+    "text": "雾还在前面。但我的名字，已经写下了。",
+    "expression": "smile",
+    "next": "d8",
+    "scene": "depart"
+  },
+  "d8": {
+    "speaker": "narrator",
+    "text": "第一章结束 · 雾港没有出口\n今夜只约定同行。数月里的变化、旧怨和四人的未来，会在后续章节慢慢展开。",
+    "expression": "calm",
+    "next": "",
+    "effect": {
+      "stage": "complete",
+      "flag": "CH01_COMPLETE"
+    },
+    "scene": "depart"
+  },
+  "mirror1": {
+    "speaker": "narrator",
+    "text": "镜子被潮气蒙住了一角。星遥拿袖口擦开，只看了看自己穿着外套的轮廓。",
+    "expression": "calm",
+    "next": "mirror2",
+    "scene": "optional"
+  },
+  "mirror2": {
+    "speaker": "star",
+    "text": "今天还是短发，还是我习惯的样子。换不换衣服，都可以慢慢决定。",
+    "expression": "hurt",
+    "next": "mirror3",
+    "scene": "optional"
+  },
+  "mirror3": {
+    "speaker": "xu",
+    "text": "衣柜里的款式都能直接选。想自己看，我就出去；想问一句，我也在。",
+    "expression": "smile",
+    "next": "",
+    "choices": [
+      {
+        "id": "mirror3.alone",
+        "text": "想独自照会儿镜子。",
+        "next": "mirror_alone1"
+      },
+      {
+        "id": "mirror3.stay",
+        "text": "请知微留下，陪我看一会儿。",
+        "next": "mirror_stay1"
+      },
+      {
+        "id": "mirror3.back",
+        "text": "今天先穿更熟悉的那套。",
+        "next": "mirror_back1"
+      }
+    ],
+    "scene": "optional"
+  },
+  "mirror_alone1": {
+    "speaker": "xu",
+    "text": "当然。我在门外，需要时再叫我。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "mirror_stay1": {
+    "speaker": "xu",
+    "text": "好。你自己慢慢看，不用给我一个确定的答案。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "mirror_back1": {
+    "speaker": "xu",
+    "text": "好。喜欢也可以有变化。你不欠我一句“我现在一定很喜欢”。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "talk_shen": {
+    "speaker": "shen",
+    "text": "这里的风总绕着灯塔转。你想散散步就去吧，我在这儿。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "talk_xu": {
+    "speaker": "xu",
+    "text": "我正在听齿轮的声音。你想看看就靠这边站，也可以什么都不问，陪我待一会儿。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "talk_qi": {
+    "speaker": "qi",
+    "text": "前面的木板有点滑。我提醒过你了……慢一点。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "talk_board": {
+    "speaker": "star",
+    "text": "雾港招募绘图师。报酬与轮值面议。纸的边缘被潮气卷起来，我把它压平。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  },
+  "talk_bag": {
+    "speaker": "star",
+    "text": "认可与配给确认，已经在图袋里。家人的反对不是你的名字，也不是今晚全部的生活。",
+    "expression": "calm",
+    "next": "",
+    "scene": "optional"
+  }
+}

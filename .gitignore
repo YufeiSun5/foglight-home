@@ -1,0 +1,8 @@
+.godot/
+.qa/
+builds/
+exports/
+*.tmp
+*.bak
+__pycache__/
+.DS_Store
