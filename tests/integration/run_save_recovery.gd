@@ -10,7 +10,12 @@ var failures: Array = []
 var case_id = 0
 
 func _initialize() -> void:
-	nodes = Content.load_chapter().nodes
+	var loaded = Content.load_chapter()
+	if not loaded.get("ok", false):
+		printerr("SAVE CONTENT BLOCKER: ", loaded.get("error", "Invalid content"))
+		quit(1)
+		return
+	nodes = loaded.nodes
 	test_root = "/tmp/foglight-save-tests-" + str(Time.get_ticks_usec())
 	DirAccess.make_dir_recursive_absolute(test_root)
 	_test_roundtrip()
