@@ -16,6 +16,7 @@ func _initialize() -> void:
 	base_stats = Tower.stats(Tower.fresh("stats", 1, 1, cards).state, cards).stats
 	_test_basic_attacks()
 	_test_coalesced_edges()
+	_test_input_priority_matrix()
 	_test_enemy_and_counter()
 	_test_guard_rearm()
 	_test_dodge()
@@ -149,6 +150,68 @@ func _test_coalesced_edges() -> void:
 		check(resumed.state.player.phase == "idle" and resumed.state.player.attack_id == 0 and not resumed.state.player.attack_held and not resumed.state.player.defend_held, "resume does not replay interrupted edges " + interruption)
 		var new_tap = _step(resumed.state, tap)
 		check(new_tap.state.player.attack_id == 1 and new_tap.state.player.attack_kind == "normal" and not new_tap.state.player.attack_held, "fresh complete tap works after resume " + interruption)
+
+func _test_input_priority_matrix() -> void:
+	# Each row starts from the same real preparation state; release cannot hide it from interruption.
+	var preparing_cases = [
+		{"name": "release and guard", "edges": {"attack_released": true, "defend_pressed": true}, "phase": "guard", "cooldown": 0},
+		{"name": "release and dodge", "edges": {"attack_released": true, "dodge_pressed": true}, "phase": "dodge", "cooldown": 0},
+		{"name": "release guard dodge", "edges": {"attack_released": true, "defend_pressed": true, "dodge_pressed": true}, "phase": "dodge", "cooldown": 0},
+		{"name": "unavailable dodge falls to guard", "edges": {"attack_released": true, "defend_pressed": true, "dodge_pressed": true}, "phase": "guard", "cooldown": 2},
+		{"name": "unavailable dodge preserves release", "edges": {"attack_released": true, "dodge_pressed": true}, "phase": "release", "cooldown": 2},
+		{"name": "cooldown expires before intent arbitration", "edges": {"attack_released": true, "dodge_pressed": true}, "phase": "dodge", "cooldown": 1},
+		{"name": "coalesced guard tap does not suppress release", "edges": {"attack_released": true, "defend_pressed": true, "defend_released": true}, "phase": "release", "cooldown": 0},
+		{"name": "coalesced attack yields to guard", "edges": {"attack_pressed": true, "attack_released": true, "defend_pressed": true}, "phase": "guard", "cooldown": 0},
+		{"name": "coalesced attack yields to dodge", "edges": {"attack_pressed": true, "attack_released": true, "dodge_pressed": true}, "phase": "dodge", "cooldown": 0},
+		{"name": "held preparation interrupted by guard", "edges": {"defend_pressed": true}, "phase": "guard", "cooldown": 0},
+		{"name": "held preparation interrupted by dodge", "edges": {"dodge_pressed": true}, "phase": "dodge", "cooldown": 0},
+	]
+	for held_ticks in [3, 54]:
+		var preparing = _step(_new(), {"attack_pressed": true, "line_of_sight": false}).state
+		preparing = _advance(preparing, held_ticks - 1, {"line_of_sight": false})
+		check(preparing.player.phase == ("windup" if held_ticks == 3 else "charge"), "priority fixture has expected preparation phase")
+		for row in preparing_cases:
+			var input_state = preparing.duplicate(true)
+			input_state.player.dodge_cooldown = row.cooldown
+			var before = input_state.duplicate(true)
+			var edges = row.edges.duplicate(true)
+			edges.line_of_sight = false
+			var outcome = _step(input_state, edges)
+			var label = row.name + " held=" + str(held_ticks)
+			check(outcome.state.player.phase == row.phase and input_state == before, "priority and input isolation " + label)
+			check(not outcome.state.player.attack_held and outcome.state.player.charge_ticks == 0, "no latent attack after competing intent " + label)
+			if row.phase == "release":
+				check(outcome.state.player.attack_id == 1 and _has(outcome.events, "attack_started") and outcome.state.player.attack_kind == ("normal" if held_ticks == 3 else "charge"), "only uncanceled release starts attack " + label)
+			else:
+				check(outcome.state.player.attack_id == 0 and not _has(outcome.events, "attack_started") and not _has(outcome.events, "hit"), "interrupted release produces no attack or hit " + label)
+				check(outcome.state.player.defend_held == (row.phase == "guard"), "only winning guard intent retains defense " + label)
+				var after = _advance(outcome.state, 5, {"line_of_sight": false})
+				check(after.player.attack_id == 0 and after.enemy.hp == 60, "canceled attack never emerges later " + label)
+	# Releasing held guard can immediately start a new attack; a dodge still has higher priority.
+	var guarded = _step(_new(), {"defend_pressed": true, "line_of_sight": false}).state
+	var guard_exit_cases = [
+		{"name": "release guard and press attack", "edges": {"defend_released": true, "attack_pressed": true}, "phase": "windup", "held": true, "attack_id": 0},
+		{"name": "release guard and complete tap", "edges": {"defend_released": true, "attack_pressed": true, "attack_released": true}, "phase": "release", "held": false, "attack_id": 1},
+		{"name": "release guard attack and dodge", "edges": {"defend_released": true, "attack_pressed": true, "dodge_pressed": true}, "phase": "dodge", "held": false, "attack_id": 0},
+	]
+	for row in guard_exit_cases:
+		var edges = row.edges.duplicate(true)
+		edges.line_of_sight = false
+		var outcome = _step(guarded, edges)
+		check(outcome.state.player.phase == row.phase and outcome.state.player.attack_held == row.held and not outcome.state.player.defend_held and outcome.state.player.attack_id == row.attack_id, row.name)
+	# An attack already released on an earlier tick keeps its recovery, including counter recovery.
+	var normal = _step(_new(), {"attack_pressed": true, "attack_released": true, "line_of_sight": false}).state
+	var charging = _step(_new(), {"attack_pressed": true, "line_of_sight": false}).state
+	charging = _advance(charging, 53, {"line_of_sight": false})
+	var charged = _step(charging, {"attack_released": true, "line_of_sight": false}).state
+	var counter = _step(_incoming(_new()), {"defend_pressed": true}).state
+	for recovery in [normal, charged, counter]:
+		for edges in [{"defend_pressed": true}, {"dodge_pressed": true}, {"attack_released": true, "defend_pressed": true, "dodge_pressed": true}, {"defend_released": true, "attack_pressed": true}]:
+			var command_edges = edges.duplicate(true)
+			command_edges.line_of_sight = false
+			var result = _step(recovery, command_edges)
+			check(result.state.player.phase == recovery.player.phase and result.state.player.phase_duration == recovery.player.phase_duration and result.state.player.phase_tick == recovery.player.phase_tick + 1, "already released recovery is not canceled " + recovery.player.attack_kind + str(edges))
+			check(result.state.player.attack_id == recovery.player.attack_id and not _has(result.events, "attack_started") and not _has(result.events, "dodge_started"), "recovery inputs cannot spawn extra attacks or dodges")
 
 func _test_enemy_and_counter() -> void:
 	var distant = _advance(_new(), 40, {"enemy_position": [0.0, -2.2]})

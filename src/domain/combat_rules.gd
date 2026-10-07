@@ -69,12 +69,8 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		n.player.guard_age_ticks = 0
 		n.player.guard_window_spent = true
 		if n.player.phase == "guard": _set_phase(n.player, "idle", 1)
-	if frame.attack_released:
-		if n.player.attack_held and n.player.phase in ["windup", "charge"]:
-			var charged = n.player.charge_ticks >= _ticks(n.stats.charge.hold_seconds)
-			_start_attack(n, "charge" if charged else "normal", events)
-		n.player.attack_held = false
-		n.player.charge_ticks = 0
+	# Resolve defensive interruption against the pre-release phase. Releasing attack in
+	# this frame must not turn interruptible preparation into protected recovery first.
 	var interruptible = n.player.phase in ["idle", "windup", "charge", "guard"]
 	if frame.dodge_pressed and interruptible and n.player.dodge_cooldown == 0:
 		_cancel_inputs(n)
@@ -91,14 +87,22 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		n.player.guard_window_spent = n.player.guard_rearm_ticks > 0
 		n.player.guard_rearm_ticks = GUARD_REARM_TICKS
 		_set_phase(n.player, "guard", _ticks(n.stats.defense.counter_window_seconds))
-	elif frame.attack_pressed and not n.player.attack_held and n.player.phase == "idle" and not n.player.defend_held:
+	else:
+		# Only an attack not canceled by an available dodge/guard may release or begin.
 		if frame.attack_released:
-			# A new tap fully contained in this tick produces one normal attack, never a held charge.
-			_start_attack(n, "normal", events)
-		else:
-			n.player.attack_held = true
+			if n.player.attack_held and n.player.phase in ["windup", "charge"]:
+				var charged = n.player.charge_ticks >= _ticks(n.stats.charge.hold_seconds)
+				_start_attack(n, "charge" if charged else "normal", events)
+			n.player.attack_held = false
 			n.player.charge_ticks = 0
-			_set_phase(n.player, "windup", _ticks(n.stats.charge.hold_seconds))
+		if frame.attack_pressed and not n.player.attack_held and n.player.phase == "idle" and not n.player.defend_held:
+			if frame.attack_released:
+				# A complete tap produces one normal attack, never a held charge.
+				_start_attack(n, "normal", events)
+			else:
+				n.player.attack_held = true
+				n.player.charge_ticks = 0
+				_set_phase(n.player, "windup", _ticks(n.stats.charge.hold_seconds))
 	_update_player(n, frame.line_of_sight, events)
 	if n.enemy.hp > 0 and n.player.hp > 0: _update_enemy(n, frame.line_of_sight, events)
 	if n.player.hp <= 0:
