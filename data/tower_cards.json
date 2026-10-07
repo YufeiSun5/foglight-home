@@ -85,7 +85,7 @@
       "id": "counter_edge",
       "name": "守隙反斩",
       "description": "强化已有精准防御窗口、反斩威力、范围及成功后的短暂普攻频率。按住防御不会反复打开窗口。",
-      "style": "charge",
+      "style": "counter",
       "max_rank": 3,
       "modifiers": {
         "counter_style": 1

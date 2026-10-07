@@ -157,6 +157,9 @@ func _test_draws_and_replay() -> void:
 	check(variants.size() > 10, "different seeds produce varied options")
 
 func _test_styles_and_caps() -> void:
+	check(cards.counter_edge.style=="counter", "defensive counter card has its own player-facing style")
+	var mislabeled=cards.counter_edge.duplicate(true);mislabeled.modifiers={"normal_rate":0.12}
+	check(not Rules.validate_catalog({"schema":1,"cards":[mislabeled]}).ok,"counter label cannot silently contain an unrelated modifier")
 	for preferred in ["far_charge", "chain_flow", "snap_focus", "counter_edge", "quick_rhythm", "long_edge", "gathered_breath", "held_horizon", "light_trace"]:
 		var small = {preferred: cards[preferred].duplicate(true)}
 		var s = _choosing(7, 24, small)

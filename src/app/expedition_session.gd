@@ -20,13 +20,10 @@ var _ready=false
 
 func start(catalog:Dictionary,run_id:String,epoch:int,seed_value:int,stages:int=3)->Dictionary:
 	if _ready:return {"ok":false,"error":"already_started"}
-	# Expose only modes backed by the current simulator; chain remains filtered
-	# until real multi-target movement is present, never a silent melee fallback.
+	# Catalog is validated before any interpretation or encounter creation.
 	var full=RunRules.validate_catalog(catalog)
 	if not full.get("ok",false):return full
 	var supported=catalog.duplicate(true)
-	if supported.get("cards") is Array:
-		supported.cards=supported.cards.filter(func(card):return not card.get("modifiers",{}).has("chain_charge"))
 	var checked:Dictionary=RunRules.validate_catalog(supported)
 	if not checked.get("ok",false):return checked
 	_cards=checked.cards
@@ -43,6 +40,9 @@ func view()->Dictionary:
 
 func projectile_sweeps()->Array:
 	return CombatRules.projectile_sweeps(_combat) if _ready else []
+
+func chain_sweep(sampled_intent:Dictionary={})->Dictionary:
+	return CombatRules.chain_sweep(_combat,sampled_intent) if _ready else {}
 
 func intent(action:String,payload:Dictionary={})->Dictionary:
 	_counter+=1
@@ -92,7 +92,12 @@ func card_previews()->Array:
 func _new_encounter()->Dictionary:
 	var derived:Dictionary=RunRules.stats(_run,_cards)
 	if not derived.get("ok",false):return derived
-	var next:Dictionary=CombatRules.fresh(str(_run.run_id)+"@"+str(_run.stage),derived.stats)
+	var additional:Array=[]
+	# Same original lantern type and harbor patch; later encounters add real
+	# distinct targets so piercing/chain cards have truthful targets to act on.
+	if _run.stage>=2:additional.append({"id":"enemy_2","position":[2.3,3.0]})
+	if _run.stage>=3:additional.append({"id":"enemy_3","position":[-3.6,4.3]})
+	var next:Dictionary=CombatRules.fresh(str(_run.run_id)+"@"+str(_run.stage),derived.stats,additional)
 	if not next.get("ok",false):return next
 	_stats=derived.stats;_combat=next.state;_generation+=1;_paused=false
 	return {"ok":true}
@@ -111,7 +116,7 @@ func _accept_combat_step(next:Dictionary)->Dictionary:
 	_combat=next.state
 	if not next.events.is_empty():effects.emit(next.events.duplicate(true))
 	if _combat.player.hp<=0:return _run_command("fail",{},"application")
-	if _combat.enemy.hp<=0:
+	if _combat.status=="ended" and _combat.end_reason=="victory":
 		var cleared=_run_command("clear_stage",{"stage":_run.stage},"application")
 		if cleared.get("ok",false):
 			_generation+=1

@@ -233,8 +233,12 @@ func _test_enemy_and_counter() -> void:
 	var distant = _advance(_new(), 40, {"enemy_position": [0.0, -2.2]})
 	check(distant.enemy.phase == "idle", "enemy follows at two metres instead of telegraphing out of range")
 	distant = _step(distant, {"enemy_position": [0.0, -1.9]}).state
-	var nearby = _step(distant, {"enemy_position": [0.0, -1.7]})
-	check(nearby.state.enemy.phase == "telegraph" and _has(nearby.events, "enemy_telegraph"), "enemy starts windup only inside reach plus small approach margin")
+	var outside = _step(distant, {"enemy_position": [0.0, -1.7]})
+	check(outside.state.enemy.phase=="idle" and not _has(outside.events,"enemy_telegraph"),"enemy continues approach instead of repeatedly swinging outside hit reach")
+	var approach = _step(outside.state, {"enemy_position": [0.0, -1.4]})
+	check(approach.state.enemy.phase=="idle","enemy closes within base answering distance before windup")
+	var nearby = _step(approach.state, {"enemy_position": [0.0, -1.19]})
+	check(nearby.state.enemy.phase == "telegraph" and _has(nearby.events, "enemy_telegraph"), "enemy starts windup at an actual close engagement distance")
 	var s = _advance(_new(), 30)
 	check(s.enemy.phase == "telegraph" and s.enemy.phase_duration == 36 and s.enemy.reach_m == 1.65, "enemy windup exposes exact timing/range")
 	s = _advance(s, 36)
@@ -369,7 +373,7 @@ func _test_limits_and_styles() -> void:
 		var configured = Tower.stats(run, pool).stats
 		var created = Combat.fresh("style", configured)
 		if id == "chain_flow":
-			check(not created.ok and created.error == "unsupported_charge_mode", "unimplemented attack shape never silently falls back " + id)
+			check(created.ok and created.state.stats.charge.mode == "chain_charge", "implemented chain shape accepted " + id)
 		else:
 			check(created.ok, "supported style initializes " + id)
 			if id == "snap_focus":

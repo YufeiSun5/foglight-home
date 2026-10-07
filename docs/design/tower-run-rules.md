@@ -6,7 +6,7 @@
 
 - `src/domain/tower_run_rules.gd`：注入卡定义与局内状态，纯计算候选状态、抽样、属性和预览
 - `data/tower_cards.json`：9张数据卡，效果白名单，不含任意脚本；应用可在建局前注入当前实际支持的卡子集
-- `src/domain/combat_rules.gd`：固定60 Hz的一敌近战/远程蓄力遭遇规则；位置、朝向与视线由场景采样，规则不移动节点
+- `src/domain/combat_rules.gd`：固定60 Hz的最多三敌近战/远程蓄力/链斩遭遇规则；位置、朝向与视线由场景采样，规则不移动节点
 - 两者没有文件、节点树、全局随机数或持久剧情写入口。调用者必须将返回候选状态原子提交到本局唯一写入口，并对重放结果避免重复发布事件
 - 不把本局状态交给主线 `StateStore`，不增加主线存档schema。保存主线期间无需序列化本局。新局身份及应用会话代次由应用生成，不能反复复用旧ID
 
@@ -33,7 +33,7 @@
 
 ## 战斗 API
 
-`Combat.fresh(run_id, stats) → {ok,state}` 复制已派生属性，建立玩家100HP/机关60HP的临时遭遇。当前 `SUPPORTED_CHARGE_MODES` 为 `melee_charge` 与 `ranged_charge`；链式仍返回 `unsupported_charge_mode`，不能静默当近战。应用在建局前过滤未接入模式卡，不向玩家发实际无效的卡。
+`Combat.fresh(run_id, stats) → {ok,state}` 复制已派生属性，建立玩家100HP/机关60HP的临时遭遇。当前 `SUPPORTED_CHARGE_MODES` 为 `melee_charge`、`ranged_charge` 与 `chain_charge`，模式的实际动作由规则执行；应用不得用近战静默替代任一模式。卡面区分普攻、蓄力、防反标签，显示形态与数值变化。
 
 `Combat.step(state, frame) → {ok,state,events,replay}` 每次代表一个1/60秒逻辑步，不接任意dt。frame精确包含：
 
@@ -43,7 +43,7 @@
 - `attack_pressed / attack_released / defend_pressed / defend_released / dodge_pressed`：按键边沿bool，按住不重复提交press；规则仍防范重复press重开格挡窗
 - `focused / paused / exit`：失焦、暂停或退出清掉挂起动作、蓄力与短无敌，不会恢复一记旧释放
 
-本局临时Combat schema2（不改变主线存档）顶层有 `schema, run_id, tick, sim_tick, status, end_reason, stats, player, enemy, hitstop_ticks, hitstop_log, last_frame_hash, projectiles`。`tick`是帧命令序号；`sim_tick`只在有效活动步增长。内部上限36000帧用于限制单遭遇状态计数，达到时以time_limit结束。
+本局临时Combat schema3（不改变主线存档）顶层有 `schema, run_id, tick, sim_tick, status, end_reason, stats, player, enemy, hitstop_ticks, hitstop_log, last_frame_hash, projectiles, additional_enemies, chain`。`tick`是帧命令序号；`sim_tick`只在有效活动步增长。内部上限36000帧用于限制单遭遇状态计数，达到时以time_limit结束。
 
 player与enemy均公开 `hp, position, phase, phase_tick, phase_duration, attack_id`，可使用 `phase_tick/phase_duration` 做有上限的动画归一化。player另有朝向、蓄力/格挡时钟、输入锁存、已命中位与闪避/短攻速时钟。敌人公开 `reach_m, arc_degrees, telegraph_ticks, active_ticks, recovery_ticks, aim_direction`，预警和命中使用同一数值。
 
@@ -55,7 +55,7 @@ player与enemy均公开 `hp, position, phase, phase_tick, phase_duration, attack
 - 普攻、蓄力和反斩各有独立恢复时间；格挡或闪避可打断尚未释放的准备，不能直接取消已释放攻击的恢复。同帧释放与格挡/可用闪避冲突时，也先依据帧前准备状态处理取消，不能先释放再忽略取消；格挡优先于新攻击，闪避优先于新格挡
 - 精准窗口从一次有效defend press开始，重复press/长按不刷新。窗口内正面受击发一次反斩；窗口外仍普通减伤。反斩不附带无敌，衍生反斩不递归触发自身
 - 当前每个攻击实例只有一个有效命中检查tick；命中或挥空均消费该检查，不允许同次攻击持续贴住敌人反复结算。范围、正面弧与视线共同判断
-- 敌人进入攻击范围外加0.10米余量内才起预警，较远时交给场景的idle追踪继续接近；预警时锁定攻击方向。展示层应在telegraph/active阶段停止敌人追踪移动；如想允许移动攻击，需要另改契约并验收
+- 敌人先接近到1.20米以内才起预警（命中弧仍为1.65米），使站定时不会在射程外反复挥空，基础近战/反斩也有实际接触距离，较远时交给场景的idle追踪继续接近；预警时锁定攻击方向。展示层应在telegraph/active阶段停止敌人追踪移动；如想允许移动攻击，需要另改契约并验收
 - 闪避事件只声明方向和时长，实际位移/墙阻挡交给场景。短无敌固定8tick、动作12tick、冷却48tick，不受卡叠加
 - 临时反斩攻速与普攻卡合算后仍限2.7次/秒；近战普攻范围≤1.70米、蓄力≤2.00米。准备/恢复使用向上量化的整tick；最短蓄力0.06秒会量化为至少4tick
 - hitstop仅视觉计时，逻辑、输入窗和敌人阶段照常推进。请求按最近整数tick量化；每攻击≤4tick，滑动60tick总预算≤7tick，同tick不累加剩余停顿
@@ -80,7 +80,7 @@ godot --headless --path . --script tests/domain/run_combat_rules.gd
 
 战斗脚本检查tap/hold、防御方向与时机、多hit去重、固定逻辑时间、有限闪避、重放/旧帧、失焦/暂停/退出清理、视线/距离/朝向拒绝与临时属性。它不验证真实按键延迟、敌人移动、墙体射线正确性、真实命中视觉、GPU性能、动画或场景切换。
 
-链斩的多目标搜索、目标消失、跨目标位移和可中断性仍待实现。远程已接连续飞行/墙阻挡与单敌命中，当前只有一个真实敌人，不能以此声称已测两目标穿透；GUI与手感仍独立验收。主线与应用/场景接线由集成层单独核验。
+本地已接最多三个独立机关、链斩有限位移/目标锁定以及远程最多两个不同目标贯穿；GUI与手感仍独立验收。主线与应用/场景接线由集成层单独核验。
 
 精准防御原型追加15tick（0.25秒）重新武装间隔：间隔内按防御仍可普通格挡，但不重开精准窗；快速松按会推后重新武装。长按和暂停恢复均不自动重开窗口。这是可调防输入抖动规则，不是耐力系统。
 
@@ -94,10 +94,22 @@ godot --headless --path . --script tests/domain/run_combat_rules.gd
 
 ## 远程蓄力与场景扫掠
 
-选取far_charge后只有充分蓄力的释放变成远程；普攻与反斩仍近战。释放时锁定朝向，active tick4在角色当时位置生成一发；出生帧没有飞行或命中，下一帧才需要碰撞采样。场景转身不改变弹体方向。弹体半径0.10米，当前敌人核心代理半径0.30米；飞行速度/射程/寿命由派生值限定，同时弹体最多4个。
+选取far_charge后只有充分蓄力的释放变成远程；普攻与反斩仍近战。释放时锁定朝向，active tick4在角色当时位置生成一发；出生帧没有飞行或命中，下一帧才需要碰撞采样。场景转身不改变弹体方向。弹体半径0.10米，每个敌人核心代理半径0.30米；飞行速度/射程/寿命由派生值限定，同时弹体最多4个。
 
 `ExpeditionSession.projectile_sweeps()` 返回只读 `[{attack_id, from:[x,z], to:[x,z], radius_m}]`，终段按剩余射程/寿命裁短。展示适配器对与步行一致的真实矩形/圆形solid计算第一个接触比例；矩形圆角按圆形弹体精确膨胀，不能用方角扩大盒代替。帧附 `projectile_collisions:[{attack_id,wall_fraction:null或0..1}]`，每个既存弹体必须一项，不允许未知ID/重复/非有限比例。暂停、失焦或退出可省略采样并同步清空弹体。
 
 规则对弹体与敌人上一帧→当前帧做相对运动扫掠，取目标与墙的先后；墙齐平优先。场景Vector2为float32，在已限定±100米坐标域只对该排序使用0.00005米容差，覆盖几项坐标ULP；不改变状态、射程或寿命校验的epsilon。误差带以外确实更早的目标仍可命中。
 
 projectiles项有attack_id、source、origin、position、direction、age_ticks、travelled_m、hit_targets与hitstop_used_ticks。命中source=`player_projectile`、target=`enemy`（本遭遇稳定身份），同攻击对同身份只一次；不产生递归效果。`projectile_spawned/projectile_ended`携带生成及wall/range/lifetime/targets/canceled原因。应用退出也必须提交Combat退出、发取消事件并清空只读视图，再结束run，不能仅等场景queue_free。
+
+## 三目标与有限链斩接线
+
+`fresh(run_id,stats,additional_enemies=[])` 接受最多两项 `{id,position}`；primary `enemy` 与附加数组没有重复权威对象。每个敌人都有稳定id/present和独立HP/阶段。帧追加每个注册附加身份的 `{id,position,line_of_sight,present}`，不接受外部HP；身份不能中途换名或复活。只打倒primary不能提前完成遭遇。
+
+链斩phase为chain。释放active tick4锁定最近、活着、可见且未访问的目标，等距按稳定ID；每段12个逻辑tick、最多36tick/3个不同目标，搜敌半径3米、单段最多2米、停在锁定目标前0.60米。每段结束再检查目标仍在、视线、距离和朝向后结算24点，并选择下一身份；无目标或失效时结束到恢复，不对同目标重复结算。
+
+`ExpeditionSession.chain_sweep(sampled_intent)` 返回 `{attack_id,from,to,radius_m:0.23}` 或空对象。Scene先给当前防御/闪避/暂停/失焦/退出和身份采样，helper共享规则取消优先级，避免表现层另抄状态机。有效时禁止额外WASD位移，对实体solid及场地边缘取首个扫掠比例，角色只移动到安全点，帧附 `chain_collision:{attack_id,wall_fraction}`；规则校验实际位置与请求线段一致。防御、闪避可取消释放后尚未锁定的前三tick，也可取消活动链；无额外无敌。
+
+事件chain_started/chain_target_locked/chain_ended与命中均携带攻击ID及真实目标ID。chain命中source=player_chain，远程source=player_projectile，敌人攻击来源为各自id。共同hitstop预算不随目标数量线性叠加；原有不同来源不会递归触发新链。当前场景1/2/3关分别有1/2/3个同类型浮灯，均在同一港路场地，并不新增实体塔楼或敌型。
+
+链斩视觉复用已有四向三帧攻击动作并同步有限根位移、命中位置；它不是新增一套专用突进图集。离场/暂停清空瞬态，死亡机关在展示层完成0.4秒机械收拢，不改变已结算HP。实际节奏、镜头追随、目标间动作衔接和场景性能仍须GUI门禁。

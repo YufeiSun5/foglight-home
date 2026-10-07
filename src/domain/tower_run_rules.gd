@@ -254,7 +254,7 @@ static func _valid_card(card: Variant) -> bool:
 	if not card is Dictionary or not _keys(card, ["id", "name", "description", "style", "max_rank", "modifiers"]): return false
 	if not _token(card.id, 60) or not card.name is String or card.name.strip_edges().is_empty() or card.name.length() > 80: return false
 	if not card.description is String or card.description.strip_edges().is_empty() or card.description.length() > 300: return false
-	if not card.style in ["normal", "charge", "mixed"] or not _whole(card.max_rank, 1, 3): return false
+	if not card.style in ["normal", "charge", "counter", "mixed"] or not _whole(card.max_rank, 1, 3): return false
 	if not card.modifiers is Dictionary or card.modifiers.is_empty() or card.modifiers.size() > 3: return false
 	for key in card.modifiers:
 		var value: Variant = card.modifiers[key]
@@ -262,7 +262,8 @@ static func _valid_card(card: Variant) -> bool:
 		if value < 0.01 or value > MODIFIER_LIMITS[key]: return false
 		if key in ["normal_trails", "charge_trails", "ranged_charge", "snap_charge", "chain_charge", "counter_style"] and not _whole(value, 1, 1): return false
 		if card.style == "normal" and not key.begins_with("normal_"): return false
-		if card.style == "charge" and not (key.begins_with("charge_") or key in ["ranged_charge", "snap_charge", "chain_charge", "counter_style"]): return false
+		if card.style == "charge" and not (key.begins_with("charge_") or key in ["ranged_charge", "snap_charge", "chain_charge"]): return false
+		if card.style == "counter" and key != "counter_style": return false
 	for exclusive in ["ranged_charge", "chain_charge", "snap_charge"]:
 		if card.modifiers.has(exclusive) and (card.max_rank != 1 or card.modifiers.size() != 1 or card.style != "charge"): return false
 	return true
