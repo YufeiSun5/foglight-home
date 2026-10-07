@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "cards": [
+    {
+      "id": "quick_rhythm",
+      "name": "轻快节拍",
+      "description": "普通攻击频率加成每级增加12%，不改变蓄力输入。",
+      "style": "normal",
+      "max_rank": 3,
+      "modifiers": {
+        "normal_rate": 0.12
+      }
+    },
+    {
+      "id": "long_edge",
+      "name": "延锋",
+      "description": "普通近战范围每级增加0.10米，始终保持近战。",
+      "style": "normal",
+      "max_rank": 3,
+      "modifiers": {
+        "normal_reach": 0.1
+      }
+    },
+    {
+      "id": "light_trace",
+      "name": "轻光轨迹",
+      "description": "普通攻击增加一层短尾迹；仅改变视觉，不增加命中次数。",
+      "style": "normal",
+      "max_rank": 2,
+      "modifiers": {
+        "normal_trails": 1
+      }
+    },
+    {
+      "id": "gathered_breath",
+      "name": "凝息",
+      "description": "蓄力速率加成每级增加16%；仍需蓄力且保留释放后的恢复。",
+      "style": "charge",
+      "max_rank": 3,
+      "modifiers": {
+        "charge_rate": 0.16
+      }
+    },
+    {
+      "id": "held_horizon",
+      "name": "蓄势延展",
+      "description": "蓄力近战范围每级增加0.15米；已有远程形态时，射程也增加0.15米。此卡本身不解锁远程。",
+      "style": "charge",
+      "max_rank": 3,
+      "modifiers": {
+        "charge_reach": 0.15
+      }
+    },
+    {
+      "id": "far_charge",
+      "name": "离弦凝光",
+      "description": "同一武器的蓄力攻击变成本局常驻远程形态，仍需蓄力；单次一发、有限射程，普通攻击仍为近战。",
+      "style": "charge",
+      "max_rank": 1,
+      "modifiers": {
+        "ranged_charge": 1
+      }
+    },
+    {
+      "id": "snap_focus",
+      "name": "瞬凝",
+      "description": "蓄力所需时间缩为原来的12%，仍须经过有限蓄力与释放恢复；可与蓄力速率或链式形态搭配。",
+      "style": "charge",
+      "max_rank": 1,
+      "modifiers": {
+        "snap_charge": 1
+      }
+    },
+    {
+      "id": "chain_flow",
+      "name": "连光突进",
+      "description": "蓄力攻击变为本局常驻链式突进形态，最多三个不同目标；与远程形态本局互斥，单独选取也可用。",
+      "style": "charge",
+      "max_rank": 1,
+      "modifiers": {
+        "chain_charge": 1
+      }
+    },
+    {
+      "id": "counter_edge",
+      "name": "守隙反斩",
+      "description": "强化已有精准防御窗口、反斩威力、范围及成功后的短暂普攻频率。按住防御不会反复打开窗口。",
+      "style": "charge",
+      "max_rank": 3,
+      "modifiers": {
+        "counter_style": 1
+      }
+    }
+  ]
+}

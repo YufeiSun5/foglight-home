@@ -16,3 +16,21 @@ python3 tools/check_boundaries.py
 if [[ -f tests/content/validate_asset_checkpoint.py ]]; then
   python3 tests/content/validate_asset_checkpoint.py
 fi
+
+# Pure optional-run rules do not load any graphical scene or unfinished action asset.
+(
+ test_root="$(mktemp -d /tmp/foglight-tower-XXXXXX)"
+ trap 'rm -rf "$test_root"' EXIT
+ mkdir -p "$test_root"/{home,data,config,cache}
+ export HOME="$test_root/home" XDG_DATA_HOME="$test_root/data"
+ export XDG_CONFIG_HOME="$test_root/config" XDG_CACHE_HOME="$test_root/cache"
+ export FOGLIGHT_TOWER_TEST_ROOT="$test_root"
+ for script in tests/domain/run_tower_rules.gd tests/domain/run_combat_rules.gd; do
+  if [[ -f "$script" ]]; then
+   log="$test_root/check.log"
+   timeout 90s "$GODOT_BIN" --headless --path . --script "res://$script" >"$log" 2>&1 || { cat "$log"; exit 1; }
+   cat "$log"
+   if grep -Eq 'SCRIPT ERROR:|^ERROR:' "$log"; then exit 1; fi
+  fi
+ done
+)
