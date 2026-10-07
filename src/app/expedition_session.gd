@@ -20,13 +20,13 @@ var _ready=false
 
 func start(catalog:Dictionary,run_id:String,epoch:int,seed_value:int,stages:int=3)->Dictionary:
 	if _ready:return {"ok":false,"error":"already_started"}
-	# Foundation slice exposes only executable modes. Conversion cards return later
-	# with real projectile/chain simulation, never silently act as ordinary melee.
+	# Expose only modes backed by the current simulator; chain remains filtered
+	# until real multi-target movement is present, never a silent melee fallback.
 	var full=RunRules.validate_catalog(catalog)
 	if not full.get("ok",false):return full
 	var supported=catalog.duplicate(true)
 	if supported.get("cards") is Array:
-		supported.cards=supported.cards.filter(func(card):return not card.get("modifiers",{}).has("ranged_charge") and not card.get("modifiers",{}).has("chain_charge"))
+		supported.cards=supported.cards.filter(func(card):return not card.get("modifiers",{}).has("chain_charge"))
 	var checked:Dictionary=RunRules.validate_catalog(supported)
 	if not checked.get("ok",false):return checked
 	_cards=checked.cards
@@ -40,6 +40,9 @@ func start(catalog:Dictionary,run_id:String,epoch:int,seed_value:int,stages:int=
 
 func view()->Dictionary:
 	return {"ready":_ready,"run":_run.duplicate(true),"combat":_combat.duplicate(true),"stats":_stats.duplicate(true),"paused":_paused,"revision":_revision,"generation":_generation}
+
+func projectile_sweeps()->Array:
+	return CombatRules.projectile_sweeps(_combat) if _ready else []
 
 func intent(action:String,payload:Dictionary={})->Dictionary:
 	_counter+=1
@@ -65,7 +68,7 @@ func submit(command:Dictionary)->Dictionary:
 		"cancel_input":result=_cancel_combat_inputs()
 		"resume":
 			_paused=false;result={"ok":true}
-		"exit":result=_run_command("exit",{},"player")
+		"exit":result=_cancel_combat_inputs(true)
 		_:result={"ok":false,"error":"unknown_intent"}
 	if result.get("ok",false):
 		_revision+=1
@@ -133,11 +136,11 @@ func _run_command(action:String,payload:Dictionary,source:String)->Dictionary:
 	if not reduced.events.is_empty():effects.emit(reduced.events.duplicate(true))
 	return {"ok":true}
 
-func _cancel_combat_inputs()->Dictionary:
-	if _combat.is_empty() or _combat.status=="ended":return {"ok":true}
+func _cancel_combat_inputs(exiting:bool=false)->Dictionary:
+	if _combat.is_empty() or _combat.status=="ended":return _run_command("exit",{},"player") if exiting else {"ok":true}
 	var frame={"run_id":_combat.run_id,"tick":int(_combat.tick)+1,
 		"player_position":_combat.player.position.duplicate(),"player_facing":_combat.player.facing.duplicate(),"enemy_position":_combat.enemy.position.duplicate(),
-		"line_of_sight":false,"attack_pressed":false,"attack_released":false,"defend_pressed":false,"defend_released":false,"dodge_pressed":false,"focused":true,"paused":true,"exit":false}
+		"line_of_sight":false,"attack_pressed":false,"attack_released":false,"defend_pressed":false,"defend_released":false,"dodge_pressed":false,"focused":true,"paused":not exiting,"exit":exiting}
 	var result=CombatRules.step(_combat,frame)
 	if not result.get("ok",false):return result
 	return _accept_combat_step(result)

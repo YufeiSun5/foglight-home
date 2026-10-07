@@ -26,7 +26,7 @@ func _init()->void:
 	var previews=app.card_previews()
 	check(previews.size()==3,"three effective cards offered")
 	for preview in previews:
-		check(not preview.card.modifiers.has("ranged_charge") and not preview.card.modifiers.has("chain_charge"),"unimplemented conversion mode not exposed")
+		check(not preview.card.modifiers.has("chain_charge"),"unimplemented conversion mode not exposed")
 		check(not preview.changes.is_empty(),"card shows derived changes")
 	var choice=app.intent("choose",{"card_id":previews[0].card.id})
 	check(app.submit(choice).ok,"card choice begins next encounter")
