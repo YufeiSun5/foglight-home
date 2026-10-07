@@ -5,8 +5,13 @@ var failures=0
 func check(value:bool,message:String)->void:
 	checks+=1
 	if not value:failures+=1;push_error(message)
-func frame(pressed=false,released=false)->Dictionary:
-	return {"player_position":[0.0,0.0],"player_facing":[0.0,-1.0],"enemy_position":[0.0,-1.0],"line_of_sight":true,"attack_pressed":pressed,"attack_released":released,"defend_pressed":false,"defend_released":false,"dodge_pressed":false,"focused":true,"paused":false,"exit":false}
+func frame(pressed=false,released=false,combat:Dictionary={})->Dictionary:
+	var value= {"player_position":[0.0,0.0],"player_facing":[0.0,-1.0],"enemy_position":[0.0,-1.0],"line_of_sight":true,"attack_pressed":pressed,"attack_released":released,"defend_pressed":false,"defend_released":false,"dodge_pressed":false,"focused":true,"paused":false,"exit":false}
+	if combat.has("additional_enemies"):
+		value.additional_enemies=[]
+		for enemy in combat.additional_enemies:value.additional_enemies.append({"id":enemy.id,"position":enemy.position.duplicate(),"present":enemy.present,"line_of_sight":true})
+	return value
+
 func _init()->void:
 	var catalog=JSON.parse_string(FileAccess.get_file_as_string("res://data/tower_cards.json"))
 	var app=Session.new()
@@ -15,18 +20,18 @@ func _init()->void:
 	var exposed=app.view();exposed.combat.player.hp=0
 	check(app.view().combat.player.hp==100,"snapshot cannot mutate session")
 	var stale=app.intent("frame",frame())
-	check(app.submit(app.intent("frame",frame())).ok,"first sampled frame accepted")
+	check(app.submit(app.intent("frame",frame(false,false,app.view().combat))).ok,"first sampled frame accepted")
 	check(not app.submit(stale).ok,"old frame intent rejected")
 	for tick in 400:
 		if app.view().run.phase!="stage_active":break
-		var result=app.submit(app.intent("frame",frame(tick%42==0,tick%42==1)))
+		var result=app.submit(app.intent("frame",frame(tick%42==0,tick%42==1,app.view().combat)))
 		check(result.ok,"accepted fixed combat step"+str(tick))
 	check(app.view().run.phase=="awaiting_choice","victory opens next-stage card choice")
 	check(app.view().run.stage==2,"encounter progression is stage-based")
 	var previews=app.card_previews()
 	check(previews.size()==3,"three effective cards offered")
 	for preview in previews:
-		check(not preview.card.modifiers.has("chain_charge"),"unimplemented conversion mode not exposed")
+		check(preview.after.charge.mode in ["melee_charge","ranged_charge","chain_charge"],"offered card has supported derived mode")
 		check(not preview.changes.is_empty(),"card shows derived changes")
 	var choice=app.intent("choose",{"card_id":previews[0].card.id})
 	check(app.submit(choice).ok,"card choice begins next encounter")
@@ -37,10 +42,10 @@ func _init()->void:
 	check(app.view().combat.player.hp==100,"prototype safety pause restores health between stages")
 	var pause=app.intent("pause")
 	check(app.submit(pause).ok,"pause intent accepted")
-	check(app.submit(app.intent("frame",frame(true,false))).ok,"paused frame accepted safely")
+	check(app.submit(app.intent("frame",frame(true,false,app.view().combat))).ok,"paused frame accepted safely")
 	check(app.view().combat.status=="paused" and not app.view().combat.player.attack_held,"pause clears held action")
 	check(app.submit(app.intent("resume")).ok,"resume accepted")
-	check(app.submit(app.intent("frame",frame())).ok,"resume frame accepted")
+	check(app.submit(app.intent("frame",frame(false,false,app.view().combat))).ok,"resume frame accepted")
 	var exit_intent=app.intent("exit")
 	check(app.submit(exit_intent).ok,"exit accepted")
 	var ended=app.view()

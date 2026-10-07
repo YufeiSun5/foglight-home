@@ -369,7 +369,7 @@ func _test_limits_and_styles() -> void:
 		var configured = Tower.stats(run, pool).stats
 		var created = Combat.fresh("style", configured)
 		if id == "chain_flow":
-			check(not created.ok and created.error == "unsupported_charge_mode", "unimplemented attack shape never silently falls back " + id)
+			check(created.ok and created.state.stats.charge.mode == "chain_charge", "implemented chain shape accepted " + id)
 		else:
 			check(created.ok, "supported style initializes " + id)
 			if id == "snap_focus":
