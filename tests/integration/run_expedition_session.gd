@@ -45,7 +45,10 @@ func _init()->void:
 	check(app.submit(app.intent("frame",frame(true,false,app.view().combat))).ok,"paused frame accepted safely")
 	check(app.view().combat.status=="paused" and not app.view().combat.player.attack_held,"pause clears held action")
 	check(app.submit(app.intent("resume")).ok,"resume accepted")
-	check(app.submit(app.intent("frame",frame(false,false,app.view().combat))).ok,"resume frame accepted")
+	var resumed=frame(false,false,app.view().combat)
+	resumed.player_position=app.view().combat.player.position
+	resumed.enemy_position=app.view().combat.enemy.position
+	check(app.submit(app.intent("frame",resumed)).ok,"resume frame accepted without paused teleport")
 	var exit_intent=app.intent("exit")
 	check(app.submit(exit_intent).ok,"exit accepted")
 	var ended=app.view()

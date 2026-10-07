@@ -25,11 +25,15 @@ func _initialize() -> void:
 	_test_input_priority_matrix()
 	_test_enemy_and_counter()
 	_test_guard_rearm()
+	_test_recovery_defense_hold()
+	_test_recovery_defense_window()
+	_test_recovery_defense_cancellation()
 	_test_dodge()
 	_test_cleanup()
 	_test_replay_and_validation()
 	_test_limits_and_styles()
 	_test_ranged_activation()
+	_test_ranged_recovery_defense()
 	_test_ranged_flight_and_walls()
 	_test_ranged_target_motion_and_ledger()
 	_test_ranged_expiry_and_cleanup()
@@ -292,6 +296,103 @@ func _test_guard_rearm() -> void:
 	invalid.player.guard_rearm_ticks = Combat.GUARD_REARM_TICKS + 1
 	check(not Combat.valid(invalid), "rearm cooldown remains bounded")
 
+func _recovery_fixture(kind: String) -> Dictionary:
+	if kind == "normal":
+		return _step(_new(), {"attack_pressed": true, "attack_released": true, "line_of_sight": false}).state
+	if kind == "counter":
+		var counter = _step(_incoming(_new()), {"defend_pressed": true}).state
+		# Test a new held intent, independently of the original successful guard.
+		return _step(counter, {"defend_released": true, "line_of_sight": false}).state
+	var charged = _step(_new(), {"attack_pressed": true, "line_of_sight": false}).state
+	charged = _advance(charged, 53, {"line_of_sight": false})
+	return _step(charged, {"attack_released": true, "line_of_sight": false}).state
+
+func _test_recovery_defense_hold() -> void:
+	for kind in ["normal", "charge", "counter"]:
+		var recovery = _recovery_fixture(kind)
+		var before = recovery.duplicate(true)
+		var pressed = _step(recovery, {"defend_pressed": true, "line_of_sight": false})
+		check(recovery == before and pressed.state.player.defend_held and pressed.state.player.guard_age_ticks == 1, "defense held during recovery is retained from its original press " + kind)
+		check(pressed.state.player.phase == recovery.player.phase and pressed.state.player.phase_tick == recovery.player.phase_tick + 1 and pressed.state.player.phase_duration == recovery.player.phase_duration, "held defense never starts guard early or shortens recovery " + kind)
+		var near_end = pressed.state
+		# Repeated input edges and simultaneous unavailable dodge do not refresh the
+		# held defense clock or skip the already released attack's protected recovery.
+		while near_end.player.phase_tick < near_end.player.phase_duration - 1:
+			var next = _step(near_end, {"defend_pressed": true, "dodge_pressed": true, "attack_pressed": true, "attack_released": true, "line_of_sight": false})
+			check(next.state.player.phase == recovery.player.phase and next.state.player.phase_tick == near_end.player.phase_tick + 1 and next.state.player.guard_age_ticks == near_end.player.guard_age_ticks + 1, "every recovery tick stays protected while original defense clock ages " + kind)
+			check(next.state.player.attack_id == recovery.player.attack_id and not _has(next.events, "attack_started") and not _has(next.events, "dodge_started"), "held defense and repeated competing input do not spawn another action " + kind)
+			near_end = next.state
+		var ended = _step(near_end, {"defend_pressed": true, "line_of_sight": false})
+		check(ended.state.player.phase == "guard" and ended.state.player.defend_held and ended.state.player.guard_age_ticks == near_end.player.guard_age_ticks + 1, "recovery ends in held guard without resetting the original clock " + kind)
+		var blocked = _step(_incoming(ended.state), {"defend_pressed": true})
+		check(blocked.state.player.hp == 95 and _has(blocked.events, "blocked") and not _has(blocked.events, "counter"), "expired buffered window grants ordinary block without another precise window " + kind)
+		# An actual incoming hit before the end is never blocked by pending intent.
+		var hurt = _step(_incoming(pressed.state))
+		check(hurt.state.player.hp == 88 and hurt.state.player.phase == "hurt" and not _has(hurt.events, "blocked") and not _has(hurt.events, "counter"), "pending guard cannot block an attack during recovery " + kind)
+		check(not hurt.state.player.defend_held and hurt.state.player.guard_age_ticks == 0 and hurt.state.player.guard_window_spent, "being hit clears the pending held defense " + kind)
+		var after_hurt = _advance(hurt.state, 9, {"line_of_sight": false})
+		check(after_hurt.player.phase == "idle" and not after_hurt.player.defend_held, "hurt does not revive a canceled defense " + kind)
+
+func _test_recovery_defense_window() -> void:
+	var window = ceili(base_stats.defense.counter_window_seconds * Combat.TICK_RATE)
+	for kind in ["normal", "charge", "counter"]:
+		var recovery = _recovery_fixture(kind)
+		var last_tick = _advance(recovery, recovery.player.phase_duration - recovery.player.phase_tick - 1, {"line_of_sight": false})
+		var pressed_last = _step(last_tick, {"defend_pressed": true, "line_of_sight": false})
+		check(pressed_last.state.player.phase == "guard" and pressed_last.state.player.guard_age_ticks == 1 and pressed_last.state.player.defend_held, "press on the final recovery tick carries through immediately " + kind)
+		var counter = _step(_incoming(pressed_last.state))
+		check(_has(counter.events, "counter") and counter.state.player.guard_age_ticks == 2, "late recovery press keeps only the remaining original precise window " + kind)
+		for elapsed_at_end in [window, window + 1]:
+			var before_press = _advance(recovery, recovery.player.phase_duration - recovery.player.phase_tick - elapsed_at_end, {"line_of_sight": false})
+			var held = _step(before_press, {"defend_pressed": true, "line_of_sight": false}).state
+			held = _advance(held, elapsed_at_end - 2, {"defend_pressed": true, "line_of_sight": false})
+			check(held.player.phase == recovery.player.phase and held.player.phase_tick == held.player.phase_duration - 1, "precision boundary fixture is still in protected recovery " + kind)
+			var contact = _step(_incoming(held), {"defend_pressed": true})
+			check(contact.state.player.guard_age_ticks == elapsed_at_end, "precision age includes all waiting recovery ticks " + kind)
+			check(_has(contact.events, "counter") == (elapsed_at_end == window) and _has(contact.events, "blocked") == (elapsed_at_end > window), "recovery completion obeys exact original-window boundary " + kind + " age=" + str(elapsed_at_end))
+		# Release and rapid re-press during recovery never grant a free second window.
+		var almost_done = _advance(recovery, recovery.player.phase_duration - recovery.player.phase_tick - 4, {"line_of_sight": false})
+		almost_done = _step(almost_done, {"defend_pressed": true, "line_of_sight": false}).state
+		almost_done = _step(almost_done, {"defend_released": true, "line_of_sight": false}).state
+		almost_done = _step(almost_done, {"defend_pressed": true, "line_of_sight": false}).state
+		var rapid = _step(_incoming(almost_done))
+		check(rapid.state.player.guard_window_spent and _has(rapid.events, "blocked") and not _has(rapid.events, "counter"), "recovery release and rapid re-press preserve precision rearm protection " + kind)
+
+func _test_recovery_defense_cancellation() -> void:
+	for kind in ["normal", "charge", "counter"]:
+		var recovery = _recovery_fixture(kind)
+		var held = _step(recovery, {"defend_pressed": true, "line_of_sight": false}).state
+		for coalesced in [false, true]:
+			var released = _step(held, {"defend_pressed": coalesced, "defend_released": true, "line_of_sight": false}).state
+			check(not released.player.defend_held and released.player.guard_age_ticks == 0 and released.player.guard_window_spent, "release wins over pending recovery defense including coalesced edges " + kind)
+			released = _advance(released, released.player.phase_duration - released.player.phase_tick, {"line_of_sight": false})
+			check(released.player.phase == "idle" and not released.player.defend_held, "released recovery defense does not reappear at completion " + kind)
+			var last_tick = _advance(held, held.player.phase_duration - held.player.phase_tick - 1, {"line_of_sight": false})
+			var last_release = _step(last_tick, {"defend_pressed": coalesced, "defend_released": true, "line_of_sight": false})
+			check(last_release.state.player.phase == "idle" and not last_release.state.player.defend_held and last_release.state.player.guard_age_ticks == 0, "release wins on the exact final recovery tick " + kind)
+		var tapped = _step(recovery, {"defend_pressed": true, "defend_released": true, "line_of_sight": false}).state
+		tapped = _advance(tapped, tapped.player.phase_duration - tapped.player.phase_tick, {"line_of_sight": false})
+		check(tapped.player.phase == "idle" and not tapped.player.defend_held, "fresh coalesced defense tap during recovery is never buffered " + kind)
+		for field in ["paused", "focused", "exit"]:
+			var edges = {"defend_pressed": true, "line_of_sight": false}
+			edges[field] = false if field == "focused" else true
+			var canceled = _step(held, edges)
+			check(not canceled.state.player.defend_held and canceled.state.player.guard_age_ticks == 0 and canceled.state.player.guard_window_spent and canceled.state.sim_tick == held.sim_tick, "interruption discards buffered recovery defense before any gameplay tick " + kind + " " + field)
+			if field == "exit":
+				check(canceled.state.status == "ended" and Combat.step(canceled.state, _frame(canceled.state)).error == "encounter_ended", "exited recovery cannot consume held defense later " + kind)
+			else:
+				var resumed = _step(canceled.state, {"line_of_sight": false})
+				check(resumed.state.player.phase == "idle" and not resumed.state.player.defend_held and resumed.state.player.attack_id == recovery.player.attack_id, "resume never resurrects buffered defense or old attack " + kind + " " + field)
+	# Keep this change bounded to released attacks: dodge cancels prior held inputs,
+	# and damage clears them. A new press during either lockout is still discarded.
+	var dodge = _step(_new(), {"dodge_pressed": true, "line_of_sight": false}).state
+	var hurt = _step(_incoming(_new())).state
+	for locked in [dodge, hurt]:
+		var attempted = _step(locked, {"defend_pressed": true, "line_of_sight": false}).state
+		check(not attempted.player.defend_held and attempted.player.phase == locked.player.phase, "dodge and hurt do not gain new buffering semantics " + locked.player.phase)
+		attempted = _advance(attempted, attempted.player.phase_duration - attempted.player.phase_tick, {"line_of_sight": false})
+		check(attempted.player.phase == "idle" and not attempted.player.defend_held, "dodge and hurt end without reviving ignored guard " + locked.player.phase)
+
 func _test_dodge() -> void:
 	var dodged = _step(_incoming(_new()), {"dodge_pressed": true})
 	check(dodged.state.player.hp == 100 and _has(dodged.events, "dodged") and _has(dodged.events, "dodge_started"), "dodge avoids one active hit")
@@ -459,6 +560,23 @@ func _test_ranged_activation() -> void:
 	check(s.enemy.hp == 60, "charge waits for actual projectile travel even within melee range")
 	var hit = _step(s, {"enemy_position": [0.0, -1.0], "line_of_sight": false})
 	check(hit.state.enemy.hp == 36 and _has(hit.events, "hit"), "near target takes only projectile damage when swept contact arrives")
+
+func _test_ranged_recovery_defense() -> void:
+	var release = _step(_ranged_prepared(), {"attack_released": true, "enemy_position": [0.0, -3.0], "line_of_sight": false}).state
+	var baseline = release.duplicate(true)
+	var held = release.duplicate(true)
+	var spawned = 0
+	for index in release.player.phase_duration - release.player.phase_tick:
+		var next = _step(baseline, {"enemy_position": [0.0, -3.0], "line_of_sight": false})
+		var guarded = _step(held, {"defend_pressed": true, "enemy_position": [0.0, -3.0], "line_of_sight": false})
+		check(guarded.events == next.events and guarded.state.projectiles == next.state.projectiles and guarded.state.enemy == next.state.enemy, "pending defense does not delay duplicate or clear the original ranged release and flight")
+		if _has(guarded.events, "projectile_spawned"): spawned += 1
+		baseline = next.state
+		held = guarded.state
+		if baseline.player.phase == "release":
+			check(held.player.phase == "release" and held.player.phase_tick == baseline.player.phase_tick and held.player.phase_duration == baseline.player.phase_duration, "ranged guard intent keeps every protected recovery tick")
+	check(spawned == 1 and held.enemy.hp == 36 and held.player.attack_id == release.player.attack_id, "ranged recovery buffering retains one finite projectile and one target hit")
+	check(held.player.phase == "guard" and held.player.defend_held and held.player.guard_age_ticks == release.player.phase_duration - release.player.phase_tick and baseline.player.phase == "idle", "ranged recovery ends in held guard with the original elapsed defense age")
 
 func _test_ranged_flight_and_walls() -> void:
 	var born = _ranged_born()

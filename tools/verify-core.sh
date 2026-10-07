@@ -29,7 +29,7 @@ fi
  export HOME="$test_root/home" XDG_DATA_HOME="$test_root/data"
  export XDG_CONFIG_HOME="$test_root/config" XDG_CACHE_HOME="$test_root/cache"
  export FOGLIGHT_TOWER_TEST_ROOT="$test_root"
- for script in tests/domain/run_tower_rules.gd tests/domain/run_combat_rules.gd tests/domain/run_chain_charge_rules.gd tests/integration/run_expedition_session.gd tests/integration/run_expedition_terminal_cancel.gd; do
+ for script in tests/domain/run_tower_rules.gd tests/domain/run_combat_rules.gd tests/domain/run_chain_charge_rules.gd tests/integration/run_expedition_session.gd tests/integration/run_expedition_terminal_cancel.gd tests/integration/run_expedition_pause_clock.gd; do
   if [[ -f "$script" ]]; then
    log="$test_root/check.log"
    timeout 90s "$GODOT_BIN" --headless --path . --script "res://$script" >"$log" 2>&1 || { cat "$log"; exit 1; }

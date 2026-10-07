@@ -112,7 +112,7 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		n.player.invulnerable_ticks = 8
 		n.player.dodge_cooldown = 48
 		events.append({"kind": "dodge_started", "direction": n.player.facing.duplicate(), "duration_ticks": 12, "invulnerable_ticks": 8})
-	elif frame.defend_pressed and not frame.defend_released and not n.player.defend_held and interruptible:
+	elif frame.defend_pressed and not frame.defend_released and not n.player.defend_held and (interruptible or n.player.phase in ["release", "counter"]):
 		_end_chain(n, "defense", events)
 		n.player.attack_held = false
 		n.player.charge_ticks = 0
@@ -121,7 +121,11 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		# A rapid release/press may still block, but cannot reopen precision on every edge.
 		n.player.guard_window_spent = n.player.guard_rearm_ticks > 0
 		n.player.guard_rearm_ticks = GUARD_REARM_TICKS
-		_set_phase(n.player, "guard", _ticks(n.stats.defense.counter_window_seconds))
+		# A released attack keeps its full recovery, but remembers held defense.
+		# Its precision clock starts now and keeps aging while recovery completes;
+		# _update_player raises guard without granting a fresh window at that point.
+		# Dodge and hurt still discard new presses, and all cancellations clear held intent.
+		if interruptible: _set_phase(n.player, "guard", _ticks(n.stats.defense.counter_window_seconds))
 	else:
 		# Only an attack not canceled by an available dodge/guard may release or begin.
 		if frame.attack_released:
