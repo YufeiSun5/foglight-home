@@ -17,6 +17,7 @@ const CONTACT_EPSILON = 0.00000001
 const WALL_TIE_SLOP_M = 0.00005
 
 const MAX_TICKS = 36000
+const ENEMY_ENGAGE_DISTANCE_M = 1.20 # Approach before winding up; base melee/counter can answer.
 const GUARD_REARM_TICKS = 15 # Prototype 0.25s quiet interval between precise guard presses.
 const SUPPORTED_CHARGE_MODES = ["melee_charge", "ranged_charge", "chain_charge"]
 const PLAYER_PHASES = ["idle", "windup", "charge", "release", "guard", "counter", "chain", "dodge", "hurt", "dead"]
@@ -179,7 +180,7 @@ static func _update_enemy(s: Dictionary, e: Dictionary, line_of_sight: bool, eve
 		"idle":
 			if e.phase_tick >= e.phase_duration:
 				e.phase_tick = e.phase_duration
-				if _distance(e.position, s.player.position) <= float(e.reach_m) + 0.10 and line_of_sight:
+				if _distance(e.position, s.player.position) <= minf(float(e.reach_m), ENEMY_ENGAGE_DISTANCE_M) and line_of_sight:
 					e.aim_direction = _toward(e.position, s.player.position)
 					_set_phase(e, "telegraph", e.telegraph_ticks)
 					events.append({"kind": "enemy_telegraph", "source": e.id, "origin": e.position.duplicate(), "direction": e.aim_direction.duplicate(),
