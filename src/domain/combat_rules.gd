@@ -1,10 +1,22 @@
 extends RefCounted
 ## Fixed 60 Hz pure single-enemy encounter. Positions/line of sight are sampled by the scene.
-## Visual hitstop never pauses logical ticks. No movement, projectiles, nodes, IO, or story state.
+## Visual hitstop never pauses logical ticks. No actor movement, nodes, IO, or story state.
+## Projectiles use sampled first-wall fractions; swept target contact stays pure and deterministic.
+const SCHEMA = 2
 const TICK_RATE = 60
+const PROJECTILE_RADIUS_M = 0.10
+const ENEMY_HIT_RADIUS_M = 0.30
+const MAX_PROJECTILES = 4
+const ENEMY_TARGET_ID = "enemy"
+const CONTACT_EPSILON = 0.00000001
+# The scene's Vector2 collision adapter uses float32 coordinates (bounded to100m).
+# 50 micrometres covers a few coordinate ULPs at that bound. Only wall-vs-target
+# ordering uses this spatial tolerance; range/lifetime/state validation stays exact.
+const WALL_TIE_SLOP_M = 0.00005
+
 const MAX_TICKS = 36000
 const GUARD_REARM_TICKS = 15 # Prototype 0.25s quiet interval between precise guard presses.
-const SUPPORTED_CHARGE_MODES = ["melee_charge"]
+const SUPPORTED_CHARGE_MODES = ["melee_charge", "ranged_charge"]
 const PLAYER_PHASES = ["idle", "windup", "charge", "release", "guard", "counter", "dodge", "hurt", "dead"]
 const ENEMY_PHASES = ["idle", "telegraph", "active", "recovery", "dead"]
 const INPUT_KEYS = ["run_id", "tick", "player_position", "player_facing", "enemy_position", "line_of_sight",
@@ -14,12 +26,12 @@ static func fresh(run_id: String, stats: Dictionary) -> Dictionary:
 	if run_id.is_empty() or run_id.length() > 120 or not _valid_stats(stats): return _error("invalid_config")
 	if not stats.charge.mode in SUPPORTED_CHARGE_MODES: return _error("unsupported_charge_mode")
 	return {"ok": true, "state": {
-		"schema": 1, "run_id": run_id, "tick": 0, "sim_tick": 0, "status": "active", "end_reason": "",
-		"stats": stats.duplicate(true), "hitstop_ticks": 0, "hitstop_log": [], "last_frame_hash": "",
+		"schema": SCHEMA, "run_id": run_id, "tick": 0, "sim_tick": 0, "status": "active", "end_reason": "",
+		"stats": stats.duplicate(true), "projectiles": [], "hitstop_ticks": 0, "hitstop_log": [], "last_frame_hash": "",
 		"player": {"hp": 100, "position": [0.0, 0.0], "facing": [0.0, -1.0], "phase": "idle", "phase_tick": 0,
 			"phase_duration": 1, "attack_held": false, "defend_held": false, "charge_ticks": 0, "guard_age_ticks": 0,
 			"guard_window_spent": false, "guard_rearm_ticks": 0, "dodge_cooldown": 0, "invulnerable_ticks": 0, "attack_id": 0,
-			"attack_kind": "normal", "hit_done": false, "haste_ticks": 0},
+			"attack_kind": "normal", "attack_direction": [0.0, -1.0], "hit_done": false, "haste_ticks": 0},
 		"enemy": {"hp": 60, "position": [0.0, -2.0], "phase": "idle", "phase_tick": 0, "phase_duration": 30,
 			"attack_id": 0, "hit_done": false, "aim_direction": [0.0, 1.0], "reach_m": 1.65, "arc_degrees": 80.0,
 			"damage": 12, "telegraph_ticks": 36, "active_ticks": 6, "recovery_ticks": 42},
@@ -35,6 +47,7 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		return _error("tick_conflict")
 	if frame.tick != s.tick + 1: return _error("stale_tick")
 	if s.status == "ended": return _error("encounter_ended")
+	if not _valid_projectile_samples(s, frame): return _error("invalid_projectile_samples")
 	if s.tick > 0 and not frame.exit and frame.focused and not frame.paused:
 		if _distance(s.player.position, frame.player_position) > 0.65 or _distance(s.enemy.position, frame.enemy_position) > 0.35:
 			return _error("position_step_out_of_bounds")
@@ -50,6 +63,7 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 		return _result(n, events)
 	if frame.paused or not frame.focused:
 		_cancel_inputs(n)
+		_clear_projectiles(n, events)
 		_set_phase(n.enemy, "idle", 30)
 		n.status = "paused"
 		n.hitstop_ticks = 0
@@ -103,6 +117,9 @@ static func step(s: Dictionary, frame: Dictionary) -> Dictionary:
 				n.player.attack_held = true
 				n.player.charge_ticks = 0
 				_set_phase(n.player, "windup", _ticks(n.stats.charge.hold_seconds))
+	# Only pre-existing bolts fly here. A bolt born in _update_player waits until the
+	# next frame, when the scene has had the chance to sweep its first segment.
+	_update_projectiles(n, s.enemy.position, frame.get("projectile_collisions", []), events)
 	_update_player(n, frame.line_of_sight, events)
 	if n.enemy.hp > 0 and n.player.hp > 0: _update_enemy(n, frame.line_of_sight, events)
 	if n.player.hp <= 0:
@@ -162,6 +179,7 @@ static func _start_attack(s: Dictionary, kind: String, events: Array) -> void:
 	var p: Dictionary = s.player
 	p.attack_id += 1
 	p.attack_kind = kind
+	p.attack_direction = p.facing.duplicate()
 	p.hit_done = false
 	var haste = float(s.stats.defense.counter_haste_multiplier) if p.haste_ticks > 0 else 1.0
 	var duration = _ticks(1.0 / clampf(float(s.stats.normal.attack_rate_hz) * haste, 1.5, 2.7)) if kind == "normal" else _ticks(s.stats.charge.recovery_seconds)
@@ -171,6 +189,10 @@ static func _start_attack(s: Dictionary, kind: String, events: Array) -> void:
 
 static func _player_hit(s: Dictionary, line_of_sight: bool, events: Array) -> void:
 	var kind: String = s.player.attack_kind
+	if kind == "charge" and s.stats.charge.mode == "ranged_charge":
+		_spawn_projectile(s, events)
+		return
+	if s.enemy.hp <= 0: return
 	var reach = float(s.stats.normal.reach_m)
 	var damage = 10
 	if kind == "charge":
@@ -209,13 +231,15 @@ static func _enemy_hit(s: Dictionary, line_of_sight: bool, events: Array) -> voi
 		events.append({"kind": "hit", "source": "enemy", "target": "player", "attack_id": e.attack_id, "attack_kind": "normal", "damage": damage, "hp": p.hp})
 	_hitstop(s, 0.035)
 
-static func _hitstop(s: Dictionary, seconds: float) -> void:
+static func _hitstop(s: Dictionary, seconds: float, remaining_attack_budget: int = 4) -> int:
 	var used = 0
 	for entry in s.hitstop_log: used += int(entry.amount)
 	var amount = mini(maxi(0, roundi(seconds * TICK_RATE)), mini(floori(float(s.stats.effects.max_hitstop_per_attack_seconds) * TICK_RATE), floori(float(s.stats.effects.max_hitstop_per_second_seconds) * TICK_RATE) - used))
-	if amount <= 0: return
+	amount = mini(amount, remaining_attack_budget)
+	if amount <= 0: return 0
 	s.hitstop_ticks = maxi(int(s.hitstop_ticks), amount)
 	s.hitstop_log.append({"tick": s.sim_tick, "amount": amount})
+	return amount
 
 static func _cancel_inputs(s: Dictionary) -> void:
 	s.player.attack_held = false
@@ -229,6 +253,7 @@ static func _cancel_inputs(s: Dictionary) -> void:
 
 static func _finish(s: Dictionary, reason: String, events: Array) -> void:
 	_cancel_inputs(s)
+	_clear_projectiles(s, events)
 	s.player.haste_ticks = 0
 	s.hitstop_ticks = 0
 	s.status = "ended"
@@ -248,10 +273,10 @@ static func _result(s: Dictionary, events: Array) -> Dictionary:
 	return {"ok": true, "state": s, "events": events, "replay": false}
 
 static func valid(s: Dictionary) -> bool:
-	if s.size() != 12: return false
-	for key in ["schema", "run_id", "tick", "sim_tick", "status", "end_reason", "stats", "hitstop_ticks", "hitstop_log", "last_frame_hash", "player", "enemy"]:
+	if s.size() != 13: return false
+	for key in ["schema", "run_id", "tick", "sim_tick", "status", "end_reason", "stats", "hitstop_ticks", "hitstop_log", "last_frame_hash", "player", "enemy", "projectiles"]:
 		if not s.has(key): return false
-	if s.schema != 1 or not s.run_id is String or s.run_id.is_empty() or s.run_id.length() > 120: return false
+	if not _integer(s.schema, SCHEMA, SCHEMA) or not s.run_id is String or s.run_id.is_empty() or s.run_id.length() > 120: return false
 	if not _integer(s.tick, 0, MAX_TICKS) or not _integer(s.sim_tick, 0, int(s.tick)): return false
 	if not s.status in ["active", "paused", "ended"] or not s.end_reason in ["", "exited", "failed", "victory", "time_limit"]: return false
 	if (s.status == "ended") != (s.end_reason != ""): return false
@@ -266,15 +291,16 @@ static func valid(s: Dictionary) -> bool:
 	if not s.player is Dictionary or not s.enemy is Dictionary: return false
 	var p: Dictionary = s.player
 	var e: Dictionary = s.enemy
-	if p.size() != 18 or e.size() != 14: return false
+	if p.size() != 19 or e.size() != 14: return false
 	if not _actor(p, PLAYER_PHASES, 100) or not _actor(e, ENEMY_PHASES, 60): return false
-	if not _vector(p.get("facing"), true) or not _vector(e.get("aim_direction"), true): return false
+	if not _unit_vector(p.get("attack_direction")) or not _vector(p.get("facing"), true) or not _vector(e.get("aim_direction"), true): return false
 	for key in ["attack_held", "defend_held", "guard_window_spent", "hit_done"]:
 		if not p.get(key) is bool: return false
 	for key in ["charge_ticks", "guard_age_ticks", "dodge_cooldown", "invulnerable_ticks", "haste_ticks", "guard_rearm_ticks"]:
 		if not _integer(p.get(key), 0, MAX_TICKS): return false
 	if p.invulnerable_ticks > 8 or p.dodge_cooldown > 48 or p.guard_rearm_ticks > GUARD_REARM_TICKS or not p.get("attack_kind") in ["normal", "charge", "counter"]: return false
 	if not e.get("hit_done") is bool or e.get("reach_m") != 1.65 or e.get("arc_degrees") != 80.0 or e.get("damage") != 12: return false
+	if not _valid_projectiles(s): return false
 	return e.get("telegraph_ticks") == 36 and e.get("active_ticks") == 6 and e.get("recovery_ticks") == 42
 
 static func _actor(a: Dictionary, phases: Array, max_hp: int) -> bool:
@@ -301,10 +327,12 @@ static func _valid_stats(stats: Dictionary) -> bool:
 		[d.get("counter_haste_multiplier"), 1.0, 1.3], [d.get("counter_haste_seconds"), 0.0, 1.0],
 		[e.get("normal_hitstop_seconds"), 0.0, 0.05], [e.get("charge_hitstop_seconds"), 0.0, 0.06]]:
 		if not _number(pair[0], pair[1], pair[2]): return false
+	if not _valid_charge_shape(c): return false
 	return d.get("counter_enabled") is bool and e.get("max_hitstop_per_attack_seconds") == 0.07 and e.get("max_hitstop_per_second_seconds") == 0.12 and e.get("invulnerability_seconds") == 0.0
 
 static func _valid_frame(f: Dictionary) -> bool:
-	if f.size() != INPUT_KEYS.size(): return false
+	if f.size() != INPUT_KEYS.size() + (1 if f.has("projectile_collisions") else 0): return false
+	if f.has("projectile_collisions") and not _projectile_samples_shape(f.projectile_collisions): return false
 	for key in INPUT_KEYS:
 		if not f.has(key): return false
 	if not f.run_id is String or not _integer(f.tick, 1, MAX_TICKS): return false
@@ -333,3 +361,184 @@ static func _vector(value: Variant, direction: bool = false) -> bool:
 static func _number(value: Variant, low: float, high: float) -> bool: return (value is int or value is float) and is_finite(float(value)) and value >= low and value <= high
 static func _integer(value: Variant, low: int, high: int) -> bool: return value is int and value >= low and value <= high
 static func _error(code: String) -> Dictionary: return {"ok": false, "error": code}
+
+## Read-only physics boundary for the next active tick. Every existing bolt requires
+## one first-wall sample, even if the player is in recovery or the enemy is far away.
+## A new bolt never moves or damages on its birth tick. No physics callback enters rules.
+static func projectile_sweeps(s: Dictionary) -> Array:
+	if not valid(s) or s.status != "active": return []
+	var sweeps: Array = []
+	for projectile in s.projectiles:
+		sweeps.append({"attack_id": projectile.attack_id, "from": projectile.position.duplicate(),
+			"to": _projectile_endpoint(projectile, s.stats.charge), "radius_m": PROJECTILE_RADIUS_M})
+	return sweeps
+
+static func _projectile_endpoint(projectile: Dictionary, charge: Dictionary) -> Array:
+	var distance = minf(float(charge.projectile_reach_m), minf(float(charge.projectile_lifetime_seconds), float(projectile.age_ticks + 1) / TICK_RATE) * float(charge.projectile_speed_mps))
+	return [float(projectile.origin[0]) + float(projectile.direction[0]) * distance,
+		float(projectile.origin[1]) + float(projectile.direction[1]) * distance]
+
+static func _spawn_projectile(s: Dictionary, events: Array) -> void:
+	# With current release/charge/recovery timing at most two can coexist after a
+	# hurt interruption. Keep an independent hard cap for future timing changes.
+	if s.projectiles.size() >= MAX_PROJECTILES: return
+	var projectile = {"attack_id": s.player.attack_id, "source": "player_projectile",
+		"origin": s.player.position.duplicate(), "position": s.player.position.duplicate(),
+		"direction": s.player.attack_direction.duplicate(), "age_ticks": 0, "travelled_m": 0.0,
+		"hit_targets": [], "hitstop_used_ticks": 0}
+	s.projectiles.append(projectile)
+	events.append({"kind": "projectile_spawned", "source": projectile.source, "attack_id": projectile.attack_id,
+		"origin": projectile.origin.duplicate(), "direction": projectile.direction.duplicate(),
+		"radius_m": PROJECTILE_RADIUS_M, "speed_mps": s.stats.charge.projectile_speed_mps,
+		"reach_m": s.stats.charge.projectile_reach_m, "lifetime_seconds": s.stats.charge.projectile_lifetime_seconds})
+
+static func _update_projectiles(s: Dictionary, previous_enemy_position: Array, samples: Array, events: Array) -> void:
+	var survivors: Array = []
+	for projectile in s.projectiles:
+		var end: Array = _projectile_endpoint(projectile, s.stats.charge)
+		var wall: Variant = null
+		for sample in samples:
+			if sample.attack_id == projectile.attack_id:
+				wall = sample.wall_fraction
+				break
+		var contact = -1.0
+		if s.enemy.hp > 0 and not ENEMY_TARGET_ID in projectile.hit_targets:
+			# The final range/lifetime-clipped segment may consume only part of this
+			# tick. Do not let the target move for longer than the bolt exists.
+			var remaining_seconds = float(s.stats.charge.projectile_lifetime_seconds) - float(projectile.age_ticks) / TICK_RATE
+			var remaining_range = float(s.stats.charge.projectile_reach_m) - float(projectile.travelled_m)
+			var flight_fraction = clampf(minf(remaining_seconds, remaining_range / float(s.stats.charge.projectile_speed_mps)) * TICK_RATE, 0.0, 1.0)
+			var target_end = _lerp_point(previous_enemy_position, s.enemy.position, flight_fraction)
+			contact = _swept_target_fraction(projectile.position, end, previous_enemy_position, target_end)
+		# Fractions are on the identical clipped segment. First wall wins ties, so a
+		# thin occluder cannot be skipped even when the endpoint is beyond its face.
+		if contact >= 0.0 and (wall == null or contact * _distance(projectile.position, end) + WALL_TIE_SLOP_M < float(wall) * _distance(projectile.position, end)):
+			projectile.hit_targets.append(ENEMY_TARGET_ID)
+			s.enemy.hp = maxi(0, int(s.enemy.hp) - 24)
+			projectile.hitstop_used_ticks += _hitstop(s, s.stats.effects.charge_hitstop_seconds, 4 - int(projectile.hitstop_used_ticks))
+			events.append({"kind": "hit", "source": "player_projectile", "target": ENEMY_TARGET_ID,
+				"attack_id": projectile.attack_id, "attack_kind": "charge", "damage": 24, "hp": s.enemy.hp,
+				"position": _lerp_point(projectile.position, end, contact)})
+			if projectile.hit_targets.size() >= int(s.stats.charge.projectile_max_targets):
+				projectile.position = _lerp_point(projectile.position, end, contact)
+				_projectile_ended(projectile, "targets", events)
+				continue
+		if wall != null:
+			projectile.position = _lerp_point(projectile.position, end, float(wall))
+			_projectile_ended(projectile, "wall", events)
+			continue
+		projectile.age_ticks += 1
+		projectile.position = end
+		projectile.travelled_m = minf(float(s.stats.charge.projectile_reach_m), minf(float(s.stats.charge.projectile_lifetime_seconds), float(projectile.age_ticks) / TICK_RATE) * float(s.stats.charge.projectile_speed_mps))
+		if float(projectile.travelled_m) + CONTACT_EPSILON >= float(s.stats.charge.projectile_reach_m):
+			_projectile_ended(projectile, "range", events)
+		elif float(projectile.age_ticks) / TICK_RATE + CONTACT_EPSILON >= float(s.stats.charge.projectile_lifetime_seconds):
+			_projectile_ended(projectile, "lifetime", events)
+		else:
+			survivors.append(projectile)
+	s.projectiles = survivors
+
+static func _projectile_ended(projectile: Dictionary, reason: String, events: Array) -> void:
+	events.append({"kind": "projectile_ended", "source": projectile.source, "attack_id": projectile.attack_id,
+		"reason": reason, "position": projectile.position.duplicate()})
+
+static func _clear_projectiles(s: Dictionary, events: Array) -> void:
+	for projectile in s.projectiles: _projectile_ended(projectile, "canceled", events)
+	s.projectiles = []
+
+static func _swept_target_fraction(start: Array, end: Array, target_start: Array, target_end: Array) -> float:
+	# Relative motion solves first circle contact, including a target crossing the
+	# bolt between samples. Endpoint-only distance would tunnel through moving targets.
+	var rx = float(start[0]) - float(target_start[0])
+	var ry = float(start[1]) - float(target_start[1])
+	var vx = float(end[0]) - float(start[0]) - float(target_end[0]) + float(target_start[0])
+	var vy = float(end[1]) - float(start[1]) - float(target_end[1]) + float(target_start[1])
+	var radius = PROJECTILE_RADIUS_M + ENEMY_HIT_RADIUS_M
+	var c = rx * rx + ry * ry - radius * radius
+	if c <= 0.0: return 0.0
+	var a = vx * vx + vy * vy
+	if a <= 0.000000000001: return -1.0
+	var b = 2.0 * (rx * vx + ry * vy)
+	var discriminant = b * b - 4.0 * a * c
+	if discriminant < 0.0: return -1.0
+	var fraction = (-b - sqrt(discriminant)) / (2.0 * a)
+	return clampf(fraction, 0.0, 1.0) if fraction >= -CONTACT_EPSILON and fraction <= 1.0 + CONTACT_EPSILON else -1.0
+
+static func _lerp_point(start: Array, end: Array, fraction: float) -> Array:
+	return [lerpf(float(start[0]), float(end[0]), fraction), lerpf(float(start[1]), float(end[1]), fraction)]
+
+static func _projectile_samples_shape(samples: Variant) -> bool:
+	if not samples is Array or samples.size() > MAX_PROJECTILES: return false
+	var seen: Dictionary = {}
+	for sample in samples:
+		if not sample is Dictionary or sample.size() != 2 or not sample.has("wall_fraction"): return false
+		if not _integer(sample.get("attack_id"), 1, MAX_TICKS) or seen.has(sample.attack_id): return false
+		if sample.wall_fraction != null and not _number(sample.wall_fraction, 0.0, 1.0): return false
+		seen[sample.attack_id] = true
+	return true
+
+static func _valid_projectile_samples(s: Dictionary, frame: Dictionary) -> bool:
+	var samples: Array = frame.get("projectile_collisions", [])
+	# Cancellation does no flight; omitting its samples must never prevent cleanup.
+	# Any supplied IDs must still belong to the current state, even on cancellation.
+	var ids: Array = []
+	for projectile in s.projectiles: ids.append(projectile.attack_id)
+	for sample in samples:
+		if not sample.attack_id in ids: return false
+	if frame.exit or frame.paused or not frame.focused: return true
+	return samples.size() == s.projectiles.size()
+
+static func _valid_projectiles(s: Dictionary) -> bool:
+	if not s.projectiles is Array or s.projectiles.size() > MAX_PROJECTILES: return false
+	if (s.status != "active" or s.stats.charge.mode != "ranged_charge") and not s.projectiles.is_empty(): return false
+	var ids: Dictionary = {}
+	for projectile in s.projectiles:
+		if not projectile is Dictionary or projectile.size() != 9: return false
+		for key in ["attack_id", "source", "origin", "position", "direction", "age_ticks", "travelled_m", "hit_targets", "hitstop_used_ticks"]:
+			if not projectile.has(key): return false
+		if not _integer(projectile.attack_id, 1, int(s.player.attack_id)) or ids.has(projectile.attack_id) or projectile.source != "player_projectile": return false
+		ids[projectile.attack_id] = true
+		if not _vector(projectile.origin) or not _projectile_vector(projectile.position) or not _unit_vector(projectile.direction): return false
+		if not _integer(projectile.age_ticks, 0, _ticks(s.stats.charge.projectile_lifetime_seconds) - 1): return false
+		if not _number(projectile.travelled_m, 0.0, s.stats.charge.projectile_reach_m): return false
+		var expected_distance = float(projectile.age_ticks) * float(s.stats.charge.projectile_speed_mps) / TICK_RATE
+		if absf(float(projectile.travelled_m) - expected_distance) > CONTACT_EPSILON: return false
+		if float(projectile.travelled_m) + CONTACT_EPSILON >= float(s.stats.charge.projectile_reach_m): return false
+		var expected_position = [float(projectile.origin[0]) + float(projectile.direction[0]) * expected_distance,
+			float(projectile.origin[1]) + float(projectile.direction[1]) * expected_distance]
+		if _distance(projectile.position, expected_position) > 0.00001: return false
+		if not _integer(projectile.hitstop_used_ticks, 0, 4): return false
+		# This encounter contains exactly one stable identity. A future multi-target
+		# integration must supply real identities; config max_targets=2 is only a cap.
+		if not projectile.hit_targets is Array or projectile.hit_targets.size() > 1: return false
+		if not projectile.hit_targets.is_empty() and projectile.hit_targets != [ENEMY_TARGET_ID]: return false
+	return true
+
+static func _valid_charge_shape(charge: Dictionary) -> bool:
+	var keys = ["enabled", "mode", "requires_charge", "hold_seconds", "recovery_seconds", "melee_reach_m", "trail_layers",
+		"projectile_reach_m", "projectile_speed_mps", "projectile_count", "projectile_pierce", "projectile_max_targets", "projectile_lifetime_seconds",
+		"chain_max_targets", "chain_search_radius_m", "chain_max_step_m", "chain_duration_seconds"]
+	if charge.size() != keys.size(): return false
+	for key in keys:
+		if not charge.has(key): return false
+	var ranged = charge.mode == "ranged_charge"
+	for pair in [["projectile_count", 1 if ranged else 0], ["projectile_pierce", 1 if ranged else 0], ["projectile_max_targets", 2 if ranged else 0]]:
+		if not _integer(charge[pair[0]], pair[1], pair[1]): return false
+	if ranged:
+		if not _number(charge.projectile_reach_m, 5.5, 6.0) or not _number(charge.projectile_speed_mps, 10.0, 10.0): return false
+		if not _number(charge.projectile_lifetime_seconds, 0.55, 0.60): return false
+		if absf(float(charge.projectile_lifetime_seconds) - float(charge.projectile_reach_m) / float(charge.projectile_speed_mps)) > CONTACT_EPSILON: return false
+	else:
+		for key in ["projectile_reach_m", "projectile_speed_mps", "projectile_lifetime_seconds"]:
+			if not _number(charge[key], 0.0, 0.0): return false
+	var chain = charge.mode == "chain_charge"
+	if not _integer(charge.chain_max_targets, 3 if chain else 0, 3 if chain else 0): return false
+	for pair in [["chain_search_radius_m", 3.0 if chain else 0.0], ["chain_max_step_m", 2.0 if chain else 0.0], ["chain_duration_seconds", 0.60 if chain else 0.0]]:
+		if not _number(charge[pair[0]], pair[1], pair[1]): return false
+	return true
+
+static func _unit_vector(value: Variant) -> bool:
+	return _vector(value, true) and absf(float(value[0]) * float(value[0]) + float(value[1]) * float(value[1]) - 1.0) <= 0.000001
+
+static func _projectile_vector(value: Variant) -> bool:
+	return value is Array and value.size() == 2 and _number(value[0], -106.0, 106.0) and _number(value[1], -106.0, 106.0)
