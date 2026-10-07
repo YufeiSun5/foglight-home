@@ -6,8 +6,12 @@ export XDG_CONFIG_HOME="${FOGLIGHT_TEST_CONFIG_HOME:-/tmp/foglight-core-config}"
 export XDG_DATA_HOME="${FOGLIGHT_TEST_DATA_HOME:-/tmp/foglight-core-data}"
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 GODOT_BIN="${GODOT_BIN:-godot}"
+core_log="$(mktemp /tmp/foglight-core-log-XXXXXX)"
+trap 'rm -f "$core_log"' EXIT
 for script in tests/content/validate_content.gd tests/domain/run_tests.gd tests/integration/run_save_recovery.gd; do
- timeout 75s "$GODOT_BIN" --headless --path . --script "$script"
+ timeout 75s "$GODOT_BIN" --headless --path . --script "$script" >"$core_log" 2>&1 || { cat "$core_log"; exit 1; }
+ cat "$core_log"
+ if ! grep -Eq 'checks[,;] +0 failures' "$core_log" || grep -Eq 'SCRIPT ERROR:|^ERROR:' "$core_log"; then exit 1; fi
 done
 python3 tests/content/check_json.py
 python3 tools/check_boundaries.py
@@ -25,12 +29,12 @@ fi
  export HOME="$test_root/home" XDG_DATA_HOME="$test_root/data"
  export XDG_CONFIG_HOME="$test_root/config" XDG_CACHE_HOME="$test_root/cache"
  export FOGLIGHT_TOWER_TEST_ROOT="$test_root"
- for script in tests/domain/run_tower_rules.gd tests/domain/run_combat_rules.gd; do
+ for script in tests/domain/run_tower_rules.gd tests/domain/run_combat_rules.gd tests/integration/run_expedition_session.gd tests/integration/run_expedition_terminal_cancel.gd; do
   if [[ -f "$script" ]]; then
    log="$test_root/check.log"
    timeout 90s "$GODOT_BIN" --headless --path . --script "res://$script" >"$log" 2>&1 || { cat "$log"; exit 1; }
    cat "$log"
-   if grep -Eq 'SCRIPT ERROR:|^ERROR:' "$log"; then exit 1; fi
+   if ! grep -Eq 'checks[,;] +0 failures' "$log" || grep -Eq 'SCRIPT ERROR:|^ERROR:' "$log"; then exit 1; fi
   fi
  done
 )

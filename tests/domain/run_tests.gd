@@ -3,6 +3,18 @@ const Rules = preload("res://src/domain/story_rules.gd")
 const Store = preload("res://src/app/state_store.gd")
 const Port = preload("res://src/app/ports/save_port.gd")
 const Content = preload("res://src/adapters/content_loader.gd")
+class CountingPort extends Port:
+	var writes=0
+	var reads=0
+	var barriers=0
+	func write_snapshot(_snapshot:Dictionary,_epoch:int)->Dictionary:
+		writes+=1
+		return {"ok":true}
+	func read_snapshot()->Dictionary:
+		reads+=1
+		return {"ok":false}
+	func barrier(_epoch:int)->void:barriers+=1
+
 var checks = 0
 var failures: Array = []
 var nodes: Dictionary
@@ -23,6 +35,7 @@ func _initialize() -> void:
 	_test_invalid_snapshots()
 	_test_travel()
 	_test_command_inspection()
+	_test_interaction_boundaries()
 	print("DOMAIN: %d checks; %d failures" % [checks, failures.size()])
 	for failure in failures: printerr(failure)
 	quit(0 if failures.is_empty() else 1)
@@ -211,3 +224,28 @@ func _test_command_inspection()->void:
 	check(not store.inspect_command(stale).ok and store.view()==before,"old revision inspection cannot commit")
 	store.new_game();before=store.view()
 	check(not store.inspect_command(request).ok and store.view()==before,"old epoch checked before ledger replay")
+
+func _test_interaction_boundaries()->void:
+	var port=CountingPort.new();var store=Store.new(nodes,port)
+	var old=store.make_command("choose",{"node":"g1"})
+	var before=store.view();var context=store.context();var barriers=port.barriers
+	var observed={"changed":0,"committed":0,"reentrant":false}
+	var listener=func():
+		observed.changed+=1
+		observed.reentrant=not store.invalidate_interactions().ok and not store.new_game().ok and not store.load_game().ok and not store.command("outfit",{"coat_color":"green"}).ok
+	store.changed.connect(listener)
+	store.committed.connect(func(_events):observed.committed+=1)
+	check(store.invalidate_interactions().ok,"interaction boundary succeeds")
+	check(store.view()==before,"boundary leaves persistent snapshot byte-equivalent")
+	check(store.context().generation==context.generation+1,"boundary advances exactly one interaction generation")
+	check(store.context().epoch==context.epoch and store.context().revision==context.revision,"boundary preserves epoch and story revision")
+	check(port.writes==0 and port.reads==0 and port.barriers==barriers,"boundary performs no save IO or epoch barrier")
+	check(observed.changed==1 and observed.committed==0,"boundary refreshes view without domain events")
+	check(observed.reentrant,"boundary refresh listeners cannot recursively mutate store")
+	check(not store.inspect_command(old).ok and not store.submit(old).ok,"old command is invalid across interaction boundary")
+	check(store.view()==before and port.writes==0,"rejected old command remains read-only")
+	store.changed.disconnect(listener)
+	var fresh=store.make_command("choose",{"node":"g1"})
+	check(store.submit(fresh).ok,"current command is usable after boundary")
+	var committed=store.view()
+	check(store.invalidate_interactions().ok and store.submit(fresh).ok and store.view()==committed,"already committed replay stays idempotent across a later UI boundary")

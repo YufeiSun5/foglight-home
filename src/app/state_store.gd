@@ -25,6 +25,16 @@ func context() -> Dictionary:
 	return {"revision": int(_state.revision), "epoch": _epoch, "generation": _generation}
 func validate_snapshot(snapshot: Dictionary) -> bool: return Rules.valid(snapshot, _nodes)
 
+func invalidate_interactions()->Dictionary:
+	# A UI/activity boundary, not a persistent story mutation or save operation.
+	if _submitting:return {"ok":false,"error":"已有命令正在提交"}
+	_submitting=true
+	_generation+=1
+	changed.emit()
+	_submitting=false
+	return {"ok":true}
+
+
 func new_game() -> Dictionary:
 	if _submitting: return {"ok": false, "error": "已有命令正在提交"}
 	_epoch += 1
