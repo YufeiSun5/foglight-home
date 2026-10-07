@@ -104,6 +104,10 @@ func _new_encounter()->Dictionary:
 
 func _frame(payload:Dictionary)->Dictionary:
 	if _run.phase!="stage_active":return {"ok":true}
+	# A paused view is not a simulation clock. Repeated OS/render frames must
+	# not consume the finite encounter sequence or discard a waiting run.
+	if _paused:return {"ok":true}
+	if _combat.status=="paused" and (payload.get("paused",false) or not payload.get("focused",true)):return {"ok":true}
 	var frame=payload.duplicate(true)
 	frame.run_id=_combat.run_id;frame.tick=int(_combat.tick)+1
 	frame.paused=_paused or bool(frame.get("paused",false))

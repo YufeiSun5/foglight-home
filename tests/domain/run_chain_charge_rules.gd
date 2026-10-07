@@ -22,6 +22,7 @@ func _initialize() -> void:
 	_test_multi_actor_authority()
 	_test_pierce_order_and_walls()
 	_test_repeatable_finishing_chain()
+	_test_finished_chain_defense()
 	print("CHAIN CHARGE RULES: %d checks; %d failures" % [checks, failures.size()])
 	for failure in failures: printerr(failure)
 	quit(0 if failures.is_empty() else 1)
@@ -125,6 +126,23 @@ func _hitstop_total(log: Array) -> int:
 	var result = 0
 	for entry in log: result += entry.amount
 	return result
+
+func _test_finished_chain_defense() -> void:
+	for selected in [stats, fast]:
+		var recovery = _advance(_chain(_fresh(selected)), 12)
+		check(recovery.chain.is_empty() and recovery.player.phase == "release" and recovery.player.hit_done and recovery.enemy.hp == 36, "finished real chain begins its full protected recovery")
+		var held = _step(recovery, {"defend_pressed": true}).state
+		check(held.player.phase == "release" and held.player.phase_tick == 1 and held.player.phase_duration == recovery.player.phase_duration and held.player.defend_held, "defense after chain completion is held without canceling recovery")
+		for index in held.player.phase_duration - held.player.phase_tick:
+			var next = _step(held, {"defend_pressed": true})
+			check(next.state.chain.is_empty() and next.state.enemy.hp == 36 and next.state.player.attack_id == recovery.player.attack_id and not _has_chain_event(next.events), "pending guard never restarts an ended chain or creates another strike")
+			held = next.state
+		check(held.player.phase == "guard" and held.player.guard_age_ticks == recovery.player.phase_duration and held.player.defend_held, "finished chain recovery carries ordinary held guard without refreshing its window")
+
+func _has_chain_event(events: Array) -> bool:
+	for event in events:
+		if event.kind in ["chain_started", "chain_target_locked", "hit", "attack_started"]: return true
+	return false
 
 func _test_activation_and_search() -> void:
 	check(stats.charge.hold_seconds > fast.charge.hold_seconds, "snap_focus shortens charge while chain card works alone")
