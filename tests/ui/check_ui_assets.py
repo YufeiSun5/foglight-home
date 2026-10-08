@@ -9,7 +9,7 @@ font_path = ROOT / 'assets/fonts/FoglightUI-SC.otf'
 font = TTFont(font_path)
 cmap = font.getBestCmap()
 checks = 0
-for directory in ('content', 'src/app', 'src/domain', 'src/presentation', 'src/bootstrap'):
+for directory in ('content', 'src/app', 'src/domain', 'src/adapters', 'src/presentation', 'src/bootstrap'):
     for path in (ROOT / directory).rglob('*'):
         if path.suffix not in ('.gd', '.json'): continue
         for char in path.read_text():

@@ -95,6 +95,14 @@ func submit(c:Dictionary)->Dictionary:
 
 func save() -> Dictionary: return _save_port.write_snapshot(view(), _epoch)
 
+## Startup inspection never replaces live state, advances its epoch or writes IO.
+func saved_game_status() -> Dictionary:
+	var result: Dictionary = _save_port.probe_snapshot()
+	if not result.get("exists", true): return {"exists": false, "can_continue": false}
+	var valid = result.get("ok", false) and result.get("state") is Dictionary and validate_snapshot(result.state)
+	return {"exists": true, "can_continue": valid, "recovered": result.get("recovered", false),
+		"error": "" if valid else result.get("error", "存档内容与当前章节不兼容")}
+
 func load_game(preflight: Callable = Callable()) -> Dictionary:
 	if _submitting: return {"ok": false, "error": "已有命令正在提交"}
 	var result = _save_port.read_snapshot()
