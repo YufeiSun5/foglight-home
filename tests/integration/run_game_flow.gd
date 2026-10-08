@@ -81,6 +81,7 @@ func _initialize() -> void:
 	_test_actual_file_save()
 	_test_world_transitions()
 	_test_load_preflight()
+	_test_position_sampling()
 	_test_routes()
 	_test_route_cards()
 	_test_route_world_readiness()
@@ -394,3 +395,59 @@ func _test_route_cards() -> void:
 	var invalid = Flow.new(nodes, invalid_port, {})
 	perform(invalid, "suspend")
 	check(not perform(invalid, "route_start").ok and invalid_port.writes == 0 and invalid.view().mode == "exploration", "invalid catalog fails before departure save and never locks exploration")
+
+func _test_position_sampling() -> void:
+	var world = MappedWorld.new()
+	var f = fixture(world)
+	var flow = f.flow
+	perform(flow, "suspend")
+	var sampled = {"calls": 0, "position": [1.0, -0.2], "mapping_id": "test_reversible_scale_v1", "reentrant_blocked": false}
+	flow.set_position_provider(func():
+		sampled.calls += 1
+		sampled.reentrant_blocked = not perform(flow, "save").ok
+		return {"position": sampled.position.duplicate(), "mapping_id": sampled.mapping_id})
+	var command = flow.intent("save")
+	var published = {"count": 0}
+	flow.changed.connect(func(): published.count += 1)
+	var result = flow.submit(command)
+	check(result.ok and f.save.snapshot.anchor == [5.0, -2.0] and sampled.calls == 1, "save samples exact physical position before writing persistent anchor")
+	check(published.count == 1 and sampled.reentrant_blocked, "position plus action emits one refresh and refuses sampler reentrancy")
+	var after = flow.view().story
+	var writes: int = f.save.writes
+	sampled.position = [2.0, -0.3]
+	check(flow.submit(command) == result and sampled.calls == 1 and f.save.writes == writes and flow.view().story == after, "exact retry never resamples or repeats anchor/save effects")
+	var stale = flow.intent("pause")
+	check(perform(flow, "open_wardrobe").ok and is_equal_approx(flow.view().story.anchor[0], 10.0) and is_equal_approx(flow.view().story.anchor[1], -3.0), "menu while moving captures actual position before taking input")
+	perform(flow, "close")
+	var calls: int = sampled.calls
+	check(not flow.submit(stale).ok and sampled.calls == calls, "stale UI command is rejected before position provider runs")
+	sampled.position = [0.2, 0.3]
+	check(perform(flow, "begin", {"target": "shen"}).ok and is_equal_approx(flow.view().story.anchor[0], 1.0) and is_equal_approx(flow.view().story.anchor[1], 3.0), "interaction while moving captures actual position before dialogue")
+	calls = sampled.calls
+	check(perform(flow, "save").ok and sampled.calls == calls, "dialogue save does not query exploration position provider")
+	perform(flow, "suspend")
+	sampled.position = [0.4, 0.1]
+	check(perform(flow, "travel", {"scene_id": "PILOT_CABIN"}).get("pending", false) and f.save.snapshot.anchor == [2.0, 1.0], "transition departure persists latest physical position")
+	calls = sampled.calls
+	check(ready(flow).ok and sampled.calls == calls, "transition readiness never resamples old scene")
+	flow.set_position_provider(Callable())
+	perform(flow, "travel", {"scene_id": "FOG_HARBOR"})
+	ready(flow)
+	var original = flow.view().story
+	var visual = flow.view().world.mapping.visual_anchor
+	var rounded = Vector2(visual[0], visual[1])
+	flow.set_position_provider(func(): return {"position": [rounded.x, rounded.y], "mapping_id": "test_reversible_scale_v1"})
+	check(perform(flow, "save").ok and flow.view().story == original and f.save.snapshot.anchor == [10.0, -8.68], "unchanged float32 spawn preserves exact legacy anchor without new revision")
+	for malformed in [null, [], {"position": []}, {"position": ["bad", 0]}, {"position": [INF, 0]}, {"position": [1.0, 2.0], "mapping_id": "old"}]:
+		flow.set_position_provider(func(): return malformed)
+		writes = f.save.writes
+		check(not perform(flow, "save").ok and flow.view().story == original and f.save.writes == writes, "bad sampler refuses save without changing current position")
+		flow.set_position_provider(func(): return {})
+		check(perform(flow, "save").ok, "bad sampler never strands input lock")
+	var absent = {"calls": 0}
+	flow.set_position_provider(func(): absent.calls += 1; return {"position": [1.0, 1.0], "mapping_id": "test_reversible_scale_v1"})
+	check(perform(flow, "load").get("pending", false) and absent.calls == 0, "load never resamples or mutates departing anchor")
+	perform(flow, "cancel_transition", {"transition_id": flow.view().transition.id})
+	check(perform(flow, "new_game").get("pending", false) and absent.calls == 0, "new game never resamples or rewrites old slot")
+	perform(flow, "cancel_transition", {"transition_id": flow.view().transition.id})
+	check(absent.calls == 0 and flow.view().story == original, "cancellation never invokes position provider")

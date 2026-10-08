@@ -18,6 +18,11 @@ jobs:
           echo 'a035258da32b77f966a5376f9fa29c30a6adde826a85ba918e1605bd1fc9823eba7d85f1dd5e748956bd2ba72827c0025ffa11bb82aec91128c407a2e723c99c  /tmp/godot.zip' | sha512sum --check
           unzip -q /tmp/godot.zip -d /tmp/foglight-engine
           chmod +x /tmp/foglight-engine/Godot_v4.6.3-stable_linux.x86_64
+      - name: Install pinned UI font verification dependency
+        run: |
+          python3 -m venv "$RUNNER_TEMP/foglight-ui-venv"
+          "$RUNNER_TEMP/foglight-ui-venv/bin/python" -m pip install --disable-pip-version-check --index-url https://pypi.org/simple fonttools==4.61.1
+          echo "$RUNNER_TEMP/foglight-ui-venv/bin" >> "$GITHUB_PATH"
       - name: Run bounded content, state, save and presentation checks
         env:
           GODOT_BIN: /tmp/foglight-engine/Godot_v4.6.3-stable_linux.x86_64

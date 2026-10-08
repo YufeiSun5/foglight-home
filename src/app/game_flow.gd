@@ -32,6 +32,7 @@ var _events: Array = []
 var _route_events: Array = []
 var _last_route: Dictionary = {}
 var _saved_revision = -1
+var _position_provider: Callable
 
 ## Production bootstrap may pass its existing StateStore as the first argument
 ## and null as save_port. Dictionary + SavePort remains a convenient test seam.
@@ -41,6 +42,14 @@ func _init(definitions_or_store: Variant, save_port: RefCounted = null, route_ca
 	_world_port = world_port
 	_instance = str(get_instance_id()) + ":" + str(Time.get_ticks_usec())
 	_store.committed.connect(_collect_committed)
+
+## Bootstrap injects a read-only physical-position sampler. A provider returns
+## {position:[visual x,z], mapping_id} or {} when no stable world is available.
+## It is sampled only after the original UI command passes replay/context checks;
+## movement and the requested action publish one final UI refresh. No per-frame
+## save-anchor commits or replacement of stale button commands are required.
+func set_position_provider(provider: Callable) -> void:
+	_position_provider = provider
 
 func view() -> Dictionary:
 	var story: Dictionary = _store.view()
@@ -100,7 +109,8 @@ func submit(command: Dictionary) -> Dictionary:
 	_busy = true
 	_events = []
 	_route_events = []
-	var result: Dictionary = _dispatch(command.action, command.payload)
+	var result: Dictionary = _sample_position(command.action)
+	if result.get("ok", false): result = _dispatch(command.action, command.payload)
 	if result.get("ok", false):
 		# Combat frames refresh transient revision, not every displayed UI token.
 		if command.action != "route_frame": _generation += 1
@@ -138,6 +148,23 @@ func _mode() -> String:
 	if _overlay != "": return _overlay
 	if _route != null: return "expedition"
 	return "dialogue" if _store.view().node != "" else "exploration"
+
+func _sample_position(action: String) -> Dictionary:
+	if not _position_provider.is_valid() or _mode() != "exploration" or action not in ["save", "open_wardrobe", "open_journal", "pause", "begin", "travel", "route_start"]:
+		return {"ok": true}
+	var sampled: Variant = _position_provider.call()
+	if not sampled is Dictionary: return _error("当前位置采样格式无效")
+	if sampled.is_empty(): return {"ok": true}
+	if not sampled.get("position") is Array or not _valid_position(sampled.position): return _error("当前位置采样格式无效")
+	if _world_port == null: return _error("当前位置缺少可逆映射")
+	var mapping = _resolve(_store.view())
+	if not mapping.get("ok", false): return mapping
+	if sampled.get("mapping_id") != mapping.mapping_id: return _error("当前位置映射已过期")
+	# Visual transforms use float32. An unchanged rendered spawn must not rewrite
+	# its exact saved logical anchor just because inverse arithmetic rounds it.
+	if absf(float(sampled.position[0]) - float(mapping.visual_anchor[0])) <= 0.00001 and absf(float(sampled.position[1]) - float(mapping.visual_anchor[1])) <= 0.00001:
+		return {"ok": true}
+	return _dispatch("visual_anchor", {"position": sampled.position.duplicate(), "mapping_id": sampled.mapping_id})
 
 func _dispatch(action: String, payload: Dictionary) -> Dictionary:
 	if not _pending.is_empty():
