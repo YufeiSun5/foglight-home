@@ -95,11 +95,19 @@ func submit(c:Dictionary)->Dictionary:
 
 func save() -> Dictionary: return _save_port.write_snapshot(view(), _epoch)
 
-func load_game() -> Dictionary:
+func load_game(preflight: Callable = Callable()) -> Dictionary:
 	if _submitting: return {"ok": false, "error": "已有命令正在提交"}
 	var result = _save_port.read_snapshot()
 	if not result.get("ok", false): return result
 	if not validate_snapshot(result.state): return {"ok": false, "error": "存档内容与当前章节不兼容"}
+	# A world adapter may reject unavailable scenes/anchors before the epoch,
+	# persistence barrier or authoritative state changes. Give it an isolated value.
+	if preflight.is_valid():
+		_submitting = true
+		var checked: Variant = preflight.call(result.state.duplicate(true))
+		_submitting = false
+		if not checked is Dictionary or not checked.get("ok", false):
+			return checked.duplicate(true) if checked is Dictionary else {"ok": false, "error": "读档场景检查无效"}
 	_epoch += 1
 	_generation += 1
 	_save_port.barrier(_epoch)
