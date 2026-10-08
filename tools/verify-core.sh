@@ -38,3 +38,8 @@ fi
   fi
  done
 )
+
+# Snapshot-driven UI uses only the published font and character checkpoint assets.
+if [[ -f tests/ui/verify-ui.sh ]]; then
+ bash tests/ui/verify-ui.sh
+fi

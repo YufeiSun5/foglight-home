@@ -1,0 +1,16 @@
+{
+  "family": "Foglight UI SC",
+  "derived_from": "Noto Sans CJK SC Regular",
+  "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "installed_package": "fonts-noto-cjk",
+  "upstream": "https://github.com/notofonts/noto-cjk",
+  "source_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+  "subset_sha256": "b9c352050c8769c3f0ffadd1d84c4341ecd59c111a46994cd67c05cd9d24ae62",
+  "copyright": "© 2014-2021 Adobe (http://www.adobe.com/).",
+  "license": "SIL Open Font License 1.1",
+  "license_file": "OFL-1.1.txt",
+  "modification": "Simplified Chinese face extracted, subset to project text, family renamed.",
+  "coverage_count": 654,
+  "build": "python3 tests/ui/build_ui_font.py",
+  "redistribution": "Bundle OFL-1.1.txt; do not sell font by itself. No project license is granted by this font license."
+}
