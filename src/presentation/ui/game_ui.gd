@@ -75,7 +75,7 @@ func _refresh() -> void:
 
 func _visible_state(value: Dictionary) -> Dictionary:
 	var result: Dictionary = {}
-	for key in ["context", "mode", "dialogue", "chapter", "appearance", "wardrobe", "journal", "transition", "saved_revision", "unsaved"]:
+	for key in ["context", "mode", "dialogue", "chapter", "appearance", "wardrobe", "journal", "transition", "startup", "saved_revision", "unsaved"]:
 		result[key] = value.get(key)
 	var status: Dictionary = value.get("status", {})
 	result.status = {"ok": status.get("ok", true), "error": status.get("error", ""), "warning": status.get("warning", ""), "message": status.get("message", "")}
@@ -121,7 +121,7 @@ func _rebuild() -> void:
 	_canvas.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build_hud()
 	var mode: String = _snapshot.get("mode", "exploration")
-	if mode in ["wardrobe", "journal", "pause", "transition"]:
+	if mode in ["wardrobe", "journal", "pause", "transition", "startup"]:
 		var shade = ColorRect.new()
 		shade.color = Color(0.02, 0.045, 0.07, 0.65)
 		_canvas.add_child(shade)
@@ -129,6 +129,7 @@ func _rebuild() -> void:
 		if mode == "wardrobe": _build_wardrobe()
 		elif mode == "journal": _build_journal()
 		elif mode == "pause": _build_pause()
+		elif mode == "startup": _build_startup()
 		else: _build_transition()
 	elif mode == "dialogue": _build_dialogue()
 	_build_status()
@@ -139,7 +140,9 @@ func _restore_focus(generation: int) -> void:
 	if generation != _serial or not is_inside_tree(): return
 	var key = _focus_key
 	if not _buttons.has(key) or _buttons[key].disabled:
-		key = "advance" if _buttons.has("advance") else ("choice_0" if _buttons.has("choice_0") else "close")
+		if _buttons.has("cancel_new_game"): key = "cancel_new_game"
+		elif _buttons.has("startup_continue"): key = "startup_continue"
+		else: key = "advance" if _buttons.has("advance") else ("choice_0" if _buttons.has("choice_0") else "close")
 	if _buttons.has(key) and not _buttons[key].disabled: _buttons[key].grab_focus()
 
 func _panel(key: String) -> PanelContainer:
@@ -211,6 +214,7 @@ func _emit_command(command: Dictionary, generation: int) -> void:
 		for key in _buttons: _buttons[key].disabled = enabled_before.get(key, false)
 
 func _build_hud() -> void:
+	if not _snapshot.get("startup", {}).is_empty(): return
 	var heading = _column(_panel("heading"), 1)
 	_label(heading, "雾灯归航", 23)
 	_label(heading, "第一章 · 雾港没有出口" + (" · 未保存" if _snapshot.get("unsaved", true) else " · 已保存"), 14, true)
@@ -362,7 +366,7 @@ func _build_pause() -> void:
 	_modal_header(column, "暂停")
 	_label(column, "重建试玩 · 画面待验收", 14, true)
 	if _confirm_new_game:
-		_copy(column, "重新开始会结束当前游玩并重置当前故事进度。要重新开始吗？")
+		_copy(column, "重新开始会结束当前游玩并重置故事进度。后续保存或切换场景的自动存档会覆盖现有存档及备份。要重新开始吗？")
 		_button(column, "cancel_new_game", "返回暂停菜单").pressed.connect(_cancel_restart.bind(_serial))
 		_button(column, "confirm_new_game", "确认重新开始", "new_game")
 	else:
@@ -382,13 +386,37 @@ func _cancel_restart(generation: int) -> void:
 	_confirm_new_game = false
 	_rebuild()
 
+func _build_startup() -> void:
+	var column = _column(_panel("startup"), 14)
+	_label(column, "雾灯归航", 28)
+	_label(column, "第一章 · 雾港没有出口", 17, true)
+	column.add_child(HSeparator.new())
+	var startup: Dictionary = _snapshot.get("startup", {})
+	if startup.get("confirm_new_game", false):
+		_copy(column, "开始新游戏将从第一章开头重新游玩。后续保存或切换场景的自动存档会覆盖现有存档及备份，原有进度将无法恢复。确定重新开始吗？")
+		_button(column, "cancel_new_game", "保留存档并返回  Esc", "cancel_new_game")
+		_button(column, "confirm_new_game", "确认开始新游戏", "confirm_new_game")
+	else:
+		var message = "发现已有进度。继续上次游玩，或选择开始新游戏。"
+		if startup.get("recovered", false): message = "可从备份恢复上次进度。选择继续即可读取，原文件会保留。"
+		elif not startup.get("can_continue", false): message = "现有存档暂时无法读取，原文件已保留。可以重试读取，或确认开始新游戏。\n" + str(startup.get("error", ""))
+		_copy(column, message)
+		var status: Dictionary = _snapshot.get("status", {})
+		var issue: String = status.get("error", "") if not status.get("ok", true) else status.get("warning", "")
+		if not issue.is_empty() and issue != startup.get("error", ""):
+			var notice = _copy(column, issue)
+			notice.add_theme_color_override("font_color", UITheme.GOLD)
+		_button(column, "startup_continue", "继续上次游玩" if startup.get("can_continue", false) else "重试读取存档", "load")
+		_button(column, "startup_new_game", "开始新游戏", "new_game")
+
 func _build_transition() -> void:
 	var column = _column(_panel("transition"), 12)
 	_label(column, "正在准备场景", 24)
-	_copy(column, "请稍候。准备完成后继续；也可以取消并留在原处。")
+	_copy(column, "请稍候。准备完成后继续；取消将返回开始菜单并保留存档。" if not _snapshot.get("startup", {}).is_empty() else "请稍候。准备完成后继续；也可以取消并留在原处。")
 	_button(column, "cancel_transition", "取消并返回", "cancel_transition", {"transition_id": _snapshot.get("transition", {}).get("id", "")})
 
 func _build_status() -> void:
+	if _snapshot.get("mode") == "startup": return
 	var status: Dictionary = _snapshot.get("status", {})
 	var message: String = status.get("error", "") if not status.get("ok", true) else status.get("warning", status.get("message", ""))
 	if message.is_empty(): return
@@ -414,6 +442,8 @@ func _layout() -> void:
 	_place("journal", Rect2((size - modal_size) * 0.5, modal_size))
 	modal_size = Vector2(minf(520, width - margin * 2), minf(452, height - margin * 2))
 	_place("pause", Rect2((size - modal_size) * 0.5, modal_size))
+	modal_size = Vector2(minf(570, width - margin * 2), minf(415, height - margin * 2))
+	_place("startup", Rect2((size - modal_size) * 0.5, modal_size))
 	_place("transition", Rect2((size - Vector2(520, 190)) * 0.5, Vector2(520, 190)))
 	_place("status", Rect2(margin, 98, minf(680, width - margin * 2), 56))
 
@@ -426,6 +456,11 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo or _flow == null: return
 	var key = ""
 	var mode: String = _snapshot.get("mode", "exploration")
+	if mode == "startup":
+		if event.keycode == KEY_ESCAPE and _snapshot.get("startup", {}).get("confirm_new_game", false):
+			_buttons.cancel_new_game.pressed.emit()
+			get_viewport().set_input_as_handled()
+		return
 	match event.keycode:
 		KEY_ESCAPE:
 			if _confirm_new_game: _cancel_restart(_serial); get_viewport().set_input_as_handled(); return

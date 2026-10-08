@@ -5,12 +5,12 @@
   "installed_package": "fonts-noto-cjk",
   "upstream": "https://github.com/notofonts/noto-cjk",
   "source_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
-  "subset_sha256": "b9c352050c8769c3f0ffadd1d84c4341ecd59c111a46994cd67c05cd9d24ae62",
+  "subset_sha256": "99b3332368d814672bc0a204ea886b265ef66a073f44b2c46e31c9f1c4bf8e71",
   "copyright": "© 2014-2021 Adobe (http://www.adobe.com/).",
   "license": "SIL Open Font License 1.1",
   "license_file": "OFL-1.1.txt",
   "modification": "Simplified Chinese face extracted, subset to project text, family renamed.",
-  "coverage_count": 654,
+  "coverage_count": 685,
   "build": "python3 tests/ui/build_ui_font.py",
   "redistribution": "Bundle OFL-1.1.txt; do not sell font by itself. No project license is granted by this font license."
 }

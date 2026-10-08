@@ -57,6 +57,13 @@ func read_snapshot() -> Dictionary:
 		return backup
 	return result
 
+func probe_snapshot() -> Dictionary:
+	var exists = FileAccess.file_exists(root + "/slot.json") or FileAccess.file_exists(root + "/slot.bak")
+	if not exists: return {"ok": false, "exists": false}
+	var result = read_snapshot().duplicate(true)
+	result["exists"] = true
+	return result
+
 func write_snapshot(snapshot: Dictionary, request_epoch: int) -> Dictionary:
 	if request_epoch != _epoch: return {"ok": false, "error": "旧存档请求已取消"}
 	if not _validator.is_valid() or not _validator.call(snapshot): return {"ok": false, "error": "拒绝保存未验证状态"}

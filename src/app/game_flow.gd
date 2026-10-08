@@ -33,15 +33,21 @@ var _route_events: Array = []
 var _last_route: Dictionary = {}
 var _saved_revision = -1
 var _position_provider: Callable
+var _startup: Dictionary = {}
 
 ## Production bootstrap may pass its existing StateStore as the first argument
 ## and null as save_port. Dictionary + SavePort remains a convenient test seam.
-func _init(definitions_or_store: Variant, save_port: RefCounted = null, route_catalog: Dictionary = {}, world_port: RefCounted = null):
+func _init(definitions_or_store: Variant, save_port: RefCounted = null, route_catalog: Dictionary = {}, world_port: RefCounted = null, startup_gate: bool = false):
 	_store = definitions_or_store if definitions_or_store is RefCounted else Store.new(definitions_or_store, save_port)
 	_catalog = route_catalog.duplicate(true)
 	_world_port = world_port
 	_instance = str(get_instance_id()) + ":" + str(Time.get_ticks_usec())
 	_store.committed.connect(_collect_committed)
+	if startup_gate:
+		var saved: Dictionary = _store.saved_game_status()
+		if saved.get("exists", false):
+			_startup = saved
+			_startup.confirm_new_game = false
 
 ## Bootstrap injects a read-only physical-position sampler. A provider returns
 ## {position:[visual x,z], mapping_id} or {} when no stable world is available.
@@ -80,7 +86,7 @@ func view() -> Dictionary:
 		"world": {"scene_id": story.world.scene_id, "anchor": story.anchor.duplicate(),
 			"presentation_bound": _world_port != null, "mapping": _resolve(story)},
 		"expedition": expedition, "last_route": _last_route.duplicate(true),
-		"transition": _public_transition(), "status": _status.duplicate(true),
+		"transition": _public_transition(), "startup": _startup.duplicate(true), "status": _status.duplicate(true),
 		"saved_revision": _saved_revision, "unsaved": int(story.revision) != _saved_revision}
 
 func intent(action: String, payload: Dictionary = {}) -> Dictionary:
@@ -145,6 +151,7 @@ func _context() -> Dictionary:
 
 func _mode() -> String:
 	if not _pending.is_empty(): return "transition"
+	if not _startup.is_empty(): return "startup"
 	if _overlay != "": return _overlay
 	if _route != null: return "expedition"
 	return "dialogue" if _store.view().node != "" else "exploration"
@@ -172,6 +179,7 @@ func _dispatch(action: String, payload: Dictionary) -> Dictionary:
 			"scene_ready": return _complete_transition(payload)
 			"scene_failed", "cancel_transition": return _cancel_transition(payload, action)
 			_: return _error("场景正在准备，可取消返回")
+	if not _startup.is_empty(): return _startup_action(action)
 	match action:
 		"open_wardrobe": return _open_overlay("wardrobe")
 		"open_journal": return _open_overlay("journal")
@@ -209,6 +217,24 @@ func _dispatch(action: String, payload: Dictionary) -> Dictionary:
 			return _dispatch("anchor", {"position": position.get("position")})
 		"route_start": return _start_route(payload)
 	return _error("未知操作")
+
+func _startup_action(action: String) -> Dictionary:
+	match action:
+		"load":
+			if _startup.confirm_new_game: return _error("请先取消重新开始，再读取存档")
+			return _load()
+		"new_game":
+			_startup.confirm_new_game = true
+			return {"ok": true, "confirmation_required": true}
+		"cancel_new_game":
+			if not _startup.confirm_new_game: return _error("当前没有重新开始确认")
+			_startup.confirm_new_game = false
+			return {"ok": true, "canceled": true}
+		"confirm_new_game":
+			if not _startup.confirm_new_game: return _error("请先确认是否替换现有进度")
+			_startup.confirm_new_game = false
+			return _new_game()
+	return _error("请先继续存档，或确认开始新游戏")
 
 func _open_overlay(name: String) -> Dictionary:
 	if _overlay != "": return _error("请先关闭当前界面")
@@ -272,6 +298,7 @@ func _new_game() -> Dictionary:
 	return result
 
 func _after_replacement() -> void:
+	_startup = {}
 	_overlay = ""
 	_last_route = {}
 	_saved_revision = int(_store.view().revision)

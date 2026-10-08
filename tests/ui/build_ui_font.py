@@ -19,7 +19,7 @@ copyright_notice = font['name'].getDebugName(0)
 license_notice = font['name'].getDebugName(13)
 assert 'SIL Open Font License, Version 1.1' in license_notice
 text = ''.join(chr(codepoint) for codepoint in range(32, 127)) + '\u00a0\u3000●○'
-for directory in ('content', 'src/app', 'src/domain', 'src/presentation', 'src/bootstrap'):
+for directory in ('content', 'src/app', 'src/domain', 'src/adapters', 'src/presentation', 'src/bootstrap'):
     for path in sorted((ROOT / directory).rglob('*')):
         if path.suffix in ('.gd', '.json'): text += path.read_text(encoding='utf-8')
 codepoints = sorted(set(map(ord, text)))
