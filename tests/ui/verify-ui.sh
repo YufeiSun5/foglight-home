@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/../.."
+# These read-only source checks do not touch player slots. Run before changing
+# HOME so a developer's user-installed Python verification dependency is visible.
+python3 tests/ui/check_ui_assets.py
+python3 tools/check_boundaries.py
 root="$(mktemp -d /tmp/foglight-ui-XXXXXX)"
 trap 'rm -rf "$root"' EXIT
 mkdir -p "$root"/{home,cache,config,data}
@@ -15,5 +19,3 @@ for script in run_game_ui.gd run_ui_layout.gd; do
   grep -Eq 'checks; 0 failures' "$root/check.log"
   if grep -Eq 'SCRIPT ERROR:|^ERROR:|WARNING: ObjectDB|resources still in use' "$root/check.log"; then exit 1; fi
 done
-python3 tests/ui/check_ui_assets.py
-python3 tools/check_boundaries.py
