@@ -1,0 +1,9 @@
+.godot/
+.qa/
+*.import
+.DS_Store
+*.log
+.env*
+
+/assets/workshop/foglight_workshop_refined3_runtime.glb
+/assets/workshop_props/workshop_props.glb

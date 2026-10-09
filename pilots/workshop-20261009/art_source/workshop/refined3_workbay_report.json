@@ -1,0 +1,20 @@
+{
+  "removed_full_height_wood_planks": 7,
+  "plaster_ranges_X": [
+    [
+      -3.56,
+      -3.01
+    ],
+    [
+      -1.7,
+      -0.76
+    ]
+  ],
+  "back_wall_Y": -0.28,
+  "door_opening_preserved": [
+    -2.96,
+    -1.74
+  ],
+  "new_side_infill_thickness": 0.14,
+  "post_and_wall_depth_unchanged": true
+}

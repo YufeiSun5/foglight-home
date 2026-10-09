@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "status": "blocked_no_external_textures_downloaded",
+  "scope": "four external PBR candidates only; no scene/model changes; no reference-image texturing",
+  "materials": [
+    {
+      "id": "wood_table_001",
+      "role": "subtle_dark_brown_wood",
+      "source_url": "https://polyhaven.com/a/wood_table_001",
+      "source_reported_size": {
+        "axis": "height",
+        "metres": 1.5
+      },
+      "planned_target": "assets/materials/wood_table_001/",
+      "uv_guidance": "1 UV tile approximately 1.5 metres; final aspect ratio requires image dimensions. Align the actual grain direction with each beam after inspecting downloaded albedo. Do not tile a multi-plank image at beam width.",
+      "look_notes": "Fine brown wood candidate chosen to avoid heavy black cracks. Not naturally old rough timber: source is varnished; darken/desaturate subtly and raise roughness to 0.75–0.90 if used. Final colour and grain direction are unverified.",
+      "provider": "Poly Haven",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_body": "art_source/materials/CC0-1.0.txt",
+      "verified_date": "2026-10-09",
+      "desired_resolution": "1k",
+      "desired_maps": [
+        "diff",
+        "nor_gl",
+        "rough"
+      ],
+      "albedo_color_space": "sRGB",
+      "normal_color_space": "linear/non-color",
+      "normal_convention": "OpenGL +Y tangent space",
+      "roughness_color_space": "linear/non-color",
+      "download_status": "blocked_connection_timeout",
+      "downloaded_files": [],
+      "asset_sha256": null,
+      "visual_texture_validation": "not possible; texture bytes not downloaded",
+      "candidate_download_urls": {
+        "diff": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_diff_1k.jpg",
+        "nor_gl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_nor_gl_1k.jpg",
+        "rough": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_rough_1k.jpg"
+      },
+      "candidate_download_url_status": "Pattern follows the official 4K download links; 1K URLs and file bytes could not be verified in this environment. Re-resolve on official asset page if download fails."
+    },
+    {
+      "id": "beige_wall_002",
+      "role": "warm_grey_rough_plaster",
+      "source_url": "https://polyhaven.com/a/beige_wall_002",
+      "source_reported_size": {
+        "axis": "height",
+        "metres": 3.0
+      },
+      "planned_target": "assets/materials/beige_wall_002/",
+      "uv_guidance": "1 V tile = 3 metres. Preserve source aspect ratio. Do not increase bump amplitude to imply centimetre-scale gravel.",
+      "look_notes": "Fine bumpy beige plaster candidate, appropriate for warm grey infill after modest desaturation. Suggested normal strength 0.4–0.7; roughness 0.85–0.95.",
+      "provider": "Poly Haven",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_body": "art_source/materials/CC0-1.0.txt",
+      "verified_date": "2026-10-09",
+      "desired_resolution": "1k",
+      "desired_maps": [
+        "diff",
+        "nor_gl",
+        "rough"
+      ],
+      "albedo_color_space": "sRGB",
+      "normal_color_space": "linear/non-color",
+      "normal_convention": "OpenGL +Y tangent space",
+      "roughness_color_space": "linear/non-color",
+      "download_status": "blocked_connection_timeout",
+      "downloaded_files": [],
+      "asset_sha256": null,
+      "visual_texture_validation": "not possible; texture bytes not downloaded",
+      "candidate_download_urls": {
+        "diff": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_002/beige_wall_002_diff_1k.jpg",
+        "nor_gl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_002/beige_wall_002_nor_gl_1k.jpg",
+        "rough": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_002/beige_wall_002_rough_1k.jpg"
+      },
+      "candidate_download_url_status": "Pattern follows the official 4K download links; 1K URLs and file bytes could not be verified in this environment. Re-resolve on official asset page if download fails."
+    },
+    {
+      "id": "sandy_gravel",
+      "role": "pale_earth_gravel_path",
+      "source_url": "https://polyhaven.com/a/sandy_gravel",
+      "source_reported_size": {
+        "axis": "width",
+        "metres": 2.1
+      },
+      "planned_target": "assets/materials/sandy_gravel/",
+      "uv_guidance": "1 U tile = 2.1 metres. For a confirmed square image, planar XZ mapping uses UV=(X,Z)/2.1.",
+      "look_notes": "Weathered light sand and small stones candidate. Keep sandy golden-beige palette, not orange. Suggested normal strength 0.7–1.0; roughness 0.9–1.0.",
+      "provider": "Poly Haven",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_body": "art_source/materials/CC0-1.0.txt",
+      "verified_date": "2026-10-09",
+      "desired_resolution": "1k",
+      "desired_maps": [
+        "diff",
+        "nor_gl",
+        "rough"
+      ],
+      "albedo_color_space": "sRGB",
+      "normal_color_space": "linear/non-color",
+      "normal_convention": "OpenGL +Y tangent space",
+      "roughness_color_space": "linear/non-color",
+      "download_status": "blocked_connection_timeout",
+      "downloaded_files": [],
+      "asset_sha256": null,
+      "visual_texture_validation": "not possible; texture bytes not downloaded",
+      "candidate_download_urls": {
+        "diff": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sandy_gravel/sandy_gravel_diff_1k.jpg",
+        "nor_gl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sandy_gravel/sandy_gravel_nor_gl_1k.jpg",
+        "rough": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sandy_gravel/sandy_gravel_rough_1k.jpg"
+      },
+      "candidate_download_url_status": "Pattern follows the official 4K download links; 1K URLs and file bytes could not be verified in this environment. Re-resolve on official asset page if download fails."
+    },
+    {
+      "id": "rock_boulder_dry",
+      "role": "grey_rock",
+      "source_url": "https://polyhaven.com/a/rock_boulder_dry",
+      "source_reported_size": {
+        "axis": "height",
+        "metres": 1.8
+      },
+      "planned_target": "assets/materials/rock_boulder_dry/",
+      "uv_guidance": "1 V tile = 1.8 metres. Preserve physical texel scale across boulders and use triplanar/box mapping where appropriate.",
+      "look_notes": "Dry pale sandy-grey boulder candidate. Slightly desaturate if needed. Suggested normal strength 0.6–0.9; roughness 0.9–1.0.",
+      "provider": "Poly Haven",
+      "license": "CC0-1.0",
+      "license_url": "https://polyhaven.com/license",
+      "license_body": "art_source/materials/CC0-1.0.txt",
+      "verified_date": "2026-10-09",
+      "desired_resolution": "1k",
+      "desired_maps": [
+        "diff",
+        "nor_gl",
+        "rough"
+      ],
+      "albedo_color_space": "sRGB",
+      "normal_color_space": "linear/non-color",
+      "normal_convention": "OpenGL +Y tangent space",
+      "roughness_color_space": "linear/non-color",
+      "download_status": "blocked_connection_timeout",
+      "downloaded_files": [],
+      "asset_sha256": null,
+      "visual_texture_validation": "not possible; texture bytes not downloaded",
+      "candidate_download_urls": {
+        "diff": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_diff_1k.jpg",
+        "nor_gl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_nor_gl_1k.jpg",
+        "rough": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_rough_1k.jpg"
+      },
+      "candidate_download_url_status": "Pattern follows the official 4K download links; 1K URLs and file bytes could not be verified in this environment. Re-resolve on official asset page if download fails."
+    }
+  ],
+  "hashes_note": "asset_sha256 is null because no texture was downloaded. Documentation-only hashes are in SHA256SUMS.txt.",
+  "runtime_assets_created": []
+}

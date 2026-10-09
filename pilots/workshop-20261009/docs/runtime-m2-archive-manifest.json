@@ -1,0 +1,102 @@
+{
+  "project.godot": {
+    "bytes": 651,
+    "sha256": "820ec6a89d010ed0b06e124b5fdb1a42bd44aca80481832d10ea7bb4d35b97e5"
+  },
+  "run-pilot.sh": {
+    "bytes": 290,
+    "sha256": "4e1584b9bc05a6b890e31c12370c3daee0601a4b0a09a39afed127fb02929d8a"
+  },
+  "docs/REPRODUCE.md": {
+    "bytes": 3355,
+    "sha256": "82c64f8385093d27a4b08f16ec583723833c09050700c081348cf0e5810304ca"
+  },
+  "AI_BOARD.md": {
+    "bytes": 2040,
+    "sha256": "d86c8b9446e42e206c6717bc8c55e6df8cdf7d427b637152675bcb3ea943cef2"
+  },
+  "assets/workshop/foglight_workshop_refined3_runtime.glb": {
+    "bytes": 23696032,
+    "sha256": "99e52e13fbbd65db45e9c93a9634f034d59eb252f8a3ae9bd667e183611e6746"
+  },
+  "assets/workshop/MATERIAL_CONTRACT.md": {
+    "bytes": 4528,
+    "sha256": "5a663fe61df1c15ac7b66633df7b7df130a71a163fc3476242da0befdf38bc8d"
+  },
+  "assets/workshop_props/workshop_props.glb": {
+    "bytes": 13875280,
+    "sha256": "0338a43c88973117a01374f6fd0c81c73fa011c23fc2dd6b652babbe2695ebc9"
+  },
+  "assets/workshop_props/workwall_props.glb": {
+    "bytes": 5865272,
+    "sha256": "735561a1015c4624a537a67b25aaffa74a22b62ad26bd1f23cb8c68d55507722"
+  },
+  "art_source/workshop_props/README.md": {
+    "bytes": 3582,
+    "sha256": "063259af44e2e5f4e9feddf3e06f60169fa0068107074843134dd32720802066"
+  },
+  "art_source/workshop_props/WORKWALL.md": {
+    "bytes": 2095,
+    "sha256": "dd85c02a5be842a19eaf69d3f08ce72fbd287354a5e7eb150beeb20a9a0cd8d5"
+  },
+  "src/mesh_basis_repair.gd.uid": {
+    "bytes": 20,
+    "sha256": "f50767d861e1f637b6a361742315ce9496ec075b8566f0108d7da77d6821dd9a"
+  },
+  "src/flat_diagnostic.gdshader.uid": {
+    "bytes": 20,
+    "sha256": "cfcf6030c27c98323b867327addb58c093c2fbc302e99bed1a38222b65e0c9d9"
+  },
+  "src/flat_diagnostic.gdshader": {
+    "bytes": 97,
+    "sha256": "c1c6fe6c4b1c66a317a72442eacf3274e690c17aefe2a34c729706e21e103be5"
+  },
+  "src/actor_pilot.gdshader": {
+    "bytes": 273,
+    "sha256": "74747671400a49a843821fae71c988943a844c516d262cecf3c75f4cedda330e"
+  },
+  "src/ground_flora.gd": {
+    "bytes": 24478,
+    "sha256": "d83e83f934847282be6158837e0a261b7e8c199211655e254b956d7556cc8661"
+  },
+  "src/mesh_basis_repair.gd": {
+    "bytes": 5040,
+    "sha256": "2785b54c543fc3484fd53298287bb82943ecc16d9c47235edaf6ae04560a0a42"
+  },
+  "src/pilot.tscn": {
+    "bytes": 161,
+    "sha256": "ab96d5f07186e85325af55841d2e222c1c022aad5506920d61bfe375c8e047b6"
+  },
+  "src/actor_pilot.gdshader.uid": {
+    "bytes": 19,
+    "sha256": "a6a3ded4c51306f97c91065ea688fd64ece1c6cc5f4685aefddae26aef046041"
+  },
+  "src/pilot.gd": {
+    "bytes": 6050,
+    "sha256": "6e9b17d5e2bd2e04931cf309e0104220b2de36d2bffa27f88dce8530552c4767"
+  },
+  "src/pilot.gd.uid": {
+    "bytes": 20,
+    "sha256": "6cf103206043e4bfc96d16add6988a4fb04918ee52317bcb7e9da701dfcbac4c"
+  },
+  "src/ground_flora.gd.uid": {
+    "bytes": 20,
+    "sha256": "9ef2fc0a9f167405776af0142cf68d42cfde7862b3aa090bd339ea9659539f73"
+  },
+  "assets/character/idle_topmask.png": {
+    "bytes": 1144,
+    "sha256": "579b4b48231a184112ec0ee42f697fea30b6418a377f5c880106f4935a7928ef"
+  },
+  "assets/character/idle.png": {
+    "bytes": 49080,
+    "sha256": "7f73d81dec6dc1409e753aade1d08c889888a1ee42f2097157cf5545d1c60c17"
+  },
+  "assets/character/CHARACTER_V2_PROVENANCE.md": {
+    "bytes": 4440,
+    "sha256": "47f49c4904d83f9881cb5e30c30113c03ea86a983cccdb868650da346bd32685"
+  },
+  "assets/character/provenance.json": {
+    "bytes": 1307,
+    "sha256": "c21e6f51cdc3abbbf957b55fc865238ec34cfe053cfaa635d7a316c53698d3c1"
+  }
+}

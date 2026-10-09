@@ -1,0 +1,155 @@
+{
+  "version": "v03 plus optimized runtime",
+  "files": [
+    {
+      "path": "art_source/workshop/foglight_workshop_hero.blend",
+      "bytes": 19156860,
+      "sha256": "854fb81570d6f109ca65b857d0a9c4c2a7d95cd33eb04a0dcb591658af6b1ae9",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/build_workshop.py",
+      "bytes": 23483,
+      "sha256": "9365babafac2e79492564821a83d78e0733d8eb6bc9d4432e3a1cad491a28311",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/preview_workshop.py",
+      "bytes": 1571,
+      "sha256": "52e9ff31abd93b15c81f2c98deff9c10048c763a452ddaafecbb897b68208f73",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/workshop_preview_v01.png",
+      "bytes": 1786950,
+      "sha256": "93f0a32ff17829bf67e8b9bae19d73796733d150dfbc560096101dad2bc77df5",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/make_textures.py",
+      "bytes": 2180,
+      "sha256": "879c13d59b4279265bdd383e3e5905be59d91c1322fde649a67adf06628818e2",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/workshop_preview_v03.png",
+      "bytes": 1780291,
+      "sha256": "67e7b5334110abe8622a45b08ed53e0caf1cb76c48ffd0a9128aa73b560474bf",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/export_runtime.py",
+      "bytes": 2184,
+      "sha256": "ff42ed83ed75076954f4d767656b4dcddb5ce4e0cc7c6e2e41f459b1fc650884",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/aged_oak_normal.png",
+      "bytes": 1783813,
+      "sha256": "ad3ec70447ca0bd01b8d2adecfca20e5e82dd749aec062153cde161c52a300ea",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/limestone_roughness.png",
+      "bytes": 178224,
+      "sha256": "ff75508ea1edeea10f6feb81004bbfbd5de1fd594a72cd2994329ee22fcc2ce6",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/limestone_normal.png",
+      "bytes": 2531564,
+      "sha256": "0e0a2d101b975449396e1e8fbf6ece474b6277b89ae931e9fd586922b402d8a6",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/lime_plaster_basecolor.png",
+      "bytes": 620137,
+      "sha256": "e7493adf3cb3fd871452f10ae81d4d8eaeb708317607f0b5668a7086eb64dccc",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/aged_oak_basecolor.png",
+      "bytes": 417865,
+      "sha256": "ef6f4abc14a00969a47feb3331dee5abf737d8ecd4276203434e871af99d3831",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/linen_normal.png",
+      "bytes": 1467697,
+      "sha256": "78a2f757b0ffa32b8dd94665d072c64b264c3fe9db8c8fd25db1410eb1e82341",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/lime_plaster_roughness.png",
+      "bytes": 170762,
+      "sha256": "91e57bb796addb9381126c4d9a61b785467116f102489eaa1045afdb7355aabf",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/limestone_basecolor.png",
+      "bytes": 670915,
+      "sha256": "0bdf21e7484157047c1ad3910825c81b374b7ceb588ca87acffbe7a5492c62d9",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/linen_basecolor.png",
+      "bytes": 818482,
+      "sha256": "0b24a883a206d4147dc2d78d4444fd584c8eaee4cbaeb1981f9b2a765a9bd1b8",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/teal_patina_normal.png",
+      "bytes": 1917943,
+      "sha256": "4a6add60d0925874281a35475f0b173cb62a7b5ba9bb92e3441faf8629ec0158",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/teal_patina_roughness.png",
+      "bytes": 123418,
+      "sha256": "4f756d485ed1b49626fd6f0136968392cf5fc825d6aff76b8cf43b94805ffda3",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/teal_patina_basecolor.png",
+      "bytes": 534079,
+      "sha256": "c1c87f74cd985c71616ed6b2a097fd9503322bd422d49b019d55859d165ddc95",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/aged_oak_roughness.png",
+      "bytes": 99449,
+      "sha256": "298d4b233ce4e124d1fb7889a6fe88c1f5bc409999611819392d5f1b8a871343",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/linen_roughness.png",
+      "bytes": 177939,
+      "sha256": "7b88c2e9ec4dc59df55b1ef20a83f0d18ce57221e901c5c43b48a891e6e95108",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "art_source/workshop/textures/lime_plaster_normal.png",
+      "bytes": 2310804,
+      "sha256": "af1838b1731be4aa07e87d378ff5ff5220274ce95534d6312133e38e91c03bc6",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "assets/workshop/MATERIAL_CONTRACT.md",
+      "bytes": 4528,
+      "sha256": "5a663fe61df1c15ac7b66633df7b7df130a71a163fc3476242da0befdf38bc8d",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "assets/workshop/foglight_workshop_runtime.glb",
+      "bytes": 25016872,
+      "sha256": "f46c716624779639d4b1d97e8a3cdb97de76e97776ef59def6a2beb4a34cff29",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    },
+    {
+      "path": "assets/workshop/foglight_workshop_hero.glb",
+      "bytes": 19542544,
+      "sha256": "ce99d6df6f2818869dbc58959f2682bc6f65b09075263e9238925be80cd1e4d5",
+      "provenance": "Original project modeling / procedural texture synthesis; sole user reference not embedded"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "checked_date": "2026-10-09",
+  "checks": [
+    {
+      "target": "https://api.polyhaven.com/assets?t=textures",
+      "method": "curl HEAD",
+      "result": "curl exit 28; connection timed out after 10002 milliseconds"
+    },
+    {
+      "target": "https://ambientcg.com/get?file=Wood051_1K-JPG.zip",
+      "method": "curl HEAD follow redirects",
+      "result": "curl exit 28; connection timed out after 5002 milliseconds"
+    },
+    {
+      "target": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_diff_1k.jpg",
+      "method": "curl HEAD and subsequent approved sandbox-escalated GET",
+      "result": "curl exit 28; connection timed out after 5002 milliseconds on both requests; no file written"
+    },
+    {
+      "target": "https://ambientcg.com/get?file=Wood051_1K-JPG.zip",
+      "method": "web tool official download link",
+      "result": "redirected to https://acg-download.struffelproductions.com/file/ambientCG-Web/download/Wood051_V8GxOuBK/Wood051_1K-JPG.zip; web tool reports non-retryable fetch error"
+    }
+  ],
+  "interpretation": "Official HTML could be read using web search, but binary texture acquisition through shell failed at connection stage. No authorization denial or HTTP server rejection was reported. Technical network access cause is unconfirmed."
+}

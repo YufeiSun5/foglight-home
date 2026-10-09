@@ -1,0 +1,65 @@
+{
+  "asset": "workshop_props.glb",
+  "units": "metres",
+  "source_coordinate_system": "Blender Z up; facade -Y",
+  "engine_glb": "glTF Y up; exported automatic Blender conversion",
+  "material_contract": "Original wood and forged metal maps, metric grain UVs; no baked AO or external textures",
+  "materials": 6,
+  "assemblies": {
+    "01_Flywheel_drive": {
+      "source_components": 102,
+      "vertices": 10648,
+      "triangles": 20912
+    },
+    "02_Timber_handcart": {
+      "source_components": 68,
+      "vertices": 6448,
+      "triangles": 12640
+    },
+    "03_Right_workbench": {
+      "source_components": 32,
+      "vertices": 2160,
+      "triangles": 4192
+    },
+    "04_Low_joiner_stool": {
+      "source_components": 8,
+      "vertices": 480,
+      "triangles": 928
+    },
+    "05_Olive_work_chest": {
+      "source_components": 32,
+      "vertices": 1904,
+      "triangles": 3680
+    },
+    "06_Door_barrel": {
+      "source_components": 27,
+      "vertices": 3968,
+      "triangles": 7844
+    },
+    "07_Outer_supply_crate": {
+      "source_components": 32,
+      "vertices": 1904,
+      "triangles": 3680
+    },
+    "08_Tall_side_crate": {
+      "source_components": 32,
+      "vertices": 1904,
+      "triangles": 3680
+    },
+    "09_Side_barrel": {
+      "source_components": 27,
+      "vertices": 3968,
+      "triangles": 7844
+    },
+    "10_Small_work_keg": {
+      "source_components": 27,
+      "vertices": 3968,
+      "triangles": 7844
+    }
+  },
+  "total_triangles": 73244,
+  "source_component_count": 387,
+  "preview_warning": "Blender preview only. Parent performs Godot native-frame validation.",
+  "license": "Original authored procedural geometry and textures for this project; no third-party assets.",
+  "sha256_glb": "0338a43c88973117a01374f6fd0c81c73fa011c23fc2dd6b652babbe2695ebc9"
+}

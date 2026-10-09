@@ -1,0 +1,25 @@
+{
+  "source": {
+    "files": 153,
+    "mismatch_paths": []
+  },
+  "runtime": {
+    "files": 25,
+    "mismatch_paths": [
+      "docs/REPRODUCE.md"
+    ],
+    "explanation": "Newer Source-M3 REPRODUCE.md intentionally takes precedence; other runtime files identical."
+  },
+  "reassembled_original_glbs_sha256": "pass",
+  "reassembly_idempotence": "pass",
+  "cloud_clean_godot_4_6_3_import": "exit0; zero engine/script errors",
+  "headless_smoke_3_frames": "exit0; zero engine/script errors; 14 meshes / 62 surfaces",
+  "visual_test_this_handoff": false,
+  "native_gui_evidence_sha256": "e803468984de811a9e60b898f3310f37ff05a501a9fa3291641fcf2b2a134410",
+  "mac_validation": "not run in cloud handoff",
+  "full_clean_blender_rebuild": "not rerun",
+  "secret_pattern_scan": {
+    "hits": 0,
+    "scope": "selected publication files only; no credentials or chat searched"
+  }
+}

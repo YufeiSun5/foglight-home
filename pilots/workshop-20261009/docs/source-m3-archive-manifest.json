@@ -1,0 +1,614 @@
+{
+  "AI_BOARD.md": {
+    "bytes": 2040,
+    "sha256": "d86c8b9446e42e206c6717bc8c55e6df8cdf7d427b637152675bcb3ea943cef2"
+  },
+  "project.godot": {
+    "bytes": 651,
+    "sha256": "820ec6a89d010ed0b06e124b5fdb1a42bd44aca80481832d10ea7bb4d35b97e5"
+  },
+  "rebuild-assets.sh": {
+    "bytes": 792,
+    "sha256": "a2ae9c903327d10e59a7b0fc1d1026525cbbe0a455fe7cfbafa4f6a9641cb9d6"
+  },
+  "AGENTS.md": {
+    "bytes": 1283,
+    "sha256": "7da8dddb48c3ae4cffa48d0ab0cc99d6a39e9466261eafe248238b8046503654"
+  },
+  "run-pilot.sh": {
+    "bytes": 290,
+    "sha256": "4e1584b9bc05a6b890e31c12370c3daee0601a4b0a09a39afed127fb02929d8a"
+  },
+  "tests/.gdignore": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "tests/package_checkpoint.py": {
+    "bytes": 2700,
+    "sha256": "80509d1fa030fa1ef50e1b55f2a98a32c3ac27cf000714fd47bb04cf7d4c871b"
+  },
+  "src/mesh_basis_repair.gd.uid": {
+    "bytes": 20,
+    "sha256": "f50767d861e1f637b6a361742315ce9496ec075b8566f0108d7da77d6821dd9a"
+  },
+  "src/flat_diagnostic.gdshader.uid": {
+    "bytes": 20,
+    "sha256": "cfcf6030c27c98323b867327addb58c093c2fbc302e99bed1a38222b65e0c9d9"
+  },
+  "src/flat_diagnostic.gdshader": {
+    "bytes": 97,
+    "sha256": "c1c6fe6c4b1c66a317a72442eacf3274e690c17aefe2a34c729706e21e103be5"
+  },
+  "src/actor_pilot.gdshader": {
+    "bytes": 273,
+    "sha256": "74747671400a49a843821fae71c988943a844c516d262cecf3c75f4cedda330e"
+  },
+  "src/ground_flora.gd": {
+    "bytes": 24478,
+    "sha256": "d83e83f934847282be6158837e0a261b7e8c199211655e254b956d7556cc8661"
+  },
+  "src/mesh_basis_repair.gd": {
+    "bytes": 5040,
+    "sha256": "2785b54c543fc3484fd53298287bb82943ecc16d9c47235edaf6ae04560a0a42"
+  },
+  "src/pilot.tscn": {
+    "bytes": 161,
+    "sha256": "ab96d5f07186e85325af55841d2e222c1c022aad5506920d61bfe375c8e047b6"
+  },
+  "src/actor_pilot.gdshader.uid": {
+    "bytes": 19,
+    "sha256": "a6a3ded4c51306f97c91065ea688fd64ece1c6cc5f4685aefddae26aef046041"
+  },
+  "src/pilot.gd": {
+    "bytes": 6050,
+    "sha256": "6e9b17d5e2bd2e04931cf309e0104220b2de36d2bffa27f88dce8530552c4767"
+  },
+  "src/pilot.gd.uid": {
+    "bytes": 20,
+    "sha256": "6cf103206043e4bfc96d16add6988a4fb04918ee52317bcb7e9da701dfcbac4c"
+  },
+  "src/ground_flora.gd.uid": {
+    "bytes": 20,
+    "sha256": "9ef2fc0a9f167405776af0142cf68d42cfde7862b3aa090bd339ea9659539f73"
+  },
+  "art_source/.gdignore": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "docs/CHECKPOINT_VALIDATION.json": {
+    "bytes": 763,
+    "sha256": "ac25201d8d952762f3bc644529ea9eb11b6ac2468dd5ccccb565a4816d135424"
+  },
+  "docs/camera_fit_initial.json": {
+    "bytes": 807,
+    "sha256": "7cd371b2808a50c1b6c6c0cf5e61c1ed54eebeaf8fe48f12e440179b0b2ecb32"
+  },
+  "docs/BLACK_SPECKLE_DIAGNOSIS.md": {
+    "bytes": 1122,
+    "sha256": "76c536be428b1b0be2405c4086c950bec27fe2e47cfe25c5de577aeeb7091ce5"
+  },
+  "docs/REPRODUCE.md": {
+    "bytes": 3945,
+    "sha256": "22ffabf6989767464ac05687e4bdd6d31fc12a243411f7c93074969055f2c40c"
+  },
+  "docs/.gdignore": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "assets/ground_flora/broken_rock_02.res": {
+    "bytes": 2101,
+    "sha256": "e8e9e18875944c33eec8536f4976d6a67b590cbeb94268b93c2fe86740fe1256"
+  },
+  "assets/ground_flora/broken_rock_00.res": {
+    "bytes": 2101,
+    "sha256": "3225556bed6907d27275946b7f3ac4e5c17ae848b925e968ecf9b93808e6a1de"
+  },
+  "assets/ground_flora/broken_rock_04.res": {
+    "bytes": 2101,
+    "sha256": "5115d2df1c3e9dac0ebf3132b2b69eacb8626649346a2b32588413fb0d412332"
+  },
+  "assets/ground_flora/broken_rock_06.res": {
+    "bytes": 2101,
+    "sha256": "2e2f9acaf6a92cf1650bfbb1721fc36f54a954bdc0e8cae91aaeae743de28d56"
+  },
+  "assets/ground_flora/folded_broad_leaf.res": {
+    "bytes": 2317,
+    "sha256": "15101775d8ce481dcbb5c10d4f62fe93e3cacd26429983045555cd99c2550e54"
+  },
+  "assets/ground_flora/broken_rock_05.res": {
+    "bytes": 2101,
+    "sha256": "dc1e9dc032de2aef02f919c03a13f972d1074199f8d66387b73cfb158e6e3c61"
+  },
+  "assets/ground_flora/curved_grass_blade.res": {
+    "bytes": 2605,
+    "sha256": "1694c5b9f15d34a624fbc164e6e9174d358a5b04bf30cc0a1b625b1e5fa0959e"
+  },
+  "assets/ground_flora/ivory_cup_flower.res": {
+    "bytes": 9517,
+    "sha256": "426c67107b5b72ff674882f03220e64904d5a1462f14d435935a2cb244565124"
+  },
+  "assets/ground_flora/broken_rock_01.res": {
+    "bytes": 2101,
+    "sha256": "89fdb71af8f64570518263546103fbb97a0a0891dedc84b1cbcc14d33cd9c36b"
+  },
+  "assets/ground_flora/broken_rock_03.res": {
+    "bytes": 2101,
+    "sha256": "d4bf1565abbe68dd405b7ba69830bea487d12d2fa2fa5d4560bb7c17196052c3"
+  },
+  "assets/materials/README_PENDING_EXTERNAL.md": {
+    "bytes": 588,
+    "sha256": "6efed1459a2daa63399ec6ab3c388334f1ffb1764dc60355712d3e8ef40b7f86"
+  },
+  "assets/character/idle_topmask.png": {
+    "bytes": 1144,
+    "sha256": "579b4b48231a184112ec0ee42f697fea30b6418a377f5c880106f4935a7928ef"
+  },
+  "assets/character/idle.png": {
+    "bytes": 49080,
+    "sha256": "7f73d81dec6dc1409e753aade1d08c889888a1ee42f2097157cf5545d1c60c17"
+  },
+  "assets/character/CHARACTER_V2_PROVENANCE.md": {
+    "bytes": 4440,
+    "sha256": "47f49c4904d83f9881cb5e30c30113c03ea86a983cccdb868650da346bd32685"
+  },
+  "assets/character/provenance.json": {
+    "bytes": 1307,
+    "sha256": "c21e6f51cdc3abbbf957b55fc865238ec34cfe053cfaa635d7a316c53698d3c1"
+  },
+  "assets/workshop/refined2_runtime_validation.json": {
+    "bytes": 241,
+    "sha256": "6a169e53aaba1cb3a4e758f63df007137cc50d3a2783c74be0d99bc421f1575c"
+  },
+  "assets/workshop/refined3_runtime_validation.json": {
+    "bytes": 241,
+    "sha256": "c4a289132ffe6cb66fba26e0a8f5a8f8d2c0caee261cb3124d2090506c3d81fc"
+  },
+  "assets/workshop/runtime_gltf_validation.json": {
+    "bytes": 313,
+    "sha256": "8c713c750b97c0a0ecb938d6b7f32494f1650458e74fb41afd8d8ccd5cb17dd5"
+  },
+  "assets/workshop/runtime_validation.json": {
+    "bytes": 236,
+    "sha256": "534d68358d8b8e10faf86c675c8c32352ae57f5595da5258fd11d9f0f86e8dde"
+  },
+  "assets/workshop/export_validation.json": {
+    "bytes": 775,
+    "sha256": "5edf30dcc18947c64625ebe58316f20b1f18c0c355b8eb856b7f6bae48660064"
+  },
+  "assets/workshop/MATERIAL_CONTRACT.md": {
+    "bytes": 4528,
+    "sha256": "5a663fe61df1c15ac7b66633df7b7df130a71a163fc3476242da0befdf38bc8d"
+  },
+  "assets/workshop/dependency_manifest.json": {
+    "bytes": 7513,
+    "sha256": "681a236c6545226ec2d099d40ff84e988dfc638008ccacf1ec961899c7f65615"
+  },
+  "assets/workshop/workshop_geometry_stats.json": {
+    "bytes": 156,
+    "sha256": "b76c62fa214a5a0098321d65caf056570a212e96825de7ee5b4404fe9e62423b"
+  },
+  "assets/workshop/refined_gltf_validation.json": {
+    "bytes": 335,
+    "sha256": "3a2907e6074cf7cd7c1ac76c91041ffd228e7222200f0b62b2bf3c0ca9e8835f"
+  },
+  "assets/workshop/refined_runtime_validation.json": {
+    "bytes": 240,
+    "sha256": "c3868dab80c52071630dff0f80c1a39778360de4a910eac188aad0d6151f4b48"
+  },
+  "assets/workshop/refined3_basis_audit.json": {
+    "bytes": 4900,
+    "sha256": "180f16132a9cfe9ce490875725afe5b74d810b9460295644280aea9493d89ce5"
+  },
+  "art_source/diagnostics/inspect_shadow.gd": {
+    "bytes": 1339,
+    "sha256": "5a50642bc749c0bfb995a3095a4039aa2d55eb1782cbdcac84c82c36e82a4842"
+  },
+  "art_source/diagnostics/check_api.gd": {
+    "bytes": 503,
+    "sha256": "b09dc0a0a8868fb58e3288af431947914075d42699c23e45d78283892320c91f"
+  },
+  "art_source/diagnostics/inspect_import.gd": {
+    "bytes": 1354,
+    "sha256": "9d88e6f1d6f7d8691bc5b0f9920fae4b7ed275089e8b2633dd7b4dc623a1de05"
+  },
+  "art_source/diagnostics/BLACK_SPECKLE_DIAGNOSIS.md": {
+    "bytes": 4078,
+    "sha256": "a06ed5fcf0d1d5d800a31225d941661203068de04241ffda5b1089d5acb6575a"
+  },
+  "art_source/diagnostics/sanitize_tangents.gd": {
+    "bytes": 1617,
+    "sha256": "d75c7b3f977417b62bbf7f16fbb0476a4809edc1cf8027ba7a05489095ccbac5"
+  },
+  "art_source/diagnostics/standard_shader_binary_excerpt.txt": {
+    "bytes": 8612,
+    "sha256": "bdfc0c5fd04b559c47faf90d02acbbbe801d894a767ebccf4caed85f012eb0df"
+  },
+  "art_source/diagnostics/test_repair.gd": {
+    "bytes": 1267,
+    "sha256": "6b79e7744fe8fb5b4856b082571f10ec81b1b7ddcba6f7637a2140109e759116"
+  },
+  "art_source/diagnostics/inspect_standard_shader.gd": {
+    "bytes": 380,
+    "sha256": "252969e43c29b22cfc042f6cdd95be4dd1d6ab8adf645eca350a6db75c6dee6e"
+  },
+  "art_source/diagnostics/black_speckle_evidence.json": {
+    "bytes": 4662,
+    "sha256": "4e963ddec8e1f85ba6c0ad8de62119448d4286b926c3abf7e0573921d7f74223"
+  },
+  "art_source/ground_flora/README.md": {
+    "bytes": 7246,
+    "sha256": "ec57dd835f7e31672949190691fdece723e2c548d4a57e80b80967505bece18e"
+  },
+  "art_source/ground_flora/ground_flora_before_frontface_fix.gd": {
+    "bytes": 21926,
+    "sha256": "de00dda5e0f7e20b7eb84da9dd994ecd85add7b0f28da8eeeeda4695e1e421e4"
+  },
+  "art_source/ground_flora/build_assets.gd.uid": {
+    "bytes": 20,
+    "sha256": "f9e93f17adc949e9483b8aa477d03bb3f5deda2b43e728cff8e0d18d181bd39c"
+  },
+  "art_source/ground_flora/ground_flora_rejected_closed_crowns.gd": {
+    "bytes": 27037,
+    "sha256": "d61206c811ac87d59534b2ec4297eb8d24ec3b256a7ce2e42024e5531441baef"
+  },
+  "art_source/ground_flora/manifest.json": {
+    "bytes": 3664,
+    "sha256": "c9bc93500acc3ab671436b1206c967225e70fade47df29effb833199eaf4ff93"
+  },
+  "art_source/ground_flora/ground_flora_before_building_offset.gd": {
+    "bytes": 19527,
+    "sha256": "bdad3715d0324f499570e75a9ef63b0754b425358bae9e7fbe6ae79bb51eb1a8"
+  },
+  "art_source/ground_flora/build_assets.gd": {
+    "bytes": 1828,
+    "sha256": "ede1b8651a6f2bfab4e392b9c99cffad54296202163712cfee06dddd0a9126ee"
+  },
+  "art_source/ground_flora/ground_flora_before_backdrop_extension.gd": {
+    "bytes": 21937,
+    "sha256": "e49a9cb5e1e815c4f50357a0aa3dd662981b9cdf268b67e84892d95cffc0e227"
+  },
+  "art_source/tripo_workshop/dimension-check.md": {
+    "bytes": 4022,
+    "sha256": "e35507610b0f2b0580a489f7f9eba19ba8b512bfec0af52dad180a7288d3719d"
+  },
+  "art_source/tripo_workshop/build_control.py": {
+    "bytes": 9251,
+    "sha256": "cbe1476220d5e963638296923be044bacb36ac03b40122da5490952a605e2dfd"
+  },
+  "art_source/tripo_workshop/multiview-design.md": {
+    "bytes": 12220,
+    "sha256": "0fe24f3a244b002256f1cf792c41b903bf6d98b5f0c91116ddf896ce7e978181"
+  },
+  "art_source/tripo_workshop/dimension-check.json": {
+    "bytes": 2725,
+    "sha256": "df796378c7ee96e21cfc4dec5858c4b12f0c72d1f8c0e1626075eff7157d2c79"
+  },
+  "art_source/tripo_workshop/control-SHA256SUMS.txt": {
+    "bytes": 896,
+    "sha256": "befc9cc845235599c116fc207861bc6b86ad3a5db6fb13a1b9442e50edfd24c7"
+  },
+  "art_source/tripo_workshop/workshop_multiview_control.blend": {
+    "bytes": 815128,
+    "sha256": "56e67143e4ee77cc898bc6695d468a9ad267ef77300e882c44c8d8327e71ec40"
+  },
+  "art_source/materials/SOURCES.md": {
+    "bytes": 2546,
+    "sha256": "bf2037adcdf9f1dfe71e9edb37213d8807eb8453415fd05fcff2cbba82b051fa"
+  },
+  "art_source/materials/manifest.json": {
+    "bytes": 8179,
+    "sha256": "048a516c3b235fdce81b4d233205efca937bc0b9b02987f3295d484a582732be"
+  },
+  "art_source/materials/CC0-1.0.txt": {
+    "bytes": 7147,
+    "sha256": "8aaa5787b5e7314fa1911c6b727234b45962cbb355993029fdbb21e5c8f557fa"
+  },
+  "art_source/materials/SHA256SUMS.txt": {
+    "bytes": 518,
+    "sha256": "7b98cf8ce110762e71d5d8f028d5430dd921e63e2dabbdf2fe8aab362e7275e1"
+  },
+  "art_source/materials/connection_checks.json": {
+    "bytes": 1327,
+    "sha256": "1dbca6af8ddb7c032c5f8518d534dc4f157d59a844b836ebed46f654aa3412a9"
+  },
+  "art_source/references/README.md": {
+    "bytes": 564,
+    "sha256": "479a4ae54ac10a5f18b370a9537240a79aa50147bb94e6773501be1af5c9da68"
+  },
+  "art_source/references/workshop_single_asset_input_concept.png": {
+    "bytes": 2392452,
+    "sha256": "0267e62b79bde3642a01d02a98a0c620e863f76093ddbfa051a82adc2af2e402"
+  },
+  "art_source/workshop/refined2_normals_report.json": {
+    "bytes": 153,
+    "sha256": "1eb6f8f5c91866cecb942b95a5c49620ab82894607421ef7b9f4d11b147efe23"
+  },
+  "art_source/workshop/refine_workbay_plaster.py": {
+    "bytes": 2021,
+    "sha256": "d2451c4fd1bb51fa59104912bd804c6ab7db7fa091c9204595f2f6be46f3e6c5"
+  },
+  "art_source/workshop/build_workshop_refined.py": {
+    "bytes": 22709,
+    "sha256": "1f2a320f1c716bb920b81d8e6115195a3f71c2240a7a7fc9ba111b53e1cd811b"
+  },
+  "art_source/workshop/export_refined3_runtime.py": {
+    "bytes": 2298,
+    "sha256": "9ba7ea2357ade929ec87dd54f171bfa7086f9f7734f320e532768a28691d94e0"
+  },
+  "art_source/workshop/refine_roof_textures.py": {
+    "bytes": 602,
+    "sha256": "e97996486d4d5e7c8c5fdf3203a099e2ac44dfd61b83f5dfdc81e57a1afd8795"
+  },
+  "art_source/workshop/refined3_workbay_report.json": {
+    "bytes": 303,
+    "sha256": "578f12f646f591a354d5c3f6e3f94450b413c8d0211f072409b9b34103f157a6"
+  },
+  "art_source/workshop/export_refined2_runtime.py": {
+    "bytes": 2298,
+    "sha256": "04bb8f8f2b93632c5f9e0acb9ed3a18d4cf0d075051844744bdea8cb64737f08"
+  },
+  "art_source/workshop/build_workshop.py": {
+    "bytes": 23483,
+    "sha256": "9365babafac2e79492564821a83d78e0733d8eb6bc9d4432e3a1cad491a28311"
+  },
+  "art_source/workshop/audit_gltf_basis.py": {
+    "bytes": 1872,
+    "sha256": "914a781b5d4161b8a1ec21e91a734592dedf017a3b0c147eb5188542ec7572f6"
+  },
+  "art_source/workshop/make_textures.py": {
+    "bytes": 2180,
+    "sha256": "879c13d59b4279265bdd383e3e5905be59d91c1322fde649a67adf06628818e2"
+  },
+  "art_source/workshop/refine_roof_normals.py": {
+    "bytes": 972,
+    "sha256": "0ce457b8d1c5587fcd471e648d57796ba9337f0db011adf3ed4f1a708ce59b6a"
+  },
+  "art_source/workshop/export_runtime.py": {
+    "bytes": 2184,
+    "sha256": "ff42ed83ed75076954f4d767656b4dcddb5ce4e0cc7c6e2e41f459b1fc650884"
+  },
+  "art_source/workshop/export_refined_runtime.py": {
+    "bytes": 2293,
+    "sha256": "a0b9e7b7b4b48db555778b30a3d9ed8959a332dda92bbdde53984a5b993f58ec"
+  },
+  "art_source/workshop_props/build_workshop_props.py": {
+    "bytes": 18880,
+    "sha256": "a962ffa5714cc473ed63a6d638e505492f1f5871aeb9bee17189493bc883d8cb"
+  },
+  "art_source/workshop_props/validate_glb.py": {
+    "bytes": 2889,
+    "sha256": "6e6700ed390b8ad9b58e304204969c6eaf4cace30f9efeefb10cd7108ef3354c"
+  },
+  "art_source/workshop_props/glb_validation.json": {
+    "bytes": 2513,
+    "sha256": "555734569522279aa9fd699a9995a0b02d900bbcc201b8074b25ba8e51036faf"
+  },
+  "art_source/workshop_props/asset_stats.json": {
+    "bytes": 1817,
+    "sha256": "2143ca9e689a6cf1120eec32d87489c992d25c7b611c8d881bd2fe13d8fc7dbd"
+  },
+  "art_source/workshop_props/README.md": {
+    "bytes": 3582,
+    "sha256": "063259af44e2e5f4e9feddf3e06f60169fa0068107074843134dd32720802066"
+  },
+  "art_source/workshop_props/workwall_stats.json": {
+    "bytes": 926,
+    "sha256": "bd6e5384f40e5067acebc7adc0d2fb9c554bfe3cfba92b1e9965da072963403b"
+  },
+  "art_source/workshop_props/workwall_validation.json": {
+    "bytes": 3225,
+    "sha256": "dddf22caf03d677a97325c43ade80c7325e225078dff3bb47223acaeb680c091"
+  },
+  "art_source/workshop_props/WORKWALL.md": {
+    "bytes": 2095,
+    "sha256": "dd85c02a5be842a19eaf69d3f08ce72fbd287354a5e7eb150beeb20a9a0cd8d5"
+  },
+  "art_source/workshop_props/workwall_hashes.json": {
+    "bytes": 2010,
+    "sha256": "36983b84fd18b1fa8fcea0bfd8bde5135f967402d290e6b5e1eba98c6cbd5f74"
+  },
+  "art_source/workshop_props/dependency_hashes.json": {
+    "bytes": 1869,
+    "sha256": "55e22e547cc4084d76436fb91e24a46bb264a5aa91497a5f8790713de49cb7a9"
+  },
+  "art_source/workshop_props/validate_workwall.py": {
+    "bytes": 1787,
+    "sha256": "d0cc005b728efb9c053ac306f84c8fcba1174cfaac1ae0567dfb8b5ced41c93e"
+  },
+  "art_source/workshop_props/build_workwall_props.py": {
+    "bytes": 9611,
+    "sha256": "d35a22428bf0b72f0f2b0a493af8b37eec41e49cfde15a44b6ebc3642cab09f8"
+  },
+  "art_source/workshop_props/generate_textures.py": {
+    "bytes": 1984,
+    "sha256": "c72f90390488ad6461851b59d08b493eca25b5d7921d019926c1cb6e82a7e11b"
+  },
+  "art_source/ground_flora/validation/winding_probe.gd": {
+    "bytes": 357,
+    "sha256": "43ed506a6c3519088895f9a227739f24a5119caa4a3fa772a2008e19e2183a7f"
+  },
+  "art_source/ground_flora/validation/project.godot": {
+    "bytes": 124,
+    "sha256": "49d11df4564f4063e0328317ce54404a985d48cca9755abde9ffa1afbdac7d15"
+  },
+  "art_source/ground_flora/validation/check.gd": {
+    "bytes": 443,
+    "sha256": "7a9869b52f995bddccde478b9f706b63bd9145873b0472f0bd7cadd1abe63680"
+  },
+  "art_source/ground_flora/validation/backdrop_geometry_probe.gd": {
+    "bytes": 847,
+    "sha256": "f0b549d95d62116706010c03234cee5c9de51b018338bda9d7934d3f2633e371"
+  },
+  "art_source/ground_flora/validation/mesh_normals_probe.gd": {
+    "bytes": 450,
+    "sha256": "e674dadade72674e59117ee28622bea5c37c6525ff2102200d80cc22b18975f8"
+  },
+  "art_source/ground_flora/validation/rejected_crown_shells/backdrop_crown_01.res": {
+    "bytes": 11228,
+    "sha256": "b6126b06cb71aafc5f3769f31facc78386584ebdbcfdf12f295a28b706ec5593"
+  },
+  "art_source/ground_flora/validation/rejected_crown_shells/backdrop_crown_00.res": {
+    "bytes": 9788,
+    "sha256": "a505b61de59f790ffa2ed405d26f93b05e67e6a80efa7b4226cd0fad9b53e07f"
+  },
+  "art_source/ground_flora/validation/rejected_crown_shells/geometry_probe.gd": {
+    "bytes": 1039,
+    "sha256": "2da3bc08664c742ac5c420767a69ea3101cdabd4cb7a4da6bc125ce30cd4e7de"
+  },
+  "art_source/ground_flora/validation/rejected_crown_shells/backdrop_crown_02.res": {
+    "bytes": 11228,
+    "sha256": "aa92982990ee2ecbea67495d9197d70bd9c1693cd7525a30327b7a5b791ee905"
+  },
+  "art_source/tripo_workshop/control_renders/FRONT.png": {
+    "bytes": 866518,
+    "sha256": "25697b852fd0fde226e1902d5f432764e7b5c4604ff6bd29584d75039c3932c6"
+  },
+  "art_source/tripo_workshop/control_renders/TOP.png": {
+    "bytes": 794139,
+    "sha256": "7f9ced13a86faec56f88b1ed4ee6e4bbb07180e4f216d185130fa283cd8f98e3"
+  },
+  "art_source/tripo_workshop/control_renders/RIGHT.png": {
+    "bytes": 747922,
+    "sha256": "287783e6561eb961efc09fc0d23650b8c4f6055ca90961673d462d89c73613aa"
+  },
+  "art_source/tripo_workshop/control_renders/LEFT.png": {
+    "bytes": 759072,
+    "sha256": "e84308d3e330e8e8029d5e173a212707618dec2f0d7c9cc59091f6500810bf53"
+  },
+  "art_source/tripo_workshop/control_renders/BACK.png": {
+    "bytes": 830013,
+    "sha256": "818744797349fc43e150395d775da106c8a6c84898009c193d4c4c0ad3403bbe"
+  },
+  "art_source/workshop/textures/aged_oak_normal.png": {
+    "bytes": 1783813,
+    "sha256": "ad3ec70447ca0bd01b8d2adecfca20e5e82dd749aec062153cde161c52a300ea"
+  },
+  "art_source/workshop/textures/limestone_roughness.png": {
+    "bytes": 178224,
+    "sha256": "ff75508ea1edeea10f6feb81004bbfbd5de1fd594a72cd2994329ee22fcc2ce6"
+  },
+  "art_source/workshop/textures/limestone_normal.png": {
+    "bytes": 2531564,
+    "sha256": "0e0a2d101b975449396e1e8fbf6ece474b6277b89ae931e9fd586922b402d8a6"
+  },
+  "art_source/workshop/textures/lime_plaster_basecolor.png": {
+    "bytes": 620137,
+    "sha256": "e7493adf3cb3fd871452f10ae81d4d8eaeb708317607f0b5668a7086eb64dccc"
+  },
+  "art_source/workshop/textures/aged_oak_basecolor.png": {
+    "bytes": 417865,
+    "sha256": "ef6f4abc14a00969a47feb3331dee5abf737d8ecd4276203434e871af99d3831"
+  },
+  "art_source/workshop/textures/linen_normal.png": {
+    "bytes": 1467697,
+    "sha256": "78a2f757b0ffa32b8dd94665d072c64b264c3fe9db8c8fd25db1410eb1e82341"
+  },
+  "art_source/workshop/textures/lime_plaster_roughness.png": {
+    "bytes": 170762,
+    "sha256": "91e57bb796addb9381126c4d9a61b785467116f102489eaa1045afdb7355aabf"
+  },
+  "art_source/workshop/textures/limestone_basecolor.png": {
+    "bytes": 670915,
+    "sha256": "0bdf21e7484157047c1ad3910825c81b374b7ceb588ca87acffbe7a5492c62d9"
+  },
+  "art_source/workshop/textures/linen_basecolor.png": {
+    "bytes": 818482,
+    "sha256": "0b24a883a206d4147dc2d78d4444fd584c8eaee4cbaeb1981f9b2a765a9bd1b8"
+  },
+  "art_source/workshop/textures/teal_refined_roughness.png": {
+    "bytes": 123419,
+    "sha256": "6369302ea8a53bfe5c08b89c220971e488ee12e768dd26c3d69a46dbc80ac58e"
+  },
+  "art_source/workshop/textures/teal_patina_normal.png": {
+    "bytes": 1917943,
+    "sha256": "4a6add60d0925874281a35475f0b173cb62a7b5ba9bb92e3441faf8629ec0158"
+  },
+  "art_source/workshop/textures/teal_patina_roughness.png": {
+    "bytes": 123418,
+    "sha256": "4f756d485ed1b49626fd6f0136968392cf5fc825d6aff76b8cf43b94805ffda3"
+  },
+  "art_source/workshop/textures/teal_refined_basecolor.png": {
+    "bytes": 476008,
+    "sha256": "16186b252eff0df89cc1f565073e1b2460eebb4b725cb94a92c4cf0cf0b30916"
+  },
+  "art_source/workshop/textures/teal_patina_basecolor.png": {
+    "bytes": 534079,
+    "sha256": "c1c87f74cd985c71616ed6b2a097fd9503322bd422d49b019d55859d165ddc95"
+  },
+  "art_source/workshop/textures/aged_oak_roughness.png": {
+    "bytes": 99449,
+    "sha256": "298d4b233ce4e124d1fb7889a6fe88c1f5bc409999611819392d5f1b8a871343"
+  },
+  "art_source/workshop/textures/linen_roughness.png": {
+    "bytes": 177939,
+    "sha256": "7b88c2e9ec4dc59df55b1ef20a83f0d18ce57221e901c5c43b48a891e6e95108"
+  },
+  "art_source/workshop/textures/teal_refined_normal.png": {
+    "bytes": 1917943,
+    "sha256": "4a6add60d0925874281a35475f0b173cb62a7b5ba9bb92e3441faf8629ec0158"
+  },
+  "art_source/workshop/textures/lime_plaster_normal.png": {
+    "bytes": 2310804,
+    "sha256": "af1838b1731be4aa07e87d378ff5ff5220274ce95534d6312133e38e91c03bc6"
+  },
+  "art_source/workshop_props/textures/wood_roughness.png": {
+    "bytes": 205444,
+    "sha256": "c284cb39c251a209c09eb8d0270329e3ec66c3dda4f3c9bc5fe5eb2d47fe61a9"
+  },
+  "art_source/workshop_props/textures/metal_normal.png": {
+    "bytes": 907122,
+    "sha256": "5bb44a85775d3ee6992ee42f2d38e7f4d9642a811d63d6db18b93b9ffdd6a1af"
+  },
+  "art_source/workshop_props/textures/wood_normal.png": {
+    "bytes": 1411560,
+    "sha256": "047e8c684cb75db0c1274ac1513e0f28b120fa9132558e1a12d8128397de4377"
+  },
+  "art_source/workshop_props/textures/metal_iron_color.png": {
+    "bytes": 236195,
+    "sha256": "97150eb4494e28ace19ec35686ead80667b46e4acbdcd751af7c3ab3874ebafc"
+  },
+  "art_source/workshop_props/textures/metal_brass_color.png": {
+    "bytes": 157060,
+    "sha256": "44a049befa722b1084f3455f03e677deee1dae9e498ffd96fe0327a47546a6ac"
+  },
+  "art_source/workshop_props/textures/wood_olive_color.png": {
+    "bytes": 243607,
+    "sha256": "df7118fff1858efd4a0bd6f8a664765b37f589d9f62bb78023990b3e16dca541"
+  },
+  "art_source/workshop_props/textures/metal_roughness.png": {
+    "bytes": 293530,
+    "sha256": "f2645f3d395da3e92239f739275dba372217fb7c27e17636771b8bbce9ec9bf8"
+  },
+  "art_source/workshop_props/textures/metal_edge_color.png": {
+    "bytes": 185863,
+    "sha256": "1e917c23c57145fdcbdd782bd78eab33ebf0c7bdc24ccd826719310e407dee2a"
+  },
+  "art_source/workshop_props/textures/wood_old_color.png": {
+    "bytes": 257741,
+    "sha256": "a3662d97c83d447a51d8a112ac0d2e6c3ffc59cd66ef4bbce89a3616efa928f5"
+  },
+  "art_source/workshop_props/textures/wood_oak_color.png": {
+    "bytes": 288269,
+    "sha256": "fbceccaafdbab699bce1a16c156669d0604e16fb09f3558c6248694ae446e673"
+  },
+  ".agents/skills/tripo-game-assets/SKILL.md": {
+    "bytes": 3056,
+    "sha256": "1e9ab13e713e52452f1dc3d9ea2acc2dc11ac071424dfd6cb57d069bfc3687c2"
+  },
+  ".agents/skills/tripo-game-assets/references/api-v3.md": {
+    "bytes": 8549,
+    "sha256": "432fcd299ff49f26bb8e77abde0c385e347df89b52c59f53a784fe993a0fdcef"
+  },
+  ".agents/skills/tripo-game-assets/references/billing.md": {
+    "bytes": 2973,
+    "sha256": "2cc50553b07edc1f5919696d3a722884fcbcde92f9b31dc29388567ccb908216"
+  },
+  ".agents/skills/tripo-game-assets/references/cli-access.md": {
+    "bytes": 3003,
+    "sha256": "6597797eeb1c2809e52321e0405cd6b65fe583b8ed6190352323860f8de13c04"
+  },
+  ".agents/skills/tripo-game-assets/references/workshop-validation.md": {
+    "bytes": 5279,
+    "sha256": "ffca59ab0ae44ac3f1d6fcbdffea14c2c67cc5aae4769332e19b8f8ca8bc1b44"
+  }
+}

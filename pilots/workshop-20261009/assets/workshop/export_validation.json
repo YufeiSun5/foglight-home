@@ -1,0 +1,27 @@
+{
+  "glb_magic": "glTF",
+  "version": 2,
+  "declared_bytes_match": true,
+  "nodes": 547,
+  "meshes": 546,
+  "materials": 13,
+  "embedded_images": 15,
+  "camera_count": 0,
+  "all_images_embedded": true,
+  "all_mesh_primitives_have_uv": true,
+  "double_sided_materials": [
+    "Workshop | recessed lime mortar",
+    "Workshop | grey limestone",
+    "Workshop | weathered lime plaster",
+    "Workshop | weathered structural oak",
+    "Workshop | deep unlit interior",
+    "Workshop | cut oak edges",
+    "Workshop | hand forged iron",
+    "Workshop | aged recessed timber",
+    "Workshop | brushed turquoise patina",
+    "Workshop | patinated folded hems",
+    "Workshop | aged green glass",
+    "Workshop | warm interior glazing",
+    "Workshop | unbleached woven canopy"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "art_source/workshop_props/build_workwall_props.py": "d35a22428bf0b72f0f2b0a493af8b37eec41e49cfde15a44b6ebc3642cab09f8",
+  "art_source/workshop_props/workwall_props.blend": "ea3a60081e5dd22653211ef32ddf21c7435b86b6f0c5f55a6d80647063b45446",
+  "art_source/workshop_props/workwall_props_export_verified.blend": "9c1d223960335b8be2ff5ed0d919179d879ca1d717b616388f5442ab66f76269",
+  "art_source/workshop_props/validate_workwall.py": "d0cc005b728efb9c053ac306f84c8fcba1174cfaac1ae0567dfb8b5ced41c93e",
+  "art_source/workshop_props/workwall_preview.png": "2a3b35f7882322964c749b61f7050a79f4efa09ff4cc280cb61e3603f5132ebb",
+  "assets/workshop_props/workwall_props.glb": "735561a1015c4624a537a67b25aaffa74a22b62ad26bd1f23cb8c68d55507722",
+  "art_source/workshop_props/textures/wood_roughness.png": "c284cb39c251a209c09eb8d0270329e3ec66c3dda4f3c9bc5fe5eb2d47fe61a9",
+  "art_source/workshop_props/textures/metal_normal.png": "5bb44a85775d3ee6992ee42f2d38e7f4d9642a811d63d6db18b93b9ffdd6a1af",
+  "art_source/workshop_props/textures/wood_normal.png": "047e8c684cb75db0c1274ac1513e0f28b120fa9132558e1a12d8128397de4377",
+  "art_source/workshop_props/textures/metal_iron_color.png": "97150eb4494e28ace19ec35686ead80667b46e4acbdcd751af7c3ab3874ebafc",
+  "art_source/workshop_props/textures/metal_brass_color.png": "44a049befa722b1084f3455f03e677deee1dae9e498ffd96fe0327a47546a6ac",
+  "art_source/workshop_props/textures/wood_olive_color.png": "df7118fff1858efd4a0bd6f8a664765b37f589d9f62bb78023990b3e16dca541",
+  "art_source/workshop_props/textures/metal_roughness.png": "f2645f3d395da3e92239f739275dba372217fb7c27e17636771b8bbce9ec9bf8",
+  "art_source/workshop_props/textures/metal_edge_color.png": "1e917c23c57145fdcbdd782bd78eab33ebf0c7bdc24ccd826719310e407dee2a",
+  "art_source/workshop_props/textures/wood_old_color.png": "a3662d97c83d447a51d8a112ac0d2e6c3ffc59cd66ef4bbce89a3616efa928f5",
+  "art_source/workshop_props/textures/wood_oak_color.png": "fbceccaafdbab699bce1a16c156669d0604e16fb09f3558c6248694ae446e673"
+}

@@ -1,0 +1,2 @@
+001d2ef50b0aa514028efbd090038caa30dee4ccdafb7662e8beef7856243fc4  Foglight-Workshop-Pilot-Source-M3-20261009.zip
+bd142a5c339875671ee0fb32cb61294f027793e0c0aa253979af0574507052d6  Foglight-Workshop-Pilot-Runtime-M2-20261009.zip

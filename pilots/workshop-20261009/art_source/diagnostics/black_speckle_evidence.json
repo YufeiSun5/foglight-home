@@ -1,0 +1,248 @@
+{
+  ".qa/material-r2-tbn/engine_frame.png": {
+    "sha256": "7934fdaa68b137f4d7fcd9c08843256e1c9fe94a617c7e81fd5a3526cdcf9b7f",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 67
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 727
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 37
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 170
+      }
+    }
+  },
+  ".qa/material-r2-no-aniso/engine_frame.png": {
+    "sha256": "90de5bf6cd11e0b739a30fda5c5b41f97a5fe516ffd543ecbf92e02f96f996b3",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 0
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 0
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 0
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 0
+      }
+    }
+  },
+  ".qa/material-r2-flat/engine_frame.png": {
+    "sha256": "608aad2967553d2c2aeb953a9a7485ec1d06306bc209f24ee39b762436f1a544",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 53
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 613
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 36
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 148
+      }
+    }
+  },
+  ".qa/material-r2-shader-flat/engine_frame.png": {
+    "sha256": "1becad6623ba7bd36ef846eedae3b5ad245cf6d82682e7a5bfae8e6f86e6d813",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 0
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 0
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 0
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 0
+      }
+    }
+  },
+  ".qa/material-r2-no-shadow-mesh/engine_frame.png": {
+    "sha256": "7934fdaa68b137f4d7fcd9c08843256e1c9fe94a617c7e81fd5a3526cdcf9b7f",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 67
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 727
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 37
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 170
+      }
+    }
+  },
+  ".qa/material-r2-double-sided/engine_frame.png": {
+    "sha256": "80d40a027c67a47a6eecf7b9ae812d8f9008ef6c744a5d210772ffcc1aa7d8c1",
+    "regions": {
+      "roof": {
+        "crop_xyxy": [
+          550,
+          205,
+          1040,
+          350
+        ],
+        "exact_black_pixels": 67
+      },
+      "flywheel": {
+        "crop_xyxy": [
+          470,
+          490,
+          616,
+          600
+        ],
+        "exact_black_pixels": 727
+      },
+      "canopy": {
+        "crop_xyxy": [
+          870,
+          367,
+          1095,
+          438
+        ],
+        "exact_black_pixels": 37
+      },
+      "cart_wheel": {
+        "crop_xyxy": [
+          684,
+          610,
+          741,
+          673
+        ],
+        "exact_black_pixels": 170
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "nodes": 1,
+  "meshes": 1,
+  "material_surfaces": 13,
+  "embedded_images": 15,
+  "all_images_embedded": true,
+  "all_primitives_uv": true,
+  "all_primitives_normals": true,
+  "all_primitives_tangents": true,
+  "sha256": "f46c716624779639d4b1d97e8a3cdb97de76e97776ef59def6a2beb4a34cff29",
+  "bytes": 25016872
+}

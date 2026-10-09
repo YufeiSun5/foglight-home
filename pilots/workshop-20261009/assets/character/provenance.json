@@ -1,0 +1,25 @@
+{
+  "scope": "Original project character read at pinned public checkpoint; not recovered lost scene",
+  "repository": "YufeiSun5/foglight-home",
+  "commit": "a03f676bec39a886ab8afe2d2205a0efe9d30dc8",
+  "files": [
+    {
+      "file": "idle.png",
+      "git_blob_sha": "a0c1f7cb83d3a38a86f1fcc54cc1f43eb1b57a6d",
+      "sha256": "7f73d81dec6dc1409e753aade1d08c889888a1ee42f2097157cf5545d1c60c17",
+      "source": "https://github.com/YufeiSun5/foglight-home/blob/a03f676bec39a886ab8afe2d2205a0efe9d30dc8/assets/characters_v2/cen_xingyao/outfits/trousers/idle.png"
+    },
+    {
+      "file": "idle_topmask.png",
+      "git_blob_sha": "c04217beda281a762db9d763101e6c55ea53bf60",
+      "sha256": "579b4b48231a184112ec0ee42f697fea30b6418a377f5c880106f4935a7928ef",
+      "source": "https://github.com/YufeiSun5/foglight-home/blob/a03f676bec39a886ab8afe2d2205a0efe9d30dc8/assets/characters_v2/cen_xingyao/outfits/trousers/idle_topmask.png"
+    },
+    {
+      "file": "CHARACTER_V2_PROVENANCE.md",
+      "git_blob_sha": "869d7e99441699aad133fcb075fb0644d239140e",
+      "sha256": "47f49c4904d83f9881cb5e30c30113c03ea86a983cccdb868650da346bd32685",
+      "source": "https://github.com/YufeiSun5/foglight-home/blob/a03f676bec39a886ab8afe2d2205a0efe9d30dc8/assets/characters_v2/CHARACTER_V2_PROVENANCE.md"
+    }
+  ]
+}

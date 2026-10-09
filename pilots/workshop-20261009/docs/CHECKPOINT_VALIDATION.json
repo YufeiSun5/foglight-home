@@ -1,0 +1,15 @@
+{
+  "zip_crc": "pass",
+  "per_file_sha256": "pass",
+  "clean_extraction_import": "exit0; no missing resources/parse errors; editor-settings-save warning",
+  "first_headless_smoke": "failed signal11 before scene startup because default home data directory was unwritable; failed log preserved",
+  "bounded_retry": "passed exit0 after setting XDG data/config/cache to authorized workspace directories",
+  "loaded_material_surfaces": 62,
+  "loaded_model_meshes": 14,
+  "headless_visual_claim": false,
+  "native_frame": ".qa/material-r3/engine_frame.png",
+  "native_frame_sha256": "e803468984de811a9e60b898f3310f37ff05a501a9fa3291641fcf2b2a134410",
+  "native_gui_observed": true,
+  "native_gui_closed": true,
+  "production_performance_or_gameplay_acceptance": false
+}

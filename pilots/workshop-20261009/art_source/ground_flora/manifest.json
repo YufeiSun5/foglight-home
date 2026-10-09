@@ -1,0 +1,107 @@
+{
+  "title": "Original ground and flora for independent workshop pilot",
+  "source_type": "original editable procedural geometry",
+  "seed": 20261009,
+  "reference": "ChatGPT 圖片 2026年10月9日 下午09_48_25-4.png",
+  "not_restoration": true,
+  "third_party_dependencies": [],
+  "external_pbr_status": "not obtained; original provisional soil shader",
+  "coordinate_system": "Godot X=Blender X, Godot Y=Blender Z, Godot Z=-Blender Y",
+  "validation": {
+    "godot_version": "4.6.3",
+    "headless_instantiation": "passed",
+    "packed_scene_reload": "structural pass insufficient: transform readback zero under headless dummy; candidate quarantined",
+    "native_frame_review": "r2 no-compression actual frame rejected closed crown bodies as spheres/potatoes. All shell instances removed; same 3660 leaves concentrated into six crowns and slope soil muted; next native frame pending.",
+    "upward_normals_measured": {
+      "grass": 0.449350658,
+      "broadleaf": 0.95113614,
+      "flower": 0.963666486
+    }
+  },
+  "files": [
+    {
+      "path": "src/ground_flora.gd",
+      "bytes": 24478,
+      "sha256": "d83e83f934847282be6158837e0a261b7e8c199211655e254b956d7556cc8661"
+    },
+    {
+      "path": "art_source/ground_flora/build_assets.gd",
+      "bytes": 1828,
+      "sha256": "ede1b8651a6f2bfab4e392b9c99cffad54296202163712cfee06dddd0a9126ee"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_00.res",
+      "bytes": 2101,
+      "sha256": "3225556bed6907d27275946b7f3ac4e5c17ae848b925e968ecf9b93808e6a1de"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_01.res",
+      "bytes": 2101,
+      "sha256": "89fdb71af8f64570518263546103fbb97a0a0891dedc84b1cbcc14d33cd9c36b"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_02.res",
+      "bytes": 2101,
+      "sha256": "e8e9e18875944c33eec8536f4976d6a67b590cbeb94268b93c2fe86740fe1256"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_03.res",
+      "bytes": 2101,
+      "sha256": "d4bf1565abbe68dd405b7ba69830bea487d12d2fa2fa5d4560bb7c17196052c3"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_04.res",
+      "bytes": 2101,
+      "sha256": "5115d2df1c3e9dac0ebf3132b2b69eacb8626649346a2b32588413fb0d412332"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_05.res",
+      "bytes": 2101,
+      "sha256": "dc1e9dc032de2aef02f919c03a13f972d1074199f8d66387b73cfb158e6e3c61"
+    },
+    {
+      "path": "assets/ground_flora/broken_rock_06.res",
+      "bytes": 2101,
+      "sha256": "2e2f9acaf6a92cf1650bfbb1721fc36f54a954bdc0e8cae91aaeae743de28d56"
+    },
+    {
+      "path": "assets/ground_flora/curved_grass_blade.res",
+      "bytes": 2605,
+      "sha256": "1694c5b9f15d34a624fbc164e6e9174d358a5b04bf30cc0a1b625b1e5fa0959e"
+    },
+    {
+      "path": "assets/ground_flora/folded_broad_leaf.res",
+      "bytes": 2317,
+      "sha256": "15101775d8ce481dcbb5c10d4f62fe93e3cacd26429983045555cd99c2550e54"
+    },
+    {
+      "path": "assets/ground_flora/ivory_cup_flower.res",
+      "bytes": 9517,
+      "sha256": "426c67107b5b72ff674882f03220e64904d5a1462f14d435935a2cb244565124"
+    }
+  ],
+  "integration": "Use src/ground_flora.gd static apply(parent) in real Godot render context",
+  "building_offset": [
+    3.2,
+    0,
+    -1.2
+  ],
+  "grass_blades_after_subtractive_mask": 31145,
+  "backdrop_revision": {
+    "added_surface_leaves": 3660,
+    "closed_crown_lobes": 0,
+    "renderer_nodes_total": 18,
+    "terrain_extent_xz": [
+      [
+        -65,
+        -90
+      ],
+      [
+        65,
+        21
+      ]
+    ],
+    "extra_far_ridge": "halved to protect sky",
+    "rock_geometry": "unchanged, visibly pale faceted blocks, deferred"
+  }
+}

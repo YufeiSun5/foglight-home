@@ -1,0 +1,26 @@
+{
+  "asset": "workwall_props.glb",
+  "assemblies": {
+    "01_Three_tier_tool_shelf": {
+      "source_components": 49,
+      "triangles": 7904,
+      "uv_degenerate_triangles_repaired": 768
+    },
+    "02_Left_wall_hung_tools": {
+      "source_components": 14,
+      "triangles": 2272,
+      "uv_degenerate_triangles_repaired": 0
+    },
+    "03_Right_wall_frame_saw": {
+      "source_components": 21,
+      "triangles": 980,
+      "uv_degenerate_triangles_repaired": 112
+    }
+  },
+  "triangles": 11156,
+  "units": "metres",
+  "coordinates": "Source Blender Z up/front -Y; use unchanged scene origin and same parent offset as house.",
+  "sha256": "735561a1015c4624a537a67b25aaffa74a22b62ad26bd1f23cb8c68d55507722",
+  "materials": "Same restrained procedural oak/iron/brass as original prop source. No diagnostic changes to normals or roughness.",
+  "scope": "Additional wall props only; workshop_props.glb remains unchanged."
+}

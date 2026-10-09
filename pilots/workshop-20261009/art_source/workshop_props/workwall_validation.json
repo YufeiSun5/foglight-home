@@ -1,0 +1,113 @@
+{
+  "sha256": "735561a1015c4624a537a67b25aaffa74a22b62ad26bd1f23cb8c68d55507722",
+  "bytes": 5865272,
+  "max_abs_dot_N_T": 0.00013438798487186432,
+  "invalid_tangent_count": 0,
+  "degenerate_uv_triangles": 0,
+  "primitives": [
+    {
+      "mesh": "Cube.036",
+      "material": "Oak | old inner endgrain",
+      "vertices": 4088,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.036",
+      "material": "Forged blue iron | satin scale",
+      "vertices": 2909,
+      "max_abs_dot_N_T": 0.00010541081428527832,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.036",
+      "material": "Oak | oiled structural timber",
+      "vertices": 2666,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.036",
+      "material": "Machined iron | burnished collars",
+      "vertices": 2592,
+      "max_abs_dot_N_T": 0.00012049078941345215,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.036",
+      "material": "Warm brass | bearing bushings",
+      "vertices": 3775,
+      "max_abs_dot_N_T": 0.00013438798487186432,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.063",
+      "material": "Oak | old inner endgrain",
+      "vertices": 534,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.063",
+      "material": "Forged blue iron | satin scale",
+      "vertices": 2484,
+      "max_abs_dot_N_T": 9.700655937194824e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.063",
+      "material": "Oak | oiled structural timber",
+      "vertices": 264,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.063",
+      "material": "Machined iron | burnished collars",
+      "vertices": 222,
+      "max_abs_dot_N_T": 9.954720735549927e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.066",
+      "material": "Oak | oiled structural timber",
+      "vertices": 528,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.066",
+      "material": "Oak | old inner endgrain",
+      "vertices": 860,
+      "max_abs_dot_N_T": 0.00010251998901367188,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.066",
+      "material": "Machined iron | burnished collars",
+      "vertices": 602,
+      "max_abs_dot_N_T": 9.38507728278637e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    },
+    {
+      "mesh": "Cube.066",
+      "material": "Forged blue iron | satin scale",
+      "vertices": 208,
+      "max_abs_dot_N_T": 8.091330528259277e-05,
+      "invalid_tangent_count": 0,
+      "degenerate_uv_triangles": 0
+    }
+  ]
+}

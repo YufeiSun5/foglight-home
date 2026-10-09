@@ -1,0 +1,26 @@
+[
+  {
+    "target": "assets/workshop/foglight_workshop_refined3_runtime.glb",
+    "sha256": "99e52e13fbbd65db45e9c93a9634f034d59eb252f8a3ae9bd667e183611e6746",
+    "bytes": 23696032,
+    "parts": [
+      "asset-parts/foglight_workshop_refined3_runtime.glb/000.part",
+      "asset-parts/foglight_workshop_refined3_runtime.glb/001.part",
+      "asset-parts/foglight_workshop_refined3_runtime.glb/002.part",
+      "asset-parts/foglight_workshop_refined3_runtime.glb/003.part",
+      "asset-parts/foglight_workshop_refined3_runtime.glb/004.part",
+      "asset-parts/foglight_workshop_refined3_runtime.glb/005.part"
+    ]
+  },
+  {
+    "target": "assets/workshop_props/workshop_props.glb",
+    "sha256": "0338a43c88973117a01374f6fd0c81c73fa011c23fc2dd6b652babbe2695ebc9",
+    "bytes": 13875280,
+    "parts": [
+      "asset-parts/workshop_props.glb/000.part",
+      "asset-parts/workshop_props.glb/001.part",
+      "asset-parts/workshop_props.glb/002.part",
+      "asset-parts/workshop_props.glb/003.part"
+    ]
+  }
+]
